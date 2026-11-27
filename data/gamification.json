@@ -1,10 +1,10 @@
 {
   "username": "25sarvesh2005",
   "display_name": "Sarvesh Sharma",
-  "generated_at_utc": "2026-11-27T11:32:30Z",
-  "total_contributions": 1018,
-  "contributions_12m": 999,
-  "active_days": 190,
+  "generated_at_utc": "2026-11-27T11:49:47Z",
+  "total_contributions": 919,
+  "contributions_12m": 908,
+  "active_days": 129,
   "peak_day_contributions": 49,
   "current_streak": 1,
   "longest_streak": 10,
@@ -17,12 +17,12 @@
   "external_stars": 2,
   "languages_ge_1pct": 6,
   "account_age_days": 1160,
-  "xp": 4391,
-  "level": 15,
-  "level_title": "Telemetry Lead",
-  "xp_in_level": 471,
-  "xp_for_next_level": 580,
-  "level_progress_pct": 81.2,
+  "xp": 3888,
+  "level": 14,
+  "level_title": "Systems Architect",
+  "xp_in_level": 508,
+  "xp_for_next_level": 540,
+  "level_progress_pct": 94.1,
   "top_languages": [
     {
       "name": "Python",
@@ -109,7 +109,7 @@
     {
       "key": "club_500",
       "title": "500 Club",
-      "current": 1018,
+      "current": 919,
       "target": 500,
       "unit": "",
       "unlocked": true,
@@ -139,11 +139,11 @@
     {
       "key": "builder_1k",
       "title": "1K Builder",
-      "current": 1018,
+      "current": 919,
       "target": 1000,
       "unit": "",
-      "unlocked": true,
-      "progress_pct": 100.0,
+      "unlocked": false,
+      "progress_pct": 91.9,
       "description": "Reach 1,000 verified GitHub contributions."
     },
     {
@@ -177,6 +177,6 @@
       "description": "Earn 10 non-self stars across owned repositories."
     }
   ],
-  "unlocked_count": 9,
+  "unlocked_count": 8,
   "total_quests": 12
 }
