@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 274" width="840" height="274" role="img" aria-labelledby="battle-title-dark battle-desc-dark">
-  <title id="battle-title-dark">Interactive RPG Dungeon Raid — NullPointer Wyrm (111/240 HP)</title>
+  <title id="battle-title-dark">Interactive RPG Dungeon Raid — NullPointer Wyrm (102/240 HP)</title>
   <desc id="battle-desc-dark">Live GitHub Issues co-op boss fight on @25sarvesh2005's profile.</desc>
   <defs>
     <style>
@@ -123,8 +123,8 @@
 
   <!-- LEFT: Hero Nameplate & Sprites -->
   <rect x="30" y="50" width="218" height="34" rx="3" fill="#1B2236" stroke="#3B476B" stroke-width="1.2"/>
-  <text x="40" y="65" class="mono" font-size="11" font-weight="700" fill="#38BDF8">SARVESH · LVL 12</text>
-  <text x="40" y="78" class="mono" font-size="9.5" fill="#94A3C8">BUFF +0 DMG · 601 COMMITS/YR</text>
+  <text x="40" y="65" class="mono" font-size="11" font-weight="700" fill="#38BDF8">SARVESH · LVL 13</text>
+  <text x="40" y="78" class="mono" font-size="9.5" fill="#94A3C8">BUFF +0 DMG · 604 COMMITS/YR</text>
 
   <g class="bob-hero" shape-rendering="crispEdges">
     <rect x="83" y="92" width="30" height="5" fill="#141824"/>
@@ -266,9 +266,9 @@
   <!-- RIGHT: Boss Nameplate, HP Bar & Sprite -->
   <rect x="590" y="50" width="218" height="38" rx="3" fill="#1B2236" stroke="#F43F5E" stroke-width="1.3"/>
   <text x="600" y="65" class="mono" font-size="10.5" font-weight="700" fill="#F43F5E">NULLPOINTER WYRM</text>
-  <text x="800" y="65" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#F0F4FF">111/240</text>
+  <text x="800" y="65" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#F0F4FF">102/240</text>
   <rect x="600" y="73" width="198" height="8" rx="2" fill="#252E47"/>
-  <rect x="600" y="73" width="90.65" height="8" rx="2" fill="#F43F5E"/>
+  <rect x="600" y="73" width="83.3" height="8" rx="2" fill="#F43F5E"/>
 
   <g class="bob-boss" shape-rendering="crispEdges">
     <rect x="662" y="92" width="10" height="5" fill="#141824"/>
@@ -355,7 +355,7 @@
   <!-- BOTTOM: Combat Log & Tavern Ticker -->
   <rect x="16" y="212" width="808" height="48" rx="3" fill="#1B2236" stroke="#3B476B" stroke-width="1.2"/>
   <text x="28" y="231" class="mono" font-size="11" font-weight="700" fill="#FBBF24">▶</text>
-  <text x="43" y="231" class="sans" font-size="12" font-weight="600" fill="#F0F4FF">Architect @25sarvesh2005 pushed +2 contribs (6 DMG)!</text>
+  <text x="43" y="231" class="sans" font-size="12" font-weight="600" fill="#F0F4FF">Architect @25sarvesh2005 pushed +3 contribs (9 DMG)!</text>
   <text x="28" y="250" class="mono" font-size="9.5" fill="#94A3C8">RAIDERS: Awaiting first challenger</text>
   <text x="812" y="250" text-anchor="end" class="mono" font-size="9.5" fill="#34D399">TAVERN: Sign Tavern Log below!</text>
 </svg>
