@@ -8,12 +8,21 @@
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .steam { animation: steam 1.8s steps(2, end) infinite; }
+      @keyframes steam {
+        0%, 100% { transform: translateY(0px); opacity: 0.9; }
+        50% { transform: translateY(-3px); opacity: 0.35; }
+      }
     </style>
   </defs>
 
-  <!-- Outer Pixel Cartridge Frame -->
+  <!-- Outer Pixel Cartridge Frame + Corner Rivets -->
   <rect x="2" y="2" width="836" height="312" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
   <rect x="6" y="6" width="828" height="304" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
+  <g shape-rendering="crispEdges" fill="{{ theme.accent_primary }}">
+    <rect x="4" y="4" width="4" height="4"/><rect x="832" y="4" width="4" height="4"/>
+    <rect x="4" y="308" width="4" height="4"/><rect x="832" y="308" width="4" height="4"/>
+  </g>
 
   <!-- Top Chrome -->
   <rect x="6" y="6" width="828" height="28" fill="{{ theme.bg_panel }}"/>
@@ -26,6 +35,7 @@
 
   <!-- Portrait Screen -->
   <rect x="28" y="54" width="240" height="94" rx="3" fill="{{ theme.bg_stage }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
+  <rect x="29" y="136" width="238" height="11" fill="{{ theme.ground }}"/>
   <g shape-rendering="crispEdges">
     {% for r in avatar_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
@@ -33,6 +43,12 @@
     {% for r in pet_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
+    {% for r in mug_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+    <g class="steam" fill="{{ theme.text_muted }}">
+      <rect x="148" y="118" width="2" height="4"/><rect x="154" y="116" width="2" height="4"/>
+    </g>
   </g>
   <rect x="166" y="66" width="88" height="24" rx="3" fill="{{ theme.accent_primary }}"/>
   <text x="210" y="82" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="{{ theme.accent_pill_text }}">LVL {{ report.level }}</text>

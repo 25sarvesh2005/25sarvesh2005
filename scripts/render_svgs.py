@@ -15,9 +15,15 @@ from scripts.config import THEMES
 from scripts.game_engine import get_active_boss, init_game_state
 from scripts.pixel_sprites import (
     BOSS_SPRITES,
+    COFFEE_MUG,
     COMPANION_SPARK,
     HERO_ARCHITECT,
+    PIXEL_CLOUD,
+    PIXEL_MOON,
+    PIXEL_SUN,
     QUEST_SPRITES,
+    SWORD_CLASH,
+    WALL_TORCH,
     compile_pixel_grid,
 )
 
@@ -117,12 +123,20 @@ def render_all_svgs(
     boss_hp = int(state.get("boss_hp", boss.max_hp))
     boss_hp_width = round(max(0.0, min(1.0, boss_hp / max(1, boss.max_hp))) * 196.0, 2)
 
-    hero_rects = compile_pixel_grid(HERO_ARCHITECT, scale=5, ox=52, oy=92)
-    pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=4, ox=148, oy=132)
-    boss_rects = compile_pixel_grid(BOSS_SPRITES[boss.key], scale=5, ox=658, oy=92)
+    hero_rects = compile_pixel_grid(HERO_ARCHITECT, scale=5, ox=58, oy=92)
+    pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=4, ox=152, oy=132)
+    boss_rects = compile_pixel_grid(BOSS_SPRITES[boss.key], scale=5, ox=652, oy=92)
 
-    trainer_avatar_rects = compile_pixel_grid(HERO_ARCHITECT, scale=4, ox=42, oy=70)
-    trainer_pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=3, ox=114, oy=104)
+    torch_left_rects = compile_pixel_grid(WALL_TORCH, scale=3, ox=24, oy=108)
+    torch_right_rects = compile_pixel_grid(WALL_TORCH, scale=3, ox=794, oy=108)
+    clash_rects = compile_pixel_grid(SWORD_CLASH, scale=2, ox=412, oy=78)
+    moon_rects = compile_pixel_grid(PIXEL_MOON, scale=3, ox=496, oy=52)
+    sun_rects = compile_pixel_grid(PIXEL_SUN, scale=3, ox=496, oy=52)
+    cloud_rects = compile_pixel_grid(PIXEL_CLOUD, scale=2, ox=286, oy=58)
+
+    trainer_avatar_rects = compile_pixel_grid(HERO_ARCHITECT, scale=4, ox=38, oy=70)
+    trainer_pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=3, ox=108, oy=104)
+    mug_rects = compile_pixel_grid(COFFEE_MUG, scale=2, ox=144, oy=124)
 
     raiders_list = state.get("recent_raiders") or []
     raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Awaiting first challenger"
@@ -153,6 +167,11 @@ def render_all_svgs(
             hero_rects=hero_rects,
             pet_rects=pet_rects,
             boss_rects=boss_rects,
+            torch_left_rects=torch_left_rects,
+            torch_right_rects=torch_right_rects,
+            clash_rects=clash_rects,
+            celestial_rects=moon_rects if mode == "dark" else sun_rects,
+            cloud_rects=[] if mode == "dark" else cloud_rects,
             raiders_text=raiders_text,
             tavern_text=tavern_text,
             sync_date=sync_date,
@@ -170,6 +189,7 @@ def render_all_svgs(
             xp_bar_width=xp_bar_width,
             avatar_rects=trainer_avatar_rects,
             pet_rects=trainer_pet_rects,
+            mug_rects=mug_rects,
             badge_tiles=badge_tiles,
             lang_segments=lang_segments,
             sync_date=sync_date,

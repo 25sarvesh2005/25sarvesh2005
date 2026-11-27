@@ -47,6 +47,7 @@ THEMES: dict[str, dict[str, str]] = {
         "accent_arcane": "#A78BFA",
         "star": "#47557E",
         "ground": "#222C47",
+        "horizon": "#171F33",
     },
     "light": {
         "name": "Pocket Parchment",
@@ -68,6 +69,7 @@ THEMES: dict[str, dict[str, str]] = {
         "accent_arcane": "#6D28D9",
         "star": "#B8AA88",
         "ground": "#DDD0AF",
+        "horizon": "#E3D6B6",
     },
 }
 

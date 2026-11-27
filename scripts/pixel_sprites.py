@@ -33,7 +33,77 @@ SPRITE_PALETTE: dict[str, str] = {
     "M": "#9F1239",  # dark crimson
     "P": "#A78BFA",  # arcane purple
     "V": "#6D28D9",  # deep violet
+    "C": "#FFFFFF",  # crisp cloud white
 }
+
+# 6x10 Wall Torch (scenery)
+WALL_TORCH: tuple[str, ...] = (
+    "..YY..",
+    ".YRRY.",
+    ".RYYR.",
+    "..RR..",
+    ".KKKK.",
+    ".KDDK.",
+    "..KK..",
+    "..KK..",
+    "..KK..",
+    "......",
+)
+
+# 8x8 Crescent Moon (dark sky) & Sun / Cloud (light sky)
+PIXEL_MOON: tuple[str, ...] = (
+    "..YYYY..",
+    ".YYY....",
+    "YYY.....",
+    "YY......",
+    "YY......",
+    "YYY.....",
+    ".YYY....",
+    "..YYYY..",
+)
+
+PIXEL_SUN: tuple[str, ...] = (
+    "...YY...",
+    ".Y.YY.Y.",
+    "..YYYY..",
+    "YYYYYYYY",
+    "YYYYYYYY",
+    "..YYYY..",
+    ".Y.YY.Y.",
+    "...YY...",
+)
+
+PIXEL_CLOUD: tuple[str, ...] = (
+    "....CCCC......",
+    "..CCCCCCCC....",
+    ".CCCCCCCCCC...",
+    "CCCCCCCCCCCCCC",
+    ".SSSSSSSSSSSS.",
+)
+
+# 8x8 Cozy Coding Desk Mug
+COFFEE_MUG: tuple[str, ...] = (
+    "........",
+    "........",
+    ".WWWWWW.",
+    ".WOOOOOW",
+    ".WWWWWWW",
+    ".WWWWWW.",
+    ".WSSSSW.",
+    ".KKKKKK.",
+)
+
+# 8x8 Energy Clash Spark (high-contrast on both light & dark arenas)
+SWORD_CLASH: tuple[str, ...] = (
+    "...RR...",
+    ".R.YY.R.",
+    "..RYYR..",
+    "RYYOOYYR",
+    "..RYYR..",
+    ".R.YY.R.",
+    "...RR...",
+    "........",
+)
 
 # 16x16 Hooded Systems Architect holding a cyan terminal blade
 HERO_ARCHITECT: tuple[str, ...] = (
