@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 316" width="840" height="316" role="img" aria-labelledby="trainer-title-dark trainer-desc-dark">
   <title id="trainer-title-dark">RPG Trainer Card &amp; Pixel Badge Case — Sarvesh Sharma (@25sarvesh2005)</title>
-  <desc id="trainer-desc-dark">Level 12 Systems Architect with 2635 verified XP, 8/12 pixel badges, and owned code stack.</desc>
+  <desc id="trainer-desc-dark">Level 12 Systems Architect with 2676 verified XP, 8/12 pixel badges, and owned code stack.</desc>
   <defs>
     <clipPath id="trainer-lang-clip-dark">
       <rect x="306" y="276" width="506" height="8" rx="2"/>
@@ -134,7 +134,7 @@
   </g>
   <rect x="166" y="66" width="88" height="24" rx="3" fill="#38BDF8"/>
   <text x="210" y="82" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#0B1120">LVL 12</text>
-  <text x="254" y="108" text-anchor="end" class="mono" font-size="12.5" font-weight="700" fill="#FBBF24">2,635 XP</text>
+  <text x="254" y="108" text-anchor="end" class="mono" font-size="12.5" font-weight="700" fill="#FBBF24">2,676 XP</text>
   <text x="254" y="124" text-anchor="end" class="mono" font-size="9" fill="#94A3C8">VERIFIED DATA</text>
 
   <!-- Trainer Name & EXP Bar -->
@@ -143,19 +143,19 @@
   <text x="28" y="185" class="mono" font-size="10" font-weight="600" fill="#A78BFA">CLASS: SYSTEMS ARCHITECT</text>
 
   <rect x="28" y="196" width="240" height="7" rx="2" fill="#252E47"/>
-  <rect x="28" y="196" width="112.08" height="7" rx="2" fill="#38BDF8"/>
-  <text x="28" y="216" class="mono" font-size="9" fill="#94A3C8">215 / 460 XP TO LVL 13</text>
+  <rect x="28" y="196" width="133.68" height="7" rx="2" fill="#38BDF8"/>
+  <text x="28" y="216" class="mono" font-size="9" fill="#94A3C8">256 / 460 XP TO LVL 13</text>
 
   <!-- RPG Attribute Rows -->
   <line x1="28" y1="226" x2="268" y2="226" stroke="#3B476B" stroke-width="1"/>
   <text x="28" y="244" class="mono" font-size="10" font-weight="700" fill="#94A3C8">CONTRIBS</text>
-  <text x="268" y="244" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#F0F4FF">575 (564/12m)</text>
+  <text x="268" y="244" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#F0F4FF">578 (567/12m)</text>
 
   <text x="28" y="264" class="mono" font-size="10" font-weight="700" fill="#94A3C8">STREAK</text>
   <text x="268" y="264" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#F0F4FF">9d best · 62d</text>
 
   <text x="28" y="284" class="mono" font-size="10" font-weight="700" fill="#94A3C8">QUALITY</text>
-  <text x="268" y="284" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#F0F4FF">6 CI · 9 Doc · 3 PR</text>
+  <text x="268" y="284" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#F0F4FF">6 CI · 9 Doc · 4 PR</text>
 
   <!-- RIGHT PANEL: 4x3 Custom Pixel Badge Case + Stack Bar -->
   <rect x="294" y="44" width="530" height="256" rx="3" fill="#1B2236" stroke="#3B476B" stroke-width="1.5"/>
@@ -379,7 +379,7 @@
     <rect x="492" y="156" width="4" height="2" fill="#141824"/>
   </g>
   <text x="494.5" y="173" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="#F0F4FF">500 Club</text>
-  <text x="494.5" y="184" text-anchor="middle" class="mono" font-size="8.5" fill="#34D399">575</text>
+  <text x="494.5" y="184" text-anchor="middle" class="mono" font-size="8.5" fill="#34D399">578</text>
   <rect x="562" y="134" width="121" height="55" rx="3" fill="#0D1117" stroke="#FBBF24" stroke-width="1.4"/>
   <g shape-rendering="crispEdges">
     <rect x="622" y="140" width="6" height="2" fill="#141824"/>
@@ -438,7 +438,7 @@
     <rect x="746" y="156" width="8" height="2" fill="#141824"/>
   </g>
   <text x="750.5" y="173" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="#F0F4FF">First Merge</text>
-  <text x="750.5" y="184" text-anchor="middle" class="mono" font-size="8.5" fill="#34D399">3 pr</text>
+  <text x="750.5" y="184" text-anchor="middle" class="mono" font-size="8.5" fill="#34D399">4 pr</text>
   <rect x="306" y="196" width="121" height="55" rx="3" fill="#0D1117" stroke="#3B476B" stroke-width="1"/>
   <g shape-rendering="crispEdges">
     <rect x="358" y="202" width="16" height="2" fill="#252E47"/>
@@ -451,7 +451,7 @@
     <rect x="358" y="216" width="16" height="2" fill="#252E47"/>
   </g>
   <text x="366.5" y="235" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="#94A3C8">1K Builder</text>
-  <text x="366.5" y="246" text-anchor="middle" class="mono" font-size="8.5" fill="#6E7DA6">575/1k</text>
+  <text x="366.5" y="246" text-anchor="middle" class="mono" font-size="8.5" fill="#6E7DA6">578/1k</text>
   <rect x="434" y="196" width="121" height="55" rx="3" fill="#0D1117" stroke="#3B476B" stroke-width="1"/>
   <g shape-rendering="crispEdges">
     <rect x="496" y="202" width="4" height="2" fill="#252E47"/>
