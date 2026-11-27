@@ -318,7 +318,7 @@
 
   <!-- Identity + Class Type Pills -->
   <text x="306" y="74" text-anchor="end" class="sans" font-size="12.5" font-weight="700" fill="#23262E">Sarvesh Sharma</text>
-  <text x="306" y="90" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#D97706">Lv14 · 3,907 XP</text>
+  <text x="306" y="90" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#D97706">Lv14 · 3,909 XP</text>
   <text x="306" y="104" text-anchor="end" class="mono" font-size="8" fill="#535B6E">10 PUBLIC QUESTS</text>
 
   <rect x="202" y="116" width="50" height="16" rx="3" fill="#2563EB"/>
@@ -388,7 +388,7 @@
   <!-- RIGHT SCREEN: Trophy Vault + Readable Rank Scorecard -->
   <rect x="344" y="46" width="480" height="282" rx="5" fill="#FAF7ED" stroke="#4A5162" stroke-width="1.8"/>
   <text x="356" y="64" class="mono" font-size="10.5" font-weight="700" fill="#23262E">TROPHY VAULT (8/12)</text>
-  <text x="812" y="64" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="#535B6E">NEXT UP: 1K Builder (926/1000 contributions)</text>
+  <text x="812" y="64" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="#535B6E">NEXT UP: 1K Builder (927/1000 contributions)</text>
 
   <rect x="354" y="74" width="224" height="44" rx="3" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="359" y="82" width="26" height="26" rx="2" fill="#E8F2DA" stroke="#4A5162" stroke-width="0.8"/>
@@ -787,7 +787,7 @@
   </g>
   <text x="625" y="194" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">#006</text>
   <text x="651" y="194" class="sans" font-size="10" font-weight="700" fill="#23262E">500 Club</text>
-  <text x="625" y="210" class="mono" font-size="8.5" fill="#16A34A">926 contributions</text>
+  <text x="625" y="210" class="mono" font-size="8.5" fill="#16A34A">927 contributions</text>
   <rect x="354" y="227" width="224" height="44" rx="3" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="359" y="235" width="26" height="26" rx="2" fill="#E8F2DA" stroke="#4A5162" stroke-width="0.8"/>
   <circle cx="565" cy="239" r="6.5" fill="#EFE9D1"/>

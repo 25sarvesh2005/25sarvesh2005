@@ -111,10 +111,10 @@
   <rect x="522" y="203" width="188" height="7" rx="2" fill="#22C55E"/>
   <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">POWER +0</text>
 
-  <text x="498" y="229" class="mono" font-size="9" fill="#9AAAD0">913/yr · 3,907 XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="#9AAAD0">913/yr · 3,909 XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#38BDF8">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="#253048"/>
-  <rect x="658" y="223" width="136.64" height="5" rx="1.5" fill="#38BDF8"/>
+  <rect x="658" y="223" width="137.2" height="5" rx="1.5" fill="#38BDF8"/>
 
   <!-- Natural Shaded 2px GBA Sprites -->
   <g class="bob-enemy" shape-rendering="crispEdges">
@@ -563,12 +563,31 @@
   <text x="32" y="280" class="sans" font-size="11.5" font-weight="700" fill="#F8FAFC">@25sarvesh2005 signed Tavern: &#34;Raid Guestbook live!&#34;</text>
   <text x="32" y="311" class="mono" font-size="8.5" fill="#93C5FD">Squad: @25sarvesh2005 · Log: @25sarvesh2005: &#34;Raid Guestbook live!&#34;</text>
 
-  <!-- Right 2x2 Comic Move Box -->
-  <rect x="526" y="256" width="300" height="66" rx="5" fill="#364666" stroke="#364666" stroke-width="1.8"/>
-  <rect x="530" y="260" width="292" height="58" rx="3" fill="#1A2234"/>
-  <text class="cursor mono" x="541" y="283" font-size="11" font-weight="700" fill="#F43F5E">▶</text>
-  <text x="554" y="283" class="mono" font-size="11" font-weight="700" fill="#EDF2FA">STRIKE!</text>
-  <text x="684" y="283" class="mono" font-size="11" font-weight="700" fill="#FBBF24">★ STAR KO</text>
-  <text x="554" y="305" class="mono" font-size="11" font-weight="700" fill="#34D399">POWER UP</text>
-  <text x="684" y="305" class="mono" font-size="11" font-weight="700" fill="#38BDF8">SAY HI!</text>
+  <!-- Right 2x2 Comic Command Menu -->
+  <rect x="526" y="256" width="300" height="66" rx="5" fill="#182032" stroke="#364666" stroke-width="1.8"/>
+  <rect x="530" y="260" width="292" height="58" rx="3" fill="none" stroke="#5B74A6" stroke-width="1" opacity="0.45"/>
+
+  <!-- Top-Left: Primary Attack (Active Selected) -->
+  <rect x="535" y="264" width="138" height="23" rx="3" fill="#1F2940" stroke="#F43F5E" stroke-width="1.3"/>
+  <text class="cursor mono" x="541" y="279" font-size="10" font-weight="700" fill="#F43F5E">▶</text>
+  <text x="553" y="279" class="mono" font-size="10" font-weight="700" fill="#EDF2FA">STRIKE!</text>
+  <text x="667" y="278.5" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#F43F5E">16-44</text>
+
+  <!-- Top-Right: Instant Star KO -->
+  <rect x="679" y="264" width="138" height="23" rx="3" fill="#1F2940" stroke="#364666" stroke-width="1.1"/>
+  <rect x="681" y="267" width="3" height="17" rx="1" fill="#FBBF24"/>
+  <text x="689" y="279" class="mono" font-size="10" font-weight="700" fill="#EDF2FA">★ STAR KO</text>
+  <text x="811" y="278.5" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#FBBF24">1-HIT</text>
+
+  <!-- Bottom-Left: Buff Power Up -->
+  <rect x="535" y="291" width="138" height="23" rx="3" fill="#1F2940" stroke="#364666" stroke-width="1.1"/>
+  <rect x="537" y="294" width="3" height="17" rx="1" fill="#34D399"/>
+  <text x="545" y="306" class="mono" font-size="10" font-weight="700" fill="#EDF2FA">POWER UP</text>
+  <text x="667" y="305.5" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#34D399">+10 ATK</text>
+
+  <!-- Bottom-Right: Tavern Guestbook -->
+  <rect x="679" y="291" width="138" height="23" rx="3" fill="#1F2940" stroke="#364666" stroke-width="1.1"/>
+  <rect x="681" y="294" width="3" height="17" rx="1" fill="#38BDF8"/>
+  <text x="689" y="306" class="mono" font-size="10" font-weight="700" fill="#EDF2FA">SAY HI!</text>
+  <text x="811" y="305.5" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#38BDF8">TAVERN</text>
 </svg>
