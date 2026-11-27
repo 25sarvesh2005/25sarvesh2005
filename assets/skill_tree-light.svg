@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 416" width="840" height="416" role="img" aria-labelledby="skilltree-title-light skilltree-desc-light">
-  <title id="skilltree-title-light">GBA Skill Tree &amp; Tech Mastery Matrix — @25sarvesh2005</title>
-  <desc id="skilltree-desc-light">Verified skill tree across 4 branches showing repository counts, rarity tiers, mastery status, and Grade A.</desc>
+  <title id="skilltree-title-light">Hero Skill Tree &amp; Tech Loadout — @25sarvesh2005</title>
+  <desc id="skilltree-desc-light">Verified skill tree across 4 branches showing repository counts, rarity tiers, mastery status, and Rank A.</desc>
   <defs>
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
@@ -8,7 +8,7 @@
     </style>
   </defs>
 
-  <!-- Outer GBA Matrix Cartridge Frame -->
+  <!-- Outer GBA Skill Sheet Frame -->
   <rect x="2" y="2" width="836" height="412" rx="6" fill="#F5F1E3" stroke="#4A5162" stroke-width="1.8"/>
   <rect x="4" y="4" width="832" height="29" rx="3" fill="#FAF7ED"/>
   <line x1="4" y1="33" x2="836" y2="33" stroke="#4A5162" stroke-width="1.2"/>
@@ -41,15 +41,15 @@
     <rect x="24" y="21" width="1" height="1" fill="#182032"/>
     <rect x="18" y="22" width="6" height="1" fill="#182032"/>
   </g>
-  <text x="32" y="23" class="sans" font-size="11.5" font-weight="700" fill="#23262E">GBA Skill Tree &amp; Tech Mastery Matrix · @25sarvesh2005</text>
-  <text x="822" y="23" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="#1D4ED8">Rank A (85/100) · 7 Mastered · 16/16 Verified</text>
+  <text x="32" y="23" class="sans" font-size="11.5" font-weight="700" fill="#23262E">Hero Skill Tree &amp; Loadout · @25sarvesh2005</text>
+  <text x="822" y="23" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="#1D4ED8">Rank A (85/100) · 7 Mastered · 16/16 Active</text>
 
-  <!-- Root Core Hub Node -->
-  <rect x="242" y="44" width="356" height="46" rx="4" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.8"/>
-  <rect x="252" y="52" width="36" height="30" rx="3" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.4"/>
-  <text x="270" y="73" text-anchor="middle" class="sans" font-size="17" font-weight="800" fill="#1D4ED8">A</text>
-  <text x="298" y="64" class="mono" font-size="10.5" font-weight="700" fill="#23262E">CORE SYSTEMS ARCHITECTURE</text>
-  <text x="298" y="79" class="mono" font-size="9" fill="#535B6E">10 Repos · 150 Test Files · 8 CI · 10 Docs</text>
+  <!-- Root Story Hub Node -->
+  <rect x="232" y="44" width="376" height="46" rx="4" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.8"/>
+  <rect x="242" y="52" width="36" height="30" rx="3" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.4"/>
+  <text x="260" y="73" text-anchor="middle" class="sans" font-size="17" font-weight="800" fill="#1D4ED8">A</text>
+  <text x="288" y="64" class="mono" font-size="10.5" font-weight="700" fill="#23262E">ORIGIN CLASS: SYSTEMS &amp; AI ARCHITECT</text>
+  <text x="288" y="79" class="mono" font-size="9" fill="#535B6E">10 Repos · 150 Test Files · 8 CI Pipelines · 10 Docs</text>
 
   <!-- Orthogonal Skill Tree Circuit Connectors -->
   <g fill="none" stroke="#788096" stroke-width="2" stroke-linecap="square">
@@ -65,19 +65,17 @@
     <line x1="726" y1="133" x2="726" y2="336" stroke="#D97706" stroke-width="2" opacity="0.45"/>
   </g>
 
-  <!-- 4 Specialization Columns x 4 Skill Nodes -->
+  <!-- 4 Specialization Branches x 4 Skill Nodes -->
   <rect x="18" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.2"/>
-  <text x="114" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#1D4ED8">BACKEND &amp; DATA</text>
+  <text x="114" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#1D4ED8">BACKEND FORGE</text>
 
   <rect x="18" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="19" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="30" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Python</text>
   <rect x="158" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
   <text x="180" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="30" y="169" width="8" height="5" fill="#D97706"/>
     <rect x="40" y="169" width="8" height="5" fill="#D97706"/>
@@ -89,12 +87,10 @@
   <rect x="18" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="19" y="200" width="4" height="40" rx="1.5" fill="#D97706"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="30" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">FastAPI / Pydantic</text>
   <rect x="158" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
   <text x="180" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="30" y="226" width="8" height="5" fill="#D97706"/>
     <rect x="40" y="226" width="8" height="5" fill="#D97706"/>
@@ -106,12 +102,10 @@
   <rect x="18" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="19" y="257" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="30" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">PostgreSQL / SQL</text>
   <rect x="158" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="180" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="30" y="283" width="8" height="5" fill="#D97706"/>
     <rect x="40" y="283" width="8" height="5" fill="#D97706"/>
@@ -123,12 +117,10 @@
   <rect x="18" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
   <rect x="19" y="314" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="30" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">MongoDB / Redis</text>
   <rect x="158" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
   <text x="180" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="30" y="340" width="8" height="5" fill="#16A34A"/>
     <rect x="40" y="340" width="8" height="5" fill="#16A34A"/>
@@ -143,12 +135,10 @@
   <rect x="222" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="223" y="143" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="234" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Gemini GenAI</text>
   <rect x="362" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="384" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="234" y="169" width="8" height="5" fill="#16A34A"/>
     <rect x="244" y="169" width="8" height="5" fill="#16A34A"/>
@@ -160,12 +150,10 @@
   <rect x="222" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="223" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="234" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Hybrid RAG / Chroma</text>
   <rect x="362" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="384" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="234" y="226" width="8" height="5" fill="#16A34A"/>
     <rect x="244" y="226" width="8" height="5" fill="#16A34A"/>
@@ -177,12 +165,10 @@
   <rect x="222" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
   <rect x="223" y="257" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="234" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">FastMCP Tools</text>
   <rect x="362" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
   <text x="384" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="234" y="283" width="8" height="5" fill="#1D4ED8"/>
     <rect x="244" y="283" width="8" height="5" fill="#1D4ED8"/>
@@ -194,12 +180,10 @@
   <rect x="222" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
   <rect x="223" y="314" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="234" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">PyTorch / SciPy ML</text>
   <rect x="362" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
   <text x="384" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="234" y="340" width="8" height="5" fill="#16A34A"/>
     <rect x="244" y="340" width="8" height="5" fill="#16A34A"/>
@@ -209,17 +193,15 @@
   <text x="278" y="346" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
   <text x="406" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">3 repos</text>
   <rect x="426" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#16A34A" stroke-width="1.2"/>
-  <text x="522" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#16A34A">FRONTEND &amp; APPS</text>
+  <text x="522" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#16A34A">UI &amp; APPS</text>
 
   <rect x="426" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="427" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="438" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">TypeScript</text>
   <rect x="566" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
   <text x="588" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="438" y="169" width="8" height="5" fill="#D97706"/>
     <rect x="448" y="169" width="8" height="5" fill="#D97706"/>
@@ -231,12 +213,10 @@
   <rect x="426" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="427" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="438" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">React / Next.js</text>
   <rect x="566" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="588" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="438" y="226" width="8" height="5" fill="#D97706"/>
     <rect x="448" y="226" width="8" height="5" fill="#D97706"/>
@@ -248,12 +228,10 @@
   <rect x="426" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
   <rect x="427" y="257" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="438" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Electron Desktop</text>
   <rect x="566" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
   <text x="588" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="438" y="283" width="8" height="5" fill="#16A34A"/>
     <rect x="448" y="283" width="8" height="5" fill="#16A34A"/>
@@ -265,12 +243,10 @@
   <rect x="426" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="1.3"/>
   <rect x="427" y="314" width="4" height="40" rx="1.5" fill="#16A34A"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="438" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Kotlin / Compose</text>
   <rect x="566" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#16A34A" stroke-width="1"/>
   <text x="588" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#16A34A">UNCOM</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="438" y="340" width="8" height="5" fill="#1D4ED8"/>
     <rect x="448" y="340" width="8" height="5" fill="#1D4ED8"/>
@@ -280,17 +256,15 @@
   <text x="482" y="346" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">ACTIVE</text>
   <text x="610" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">1 repo</text>
   <rect x="630" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#D97706" stroke-width="1.2"/>
-  <text x="726" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#D97706">TESTING &amp; OPS</text>
+  <text x="726" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#D97706">OPS &amp; ARMOR</text>
 
   <rect x="630" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
   <rect x="631" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="642" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Pytest / Ruff QA</text>
   <rect x="770" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
   <text x="792" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="642" y="169" width="8" height="5" fill="#D97706"/>
     <rect x="652" y="169" width="8" height="5" fill="#D97706"/>
@@ -302,12 +276,10 @@
   <rect x="630" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="631" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="642" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">GitHub Actions CI</text>
   <rect x="770" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="792" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="642" y="226" width="8" height="5" fill="#D97706"/>
     <rect x="652" y="226" width="8" height="5" fill="#D97706"/>
@@ -319,12 +291,10 @@
   <rect x="630" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
   <rect x="631" y="257" width="4" height="40" rx="1.5" fill="#7C3AED"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="642" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Docker Sandbox</text>
   <rect x="770" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
   <text x="792" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="642" y="283" width="8" height="5" fill="#16A34A"/>
     <rect x="652" y="283" width="8" height="5" fill="#16A34A"/>
@@ -336,12 +306,10 @@
   <rect x="630" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="1.3"/>
   <rect x="631" y="314" width="4" height="40" rx="1.5" fill="#16A34A"/>
 
-  <!-- Node Line 1: Skill Name & Rarity Pill -->
   <text x="642" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Playwright E2E</text>
   <rect x="770" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#16A34A" stroke-width="1"/>
   <text x="792" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#16A34A">UNCOM</text>
 
-  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
   <g shape-rendering="crispEdges">
     <rect x="642" y="340" width="8" height="5" fill="#1D4ED8"/>
     <rect x="652" y="340" width="8" height="5" fill="#1D4ED8"/>
@@ -351,7 +319,7 @@
   <text x="686" y="346" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">ACTIVE</text>
   <text x="814" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">1 repo</text>
 
-  <!-- Footer Rarity & Mastery Legend -->
+  <!-- Clear Plain-English Rarity & Verification Legend -->
   <rect x="18" y="368" width="804" height="34" rx="3" fill="#FAF7ED" stroke="#4A5162" stroke-width="1"/>
   <g shape-rendering="crispEdges">
     <rect x="28" y="377" width="6" height="6" fill="#D97706"/>
@@ -363,6 +331,6 @@
   <text x="126" y="383" class="mono" font-size="8" font-weight="700" fill="#7C3AED">EPIC</text>
   <text x="182" y="383" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">RARE</text>
   <text x="238" y="383" class="mono" font-size="8" font-weight="700" fill="#16A34A">UNCOMMON</text>
-  <text x="812" y="383" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">OVERALL GRADE A (85/100 · +1 pts to S)</text>
-  <text x="28" y="396" class="mono" font-size="8" fill="#727B91">MASTERY: ■■■■ MASTERED (4+ repos, 2+ CI/tests) · ■■■□ PROFICIENT (2–3 repos) · ■■□□ ACTIVE (1 tested/shipped repo) · All skills manifest-verified</text>
+  <text x="812" y="383" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">HERO RANK A (85/100 · +1 pt to Rank S)</text>
+  <text x="28" y="396" class="mono" font-size="8" fill="#727B91">MASTERY: ■■■■ MASTERED (4+ repos, 2+ CI/tests) · ■■■□ PROFICIENT (2–3 repos) · ■■□□ ACTIVE (1 tested repo) · Auto-scanned from live manifests</text>
 </svg>
