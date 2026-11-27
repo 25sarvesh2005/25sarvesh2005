@@ -62,7 +62,7 @@
   <rect x="3" y="3" width="834" height="31" fill="#171E2E"/>
   <line x1="3" y1="34" x2="837" y2="34" stroke="#303B56" stroke-width="1"/>
   <text x="18" y="23" class="sans" font-size="12" font-weight="700" fill="#E6EDF7">Boss Raid · Interactive Profile Game</text>
-  <text x="822" y="23" text-anchor="end" class="mono" font-size="10.5" fill="#93A3C2">1 Slain · Stage 2/4 · 0 Moves</text>
+  <text x="822" y="23" text-anchor="end" class="mono" font-size="10.5" fill="#93A3C2">1 Slain · Stage 2/4 · 1 Moves</text>
 
   <!-- Stage Backdrop -->
   <rect x="14" y="42" width="812" height="202" rx="3" fill="url(#arena-sky-dark)" stroke="#303B56" stroke-width="1.2"/>
@@ -440,7 +440,7 @@
   <!-- Bottom Combat Log -->
   <rect x="14" y="250" width="812" height="44" rx="3" fill="#171E2E" stroke="#303B56" stroke-width="1.2"/>
   <text x="26" y="268" class="mono" font-size="11" font-weight="700" fill="#FBBF24">&gt;</text>
-  <text x="40" y="268" class="sans" font-size="11.5" font-weight="600" fill="#E6EDF7">Architect @25sarvesh2005 pushed +1 contribs (3 DMG)!</text>
-  <text x="26" y="285" class="mono" font-size="9.5" fill="#93A3C2">Party: Open to visitors</text>
-  <text x="814" y="285" text-anchor="end" class="mono" font-size="9.5" fill="#34D399">Guestbook: Leave a note via Issue</text>
+  <text x="40" y="268" class="sans" font-size="11.5" font-weight="600" fill="#E6EDF7">@25sarvesh2005 signed Tavern: &#34;Raid Guestbook live!&#34;</text>
+  <text x="26" y="285" class="mono" font-size="9.5" fill="#93A3C2">Party: @25sarvesh2005</text>
+  <text x="814" y="285" text-anchor="end" class="mono" font-size="9.5" fill="#34D399">Guestbook: @25sarvesh2005: &#34;Raid Guestbook live!&#34;</text>
 </svg>

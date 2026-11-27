@@ -3,10 +3,18 @@
   "boss_index": 1,
   "boss_hp": 317,
   "bosses_slain": 1,
-  "total_raids": 0,
+  "total_raids": 1,
   "hero_buff_charges": 0,
   "last_synced_contributions": 1018,
-  "last_event": "Architect @25sarvesh2005 pushed +1 contribs (3 DMG)!",
-  "recent_raiders": [],
-  "tavern_log": []
+  "last_event": "@25sarvesh2005 signed Tavern: \"Raid Guestbook live!\"",
+  "recent_raiders": [
+    "25sarvesh2005"
+  ],
+  "tavern_log": [
+    {
+      "user": "25sarvesh2005",
+      "note": "Raid Guestbook live!",
+      "issue": 1
+    }
+  ]
 }
