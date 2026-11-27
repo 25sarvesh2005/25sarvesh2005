@@ -267,6 +267,13 @@ RARITY_COLOR_KEYS: dict[str, str] = {
     "UNCOMMON": "accent_signal",
 }
 
+BOSS_QUIPS: dict[str, str] = {
+    "nullpointer_wyrm": "SEGFAULT TIME!",
+    "merge_golem": "409 CONFLICT!",
+    "hallucination_phantom": "SOURCE: TRUST ME",
+    "legacy_monolith": "DO NOT TOUCH!",
+}
+
 
 @dataclass(frozen=True)
 class SkillSpec:
@@ -424,8 +431,8 @@ SKILL_SPECS: tuple[SkillSpec, ...] = (
 )
 
 BRANCH_META: tuple[tuple[str, str, str], ...] = (
-    ("backend", "BACKEND & DATA", "accent_primary"),
+    ("backend", "BACKEND FORGE", "accent_primary"),
     ("ai", "AI & AGENTS", "accent_arcane"),
-    ("frontend", "FRONTEND & APPS", "accent_signal"),
-    ("infra", "TESTING & OPS", "accent_amber"),
+    ("frontend", "UI & APPS", "accent_signal"),
+    ("infra", "OPS & ARMOR", "accent_amber"),
 )

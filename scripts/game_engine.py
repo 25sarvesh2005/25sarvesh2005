@@ -65,7 +65,7 @@ def init_game_state(initial_contributions: int = 565, initial_stars: int = 0) ->
         "last_synced_contributions": initial_contributions,
         "last_synced_external_stars": initial_stars,
         "star_finishers": [],
-        "last_event": f"Wild {first_boss.name} appeared! Star or choose a move.",
+        "last_event": f"Wild {first_boss.name} ambushes main! Drop a Star or strike!",
         "recent_raiders": [],
         "tavern_log": [],
     }
@@ -145,21 +145,21 @@ def apply_visitor_move(
         dmg = _deterministic_roll(seed, 16, 28) + bonus_dmg
         next_state["hero_buff_charges"] = 0
         next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
-        summary = f"@{player} struck {boss.name} for {dmg} DMG!"
+        summary = f"SLASH! @{player} lands a Strike on {boss.name} ({dmg} DMG)!"
     elif action == "overclock":
         dmg = _deterministic_roll(seed, 26, 44) + bonus_dmg
         next_state["hero_buff_charges"] = 0
         next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
-        summary = f"@{player} used Overclock Crit for {dmg} DMG!"
+        summary = f"KRAKOOM! @{player} fires Overclock Crit for {dmg} DMG!"
     elif action == "buff":
         next_state["hero_buff_charges"] = min(5, buffs + 1)
-        summary = f"@{player} used Focus Potion (+10 next hit DMG)!"
+        summary = f"POWER UP! @{player} brews Focus Potion (+10 next DMG)!"
     else:  # tavern
-        clean_msg = note or "Dropped by to explore the builds!"
+        clean_msg = note or "Dropped by to check out the builds!"
         entry = {"user": player, "note": clean_msg, "issue": issue_number}
         log = [entry, *[x for x in next_state.get("tavern_log", []) if x.get("issue") != issue_number]]
         next_state["tavern_log"] = log[:4]
-        summary = f"@{player} signed Guestbook: \"{clean_msg[:36]}\""
+        summary = f"GUEST LOG — @{player}: \"{clean_msg[:36]}\""
 
     next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
     ko_msg = _advance_boss_if_defeated(next_state)
@@ -191,13 +191,12 @@ def apply_star_ko(state: dict[str, Any], *, user_login: str) -> dict[str, Any]:
     finishers.append(player.lower())
     next_state["star_finishers"] = finishers[-200:]
     boss = get_active_boss(next_state)
-    dealt = int(next_state.get("boss_hp", boss.max_hp))
     next_state["boss_hp"] = 0
     next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
     _advance_boss_if_defeated(next_state)
     next_boss = get_active_boss(next_state)
     next_state["last_event"] = (
-        f"★ @{player} starred the repo! 1-HIT KO ({dealt} DMG) on {boss.name} — {next_boss.name} enters!"
+        f"★ @{player} starred! 1-HIT KO on {boss.name}! Next: {next_boss.name}!"
     )
 
     raiders = [r for r in next_state.get("recent_raiders", []) if r != player]
@@ -218,7 +217,7 @@ def sync_commit_synergy(state: dict[str, Any], total_contributions: int) -> dict
     boss = get_active_boss(next_state)
     dmg = min(boss.max_hp, delta * 3)
     next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
-    summary = f"Architect @25sarvesh2005 pushed +{delta} contribs ({dmg} DMG)!"
+    summary = f"COMBO! @25sarvesh2005 ships +{delta} commits ({dmg} DMG)!"
     ko_msg = _advance_boss_if_defeated(next_state)
     next_state["last_event"] = f"{summary} {ko_msg}" if ko_msg else summary
     return next_state
@@ -249,7 +248,7 @@ def sync_external_star_ko(state: dict[str, Any], external_stars: int) -> dict[st
     next_boss = get_active_boss(next_state)
     star_word = "star" if delta == 1 else "stars"
     next_state["last_event"] = (
-        f"★ New repo {star_word} (+{delta})! 1-HIT KO on {slain_names[-1]} — {next_boss.name} enters!"
+        f"★ +{delta} repo {star_word}! 1-HIT KO on {slain_names[-1]} -> {next_boss.name}!"
     )
     return next_state
 

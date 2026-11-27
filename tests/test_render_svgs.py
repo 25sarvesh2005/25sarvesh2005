@@ -69,3 +69,24 @@ def test_validate_svg_xml_rejects_foreign_object() -> None:
     bad_svg = '<svg xmlns="http://www.w3.org/2000/svg"><foreignObject/></svg>'
     with pytest.raises(ValueError, match="Forbidden SVG element"):
         validate_svg_xml(bad_svg)
+
+
+def test_render_battle_boss_quips_and_long_star_ko_text(tmp_path: Path) -> None:
+    from scripts.game_engine import apply_star_ko
+
+    raw = _sample_raw_metrics()
+    report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
+    state = apply_star_ko(init_game_state(report.total_contributions), user_login="very-long-github-visitor")
+    state["hero_buff_charges"] = 2
+
+    out_dir = tmp_path / "star_ko"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    render_all_svgs(report, out_dir, game_state=state, raw_metrics=raw)
+    battle_svg = (out_dir / "battle-dark.svg").read_text(encoding="utf-8")
+    trainer_svg = (out_dir / "trainer-dark.svg").read_text(encoding="utf-8")
+
+    validate_svg_xml(battle_svg)
+    validate_svg_xml(trainer_svg)
+    assert "409 CONFLICT!" in battle_svg
+    assert "1-HIT KO" in battle_svg
+    assert "SHARES &amp; REPOS" in trainer_svg or "SHARE &amp; REPOS" in trainer_svg

@@ -1,4 +1,4 @@
-"""Compile pure-SVG Pokémon GBA Battle Arena, Pokédex Card, and Skill Tree Matrix SVGs."""
+"""Compile pure-SVG Pokémon GBA Battle Arena, Hero Codex Card, and Skill Tree Matrix SVGs."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from scripts.compute_gamification import GamificationReport, QuestProgress, evaluate_metrics
-from scripts.config import BRANCH_META, QUEST_PLAIN_LABELS, SUPERSEDED_QUESTS, THEMES
+from scripts.config import BOSS_QUIPS, BRANCH_META, QUEST_PLAIN_LABELS, SUPERSEDED_QUESTS, THEMES
 from scripts.game_engine import get_active_boss, init_game_state
 from scripts.pixel_sprites import (
     BOSS_SPRITES,
@@ -72,13 +72,13 @@ def _build_pokedex_entries(
     report: GamificationReport,
     theme: dict[str, str],
 ) -> tuple[list[dict[str, object]], str]:
-    """Build 2x4 GBA Pokédex milestone entries with sprite, Pokéball caught icon & Dex index."""
+    """Build 2x4 Hero Codex milestone entries with sprite, Pokéball caught icon & Dex index."""
     selected, next_target = _select_display_quests(report)
     tiles: list[dict[str, object]] = []
     for idx, quest in enumerate(selected):
         col = idx % 2
         row = idx // 2
-        bx = 344 + col * 238
+        bx = 354 + col * 234
         by = 74 + row * 51
         sprite_rects = compile_pixel_grid(
             QUEST_SPRITES[quest.key],
@@ -90,17 +90,17 @@ def _build_pokedex_entries(
         ball_rects = compile_pixel_grid(
             PIXEL_POKEBALL,
             scale=1,
-            ox=bx + 210,
+            ox=bx + 206,
             oy=by + 7,
             locked_color=None if quest.unlocked else theme["bg_track"],
         )
-        progress_w = round(max(0.0, min(1.0, quest.progress_pct / 100.0)) * 176.0, 1)
+        progress_w = round(max(0.0, min(1.0, quest.progress_pct / 100.0)) * 172.0, 1)
         tiles.append(
             {
                 "dex_no": f"#{idx + 1:03d}",
                 "x": bx,
                 "y": by,
-                "w": 228,
+                "w": 224,
                 "h": 44,
                 "title": quest.title,
                 "sub": _format_quest_sub(quest),
@@ -113,37 +113,38 @@ def _build_pokedex_entries(
 
     if next_target is not None:
         unit = QUEST_PLAIN_LABELS.get(next_target.key, next_target.unit)
-        next_label = f"NEXT: {next_target.title} ({next_target.current}/{next_target.target} {unit})".strip()
+        next_label = f"NEXT UP: {next_target.title} ({next_target.current}/{next_target.target} {unit})".strip()
     else:
-        next_label = "ALL POKEDEX BADGES CAUGHT"
+        next_label = "ALL QUEST TROPHIES UNLOCKED!"
     return tiles, next_label
 
 
 def _build_dex_stat_bars(report: GamificationReport, theme: dict[str, str]) -> list[dict[str, object]]:
-    """Build 4 Pokémon GBA Summary stat bars cleanly mapped to verified GitHub metrics."""
+    """Build 4 readable player telemetry bars whose numbers match their bar fill ratios."""
+    denom = max(1, report.non_empty_owned_repos)
     rows = [
         (
-            "HP",
-            f"{report.contributions_12m:,} / {report.total_contributions:,}",
+            "OUTPUT",
+            f"{report.contributions_12m:,} / yr",
             min(100, round((report.contributions_12m / 1200.0) * 100)),
             "#22C55E" if theme["name"].startswith("FireRed") else theme["accent_signal"],
         ),
         (
-            "ATK",
-            f"{report.longest_streak}d best · {report.active_days}d",
+            "STREAK",
+            f"{report.active_days}d · {report.longest_streak}d best",
             min(100, round((report.active_days / 200.0) * 100)),
             theme["accent_amber"],
         ),
         (
-            "DEF",
+            "SHIELD",
             f"{report.ci_repos} CI · {report.documented_repos} Docs",
-            min(100, round(((report.ci_repos + report.documented_repos) / 22.0) * 100)),
+            min(100, round(((report.ci_repos + report.documented_repos) / (denom * 2)) * 100)),
             theme["accent_primary"],
         ),
         (
-            "SPD",
-            f"{report.merged_prs} PRs · {report.external_stars}★",
-            min(100, round((report.merged_prs + report.external_stars) * 8)),
+            "IMPACT",
+            f"{report.merged_prs} PRs · {report.external_stars} Stars",
+            min(100, round((report.merged_prs + report.external_stars) * 6)),
             theme["accent_arcane"],
         ),
     ]
@@ -154,7 +155,7 @@ def _build_dex_stat_bars(report: GamificationReport, theme: dict[str, str]) -> l
                 "y": 164 + idx * 20,
                 "code": code,
                 "value": val_text,
-                "fill_w": round((max(8, pct) / 100.0) * 110.0, 1),
+                "fill_w": round((max(8, pct) / 100.0) * 106.0, 1),
                 "color": color,
             }
         )
@@ -162,7 +163,7 @@ def _build_dex_stat_bars(report: GamificationReport, theme: dict[str, str]) -> l
 
 
 def _build_language_tiles(report: GamificationReport, theme: dict[str, str]) -> list[dict[str, object]]:
-    """Build 2x3 compact language telemetry grid with exact %, repos, and mastery color."""
+    """Build 2x3 readable language stat chips with exact %, full repo count, and mastery color."""
     mastery_colors = {
         "MASTERED": theme["accent_amber"],
         "PROFICIENT": theme["accent_primary"],
@@ -173,15 +174,16 @@ def _build_language_tiles(report: GamificationReport, theme: dict[str, str]) -> 
     for idx, lang in enumerate(report.top_languages[:6]):
         col = idx % 2
         row = idx // 2
+        repo_word = "1 repo" if lang.repo_count == 1 else f"{lang.repo_count} repos"
         tiles.append(
             {
-                "x": 26 + col * 144,
+                "x": 26 + col * 149,
                 "y": 258 + row * 22,
-                "w": 136,
+                "w": 141,
                 "h": 19,
                 "name": lang.name,
                 "pct": f"{lang.percentage}%",
-                "repos": f"{lang.repo_count}r",
+                "repos": repo_word,
                 "dot": lang.color,
                 "m_color": mastery_colors.get(lang.mastery, theme["text_muted"]),
             }
@@ -256,7 +258,7 @@ def _grade_color(grade: str, theme: dict[str, str]) -> str:
 def _wrap_dialog(text: str, width: int = 58) -> tuple[str, str]:
     wrapped = textwrap.wrap(text.strip(), width=width)
     if not wrapped:
-        return "Choose a move or Star the repo!", ""
+        return "Drop a Star for an instant KO or pick a move!", ""
     if len(wrapped) == 1:
         return wrapped[0], ""
     second = wrapped[1] if len(wrapped) == 2 else f"{wrapped[1][: width - 3].rstrip()}..."
@@ -289,7 +291,7 @@ def render_all_svgs(
     game_state: dict[str, Any] | None = None,
     raw_metrics: dict[str, Any] | None = None,  # noqa: ARG001
 ) -> list[Path]:
-    """Render Light and Dark GBA Battle Arena, Pokédex Card, and Skill Tree SVGs."""
+    """Render Light and Dark GBA Battle Arena, Hero Codex Card, and Skill Tree SVGs."""
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
         autoescape=select_autoescape(["svg", "j2", "xml"]),
@@ -313,6 +315,7 @@ def render_all_svgs(
     boss_hp_color = _hp_bar_color(hp_ratio)
     boss_idx = int(state.get("boss_index", 0))
     boss_level = 12 + boss_idx * 3
+    boss_quip = BOSS_QUIPS.get(boss.key, "READY!")
 
     boss_grid = BOSS_SPRITES[boss.key]
     bw, bh = sprite_bounds(boss_grid, scale=2)
@@ -322,18 +325,18 @@ def render_all_svgs(
     hero_rects = compile_pixel_grid(HERO_TRAINER, scale=2, ox=162 - (hw // 2), oy=221 - hh)
 
     cw, ch = sprite_bounds(COMPANION_FOX, scale=2)
-    pet_rects = compile_pixel_grid(COMPANION_FOX, scale=2, ox=236 - (cw // 2), oy=224 - ch)
+    pet_rects = compile_pixel_grid(COMPANION_FOX, scale=2, ox=234 - (cw // 2), oy=224 - ch)
 
     dex_hero_rects = compile_pixel_grid(HERO_TRAINER, scale=2, ox=56 - (hw // 2), oy=144 - hh)
     dex_pet_rects = compile_pixel_grid(COMPANION_FOX, scale=2, ox=104 - (cw // 2), oy=146 - ch)
 
     raiders_list = state.get("recent_raiders") or []
-    raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Open to visitors"
+    raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Open to raiders"
 
     tavern_list = state.get("tavern_log") or []
     if tavern_list:
         latest = tavern_list[0]
-        tavern_text = f"@{latest['user']}: \"{latest['note'][:26]}\""
+        tavern_text = f"@{latest['user']}: \"{latest['note'][:24]}\""
     else:
         tavern_text = "Sign Guestbook"
 
@@ -365,6 +368,7 @@ def render_all_svgs(
                 report=report,
                 game=state,
                 boss=boss,
+                boss_quip=boss_quip,
                 boss_index_1=boss_idx + 1,
                 boss_level=boss_level,
                 boss_hp_width=boss_hp_width,
@@ -419,7 +423,7 @@ def render_all_svgs(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Compile pure-SVG GBA Battle, Pokédex & Skill Tree SVGs.")
+    parser = argparse.ArgumentParser(description="Compile pure-SVG GBA Battle, Hero Codex & Skill Tree SVGs.")
     parser.add_argument("--metrics", type=Path, required=True, help="Normalized metrics JSON path.")
     parser.add_argument("--out-dir", type=Path, required=True, help="Output directory for SVGs.")
     parser.add_argument(

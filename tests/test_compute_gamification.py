@@ -168,6 +168,7 @@ def test_grade_and_skill_tree_mastery_progression() -> None:
     assert report.tested_repos == 5
     assert report.grade == "B"  # Low active days (11) & 92 contribs keeps score honest
     assert len(report.grade_pillars) == 5
+    assert [p.label for p in report.grade_pillars] == ["Commits", "CI/Tests", "Repos", "Domains", "PR/Stars"]
 
     # High activity + 150 active days raises score to A/S
     start = date(2026, 6, 1)

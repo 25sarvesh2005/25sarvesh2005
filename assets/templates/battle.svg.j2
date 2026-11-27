@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 336" width="840" height="336" role="img" aria-labelledby="battle-title-{{ mode }} battle-desc-{{ mode }}">
-  <title id="battle-title-{{ mode }}">Wild {{ boss.name }} Encounter — {{ game.boss_hp }}/{{ boss.max_hp }} HP</title>
-  <desc id="battle-desc-{{ mode }}">Pokémon GBA style interactive GitHub Boss Raid on @{{ report.username }}'s profile.</desc>
+  <title id="battle-title-{{ mode }}">Episode {{ boss_index_1 }}: @{{ report.username }} vs {{ boss.name }} ({{ game.boss_hp }}/{{ boss.max_hp }} HP)</title>
+  <desc id="battle-desc-{{ mode }}">Webcomic GBA RPG Boss Raid powered by GitHub Issues &amp; repository stars on @{{ report.username }}'s profile.</desc>
   <defs>
     <linearGradient id="gba-sky-{{ mode }}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="{{ theme.sky_top }}"/>
@@ -23,7 +23,7 @@
     </style>
   </defs>
 
-  <!-- Outer GBA Cartridge Frame -->
+  <!-- Outer Comic GBA Frame -->
   <rect x="2" y="2" width="836" height="332" rx="6" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
   <rect x="4" y="4" width="832" height="28" rx="3" fill="{{ theme.bg_panel }}"/>
   <line x1="4" y1="32" x2="836" y2="32" stroke="{{ theme.border }}" stroke-width="1.2"/>
@@ -32,8 +32,8 @@
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
-  <text x="32" y="22" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.text_primary }}">Wild Raid Encounter · @{{ report.username }}</text>
-  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="{{ theme.text_muted }}">Stage {{ boss_index_1 }}/4 · {{ game.bosses_slain }} Defeated · {{ game.total_raids }} Moves</text>
+  <text x="32" y="22" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.text_primary }}">Episode {{ boss_index_1 }} · Hero @{{ report.username }} vs {{ boss.name }}</text>
+  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="{{ theme.text_muted }}">Boss {{ boss_index_1 }}/4 · {{ game.bosses_slain }} K.O.'d · {{ game.total_raids }} Moves</text>
 
   <!-- Classic Diagonal GBA Battle Viewport -->
   <rect x="14" y="38" width="812" height="212" rx="4" fill="url(#gba-sky-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.5"/>
@@ -50,47 +50,48 @@
     {% endif %}
 
     <!-- Isometric Enemy Platform (Upper Right) -->
-    <ellipse cx="636" cy="140" rx="98" ry="22" fill="{{ theme.plat_rim }}"/>
-    <ellipse cx="636" cy="136" rx="92" ry="18" fill="{{ theme.plat_top }}" stroke="{{ theme.plat_hi }}" stroke-width="1.5"/>
-    <ellipse cx="636" cy="138" rx="36" ry="7" fill="{{ theme.shadow }}" opacity="0.32"/>
+    <ellipse cx="636" cy="140" rx="88" ry="20" fill="{{ theme.plat_rim }}"/>
+    <ellipse cx="636" cy="136" rx="82" ry="16" fill="{{ theme.plat_top }}" stroke="{{ theme.plat_hi }}" stroke-width="1.5"/>
+    <ellipse cx="636" cy="138" rx="34" ry="6" fill="{{ theme.shadow }}" opacity="0.32"/>
 
     <!-- Isometric Player Platform (Lower Left) -->
-    <ellipse cx="198" cy="222" rx="124" ry="27" fill="{{ theme.plat_rim }}"/>
-    <ellipse cx="198" cy="217" rx="116" ry="22" fill="{{ theme.plat_top }}" stroke="{{ theme.plat_hi }}" stroke-width="1.5"/>
-    <ellipse cx="162" cy="219" rx="26" ry="5.5" fill="{{ theme.shadow }}" opacity="0.32"/>
-    <ellipse cx="236" cy="222" rx="22" ry="4.5" fill="{{ theme.shadow }}" opacity="0.28"/>
+    <ellipse cx="196" cy="222" rx="112" ry="24" fill="{{ theme.plat_rim }}"/>
+    <ellipse cx="196" cy="217" rx="105" ry="20" fill="{{ theme.plat_top }}" stroke="{{ theme.plat_hi }}" stroke-width="1.5"/>
+    <ellipse cx="162" cy="219" rx="25" ry="5" fill="{{ theme.shadow }}" opacity="0.32"/>
+    <ellipse cx="234" cy="222" rx="21" ry="4.5" fill="{{ theme.shadow }}" opacity="0.28"/>
   </g>
 
-  <!-- TOP-LEFT: GBA Enemy Status HUD Box -->
+  <!-- TOP-LEFT: Enemy HUD Box -->
   <path d="M30,48 L330,48 L330,104 L318,114 L30,114 Z" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="2"/>
   <path d="M34,52 L326,52 L326,102 L316,110 L34,110 Z" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
   <text x="44" y="69" class="sans" font-size="12.5" font-weight="700" fill="{{ theme.text_primary }}">{{ boss.name }}</text>
   <text x="316" y="69" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}">Lv{{ boss_level }}</text>
 
-  <!-- Recessed HP Gauge -->
   <rect x="44" y="77" width="272" height="14" rx="4" fill="#1F2937" stroke="{{ theme.border }}" stroke-width="1"/>
   <text x="50" y="87" class="mono" font-size="9" font-weight="700" fill="#FBBF24">HP</text>
   <rect x="68" y="80" width="244" height="8" rx="2" fill="#374151"/>
   {% if boss_hp_width > 0 %}
   <rect x="68" y="80" width="{{ boss_hp_width }}" height="8" rx="2" fill="{{ boss_hp_color }}"/>
   {% endif %}
-  <text x="45" y="104" class="mono" font-size="9" font-weight="700" fill="{{ theme.accent_amber }}">★ STAR REPO = 1-HIT KO</text>
+  <text x="45" y="104" class="mono" font-size="9" font-weight="700" fill="{{ theme.accent_amber }}">★ STAR REPO = 1-HIT KO!</text>
   <text x="314" y="104" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_primary }}">{{ game.boss_hp }}/{{ boss.max_hp }}</text>
 
-  <!-- BOTTOM-RIGHT: GBA Player Status HUD Box -->
+  <!-- Compact Webcomic Boss Speech Bubble -->
+  <path d="M472,62 L584,62 Q590,62 590,68 L590,82 Q590,88 584,88 L568,88 L576,97 L556,88 L472,88 Q466,88 466,82 L466,68 Q466,62 472,62 Z" fill="{{ theme.bg_panel }}" stroke="{{ theme.border_hi }}" stroke-width="1.3"/>
+  <text x="528" y="79" text-anchor="middle" class="mono" font-size="9" font-weight="700" fill="{{ theme.accent_boss }}">{{ boss_quip }}</text>
+
+  <!-- BOTTOM-RIGHT: Player HUD Box -->
   <path d="M482,172 L812,172 L812,240 L494,240 L482,230 Z" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="2"/>
   <path d="M486,176 L808,176 L808,236 L496,236 L486,228 Z" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
-  <text x="498" y="193" class="sans" font-size="12.5" font-weight="700" fill="{{ theme.text_primary }}">SARVESH</text>
+  <text x="498" y="193" class="sans" font-size="12.5" font-weight="700" fill="{{ theme.text_primary }}">HERO · SARVESH</text>
   <text x="798" y="193" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}">Lv{{ report.level }}</text>
 
-  <!-- Player Stamina + Buff Bar -->
   <rect x="498" y="200" width="300" height="13" rx="4" fill="#1F2937" stroke="{{ theme.border }}" stroke-width="1"/>
   <text x="504" y="209.5" class="mono" font-size="8.5" font-weight="700" fill="#FBBF24">HP</text>
   <rect x="522" y="203" width="188" height="7" rx="2" fill="#22C55E"/>
-  <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">BUFF +{{ buff_charges * 10 }}</text>
+  <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">POWER +{{ buff_charges * 10 }}</text>
 
-  <!-- Gen-3 Thin Blue EXP Strip -->
-  <text x="498" y="229" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.contributions_12m }}/12m · {{ "{:,}".format(report.xp) }} XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.contributions_12m }}/yr · {{ "{:,}".format(report.xp) }} XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_primary }}">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="{{ theme.bg_track }}"/>
   {% if exp_bar_width > 0 %}
@@ -104,7 +105,12 @@
     {% endfor %}
   </g>
   {% if buff_charges > 0 %}
-  <ellipse cx="236" cy="204" rx="28" ry="24" fill="none" stroke="{{ theme.accent_signal }}" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.75"/>
+  <g class="cursor" shape-rendering="crispEdges" fill="{{ theme.accent_signal }}">
+    <rect x="190" y="168" width="4" height="4"/>
+    <rect x="258" y="184" width="4" height="4"/>
+    <rect x="208" y="190" width="3" height="3" fill="{{ theme.accent_amber }}"/>
+    <rect x="252" y="206" width="3" height="3" fill="{{ theme.accent_amber }}"/>
+  </g>
   {% endif %}
   <g class="bob-ally" shape-rendering="crispEdges">
     {% for r in hero_rects %}
@@ -115,21 +121,21 @@
     {% endfor %}
   </g>
 
-  <!-- BOTTOM SPLIT BAR: Classic GBA Dialogue Box + 2x2 Move Selector -->
+  <!-- BOTTOM SPLIT BAR: Comic Dialogue Box + 2x2 Move Selector -->
   <rect x="14" y="256" width="504" height="66" rx="5" fill="{{ theme.bg_dialog_rim }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
   <rect x="19" y="261" width="494" height="56" rx="3" fill="{{ theme.bg_dialog }}"/>
   <text x="32" y="280" class="sans" font-size="11.5" font-weight="700" fill="#F8FAFC">{{ event_line1 }}</text>
   {% if event_line2 %}
   <text x="32" y="296" class="sans" font-size="11.5" font-weight="700" fill="#F8FAFC">{{ event_line2 }}</text>
   {% endif %}
-  <text x="32" y="311" class="mono" font-size="8.5" fill="#93C5FD">Party: {{ raiders_text }} · Guestbook: {{ tavern_text }}</text>
+  <text x="32" y="311" class="mono" font-size="8.5" fill="#93C5FD">Squad: {{ raiders_text }} · Log: {{ tavern_text }}</text>
 
-  <!-- Right 2x2 Action Selector Menu -->
+  <!-- Right 2x2 Comic Move Box -->
   <rect x="526" y="256" width="300" height="66" rx="5" fill="{{ theme.border }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
   <rect x="530" y="260" width="292" height="58" rx="3" fill="{{ theme.bg_panel }}"/>
   <text class="cursor mono" x="541" y="283" font-size="11" font-weight="700" fill="{{ theme.accent_boss }}">▶</text>
-  <text x="554" y="283" class="mono" font-size="11" font-weight="700" fill="{{ theme.text_primary }}">FIGHT</text>
+  <text x="554" y="283" class="mono" font-size="11" font-weight="700" fill="{{ theme.text_primary }}">STRIKE!</text>
   <text x="684" y="283" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}">★ STAR KO</text>
-  <text x="554" y="305" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_signal }}">POTION</text>
-  <text x="684" y="305" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}">GUESTBOOK</text>
+  <text x="554" y="305" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_signal }}">POWER UP</text>
+  <text x="684" y="305" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}">SAY HI!</text>
 </svg>

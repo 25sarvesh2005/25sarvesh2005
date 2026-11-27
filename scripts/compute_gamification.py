@@ -287,11 +287,11 @@ def _compute_grade(
     )
 
     pillars = [
-        GradePillar(key="output", label="OUT", score=output_pts, max_score=25.0),
-        GradePillar(key="qa", label="QA", score=qa_pts, max_score=30.0),
-        GradePillar(key="depth", label="DEP", score=depth_pts, max_score=20.0),
-        GradePillar(key="breadth", label="DOM", score=breadth_pts, max_score=15.0),
-        GradePillar(key="collab", label="PR★", score=collab_pts, max_score=10.0),
+        GradePillar(key="output", label="Commits", score=output_pts, max_score=25.0),
+        GradePillar(key="qa", label="CI/Tests", score=qa_pts, max_score=30.0),
+        GradePillar(key="depth", label="Repos", score=depth_pts, max_score=20.0),
+        GradePillar(key="breadth", label="Domains", score=breadth_pts, max_score=15.0),
+        GradePillar(key="collab", label="PR/Stars", score=collab_pts, max_score=10.0),
     ]
     total_score = min(100, int(round(sum(p.score for p in pillars))))
 
@@ -304,9 +304,11 @@ def _compute_grade(
     higher = [(pts, lbl) for pts, lbl in GRADE_THRESHOLDS if pts > total_score]
     if higher:
         next_pts, next_letter = min(higher, key=lambda x: x[0])
-        hint = f"+{next_pts - total_score} pts to {next_letter}"
+        diff = next_pts - total_score
+        unit = "pt" if diff == 1 else "pts"
+        hint = f"+{diff} {unit} to Rank {next_letter}"
     else:
-        hint = "Max Rank S+ Achieved"
+        hint = "Max Rank S+ Cleared!"
 
     return grade, total_score, pillars, hint
 
