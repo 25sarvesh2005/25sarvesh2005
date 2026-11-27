@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 172" width="840" height="172" role="img" aria-labelledby="hero-title-light hero-desc-light">
+  <title id="hero-title-light">Sarvesh Sharma (@25sarvesh2005) — Cyber-Citadel Profile Banner</title>
+  <desc id="hero-desc-light">Level 15 Telemetry Lead with 4389 verified XP and 1017 GitHub contributions.</desc>
+  <defs>
+    <linearGradient id="hero-sky-light" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5ECD8"/>
+      <stop offset="100%" stop-color="#E3D4B2"/>
+    </linearGradient>
+    <radialGradient id="hero-glow-l-light" cx="18%" cy="48%" r="45%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="hero-glow-r-light" cx="82%" cy="40%" r="42%">
+      <stop offset="0%" stop-color="#6D28D9" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="hero-scan-light" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="4" height="1" fill="#8C7A58" opacity="0.1"/>
+    </pattern>
+    <clipPath id="hero-stage-clip-light">
+      <rect x="8" y="8" width="824" height="156" rx="3"/>
+    </clipPath>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .blink-led { animation: led 1.6s steps(2, end) infinite; }
+      .twinkle-a { animation: twinkle 2.3s steps(2, end) infinite; }
+      .twinkle-b { animation: twinkle 3.1s steps(2, end) 0.9s infinite; }
+      .scan-beam { animation: beam 5.5s linear infinite; }
+      @keyframes led { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+      @keyframes twinkle { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.22; } }
+      @keyframes beam {
+        0% { transform: translateY(-6px); opacity: 0; }
+        12%, 88% { opacity: 0.28; }
+        100% { transform: translateY(156px); opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Outer Pixel Cartridge Frame -->
+  <rect x="2" y="2" width="836" height="168" rx="4" fill="#FAF6EA" stroke="#8C7A58" stroke-width="2"/>
+  <rect x="8" y="8" width="824" height="156" rx="3" fill="url(#hero-sky-light)" stroke="#8C7A58" stroke-width="1.2"/>
+
+  <g clip-path="url(#hero-stage-clip-light)">
+    <rect x="8" y="8" width="824" height="156" fill="url(#hero-glow-l-light)"/>
+    <rect x="8" y="8" width="824" height="156" fill="url(#hero-glow-r-light)"/>
+
+    <!-- Stars / Sky Celestial -->
+    <g shape-rendering="crispEdges">
+      <rect x="797" y="42" width="6" height="3" fill="#FEF08A"/>
+      <rect x="791" y="45" width="3" height="3" fill="#FBBF24"/>
+      <rect x="797" y="45" width="6" height="3" fill="#FBBF24"/>
+      <rect x="806" y="45" width="3" height="3" fill="#FBBF24"/>
+      <rect x="794" y="48" width="12" height="3" fill="#FEF08A"/>
+      <rect x="788" y="51" width="3" height="3" fill="#FEF08A"/>
+      <rect x="791" y="51" width="18" height="3" fill="#FBBF24"/>
+      <rect x="809" y="51" width="3" height="3" fill="#FEF08A"/>
+      <rect x="788" y="54" width="3" height="3" fill="#FEF08A"/>
+      <rect x="791" y="54" width="18" height="3" fill="#FBBF24"/>
+      <rect x="809" y="54" width="3" height="3" fill="#FEF08A"/>
+      <rect x="794" y="57" width="12" height="3" fill="#FEF08A"/>
+      <rect x="791" y="60" width="3" height="3" fill="#FBBF24"/>
+      <rect x="797" y="60" width="6" height="3" fill="#FBBF24"/>
+      <rect x="806" y="60" width="3" height="3" fill="#FBBF24"/>
+      <rect x="797" y="63" width="6" height="3" fill="#FEF08A"/>
+      <rect x="724" y="48" width="8" height="2" fill="#FFFFFF"/>
+      <rect x="720" y="50" width="16" height="2" fill="#FFFFFF"/>
+      <rect x="718" y="52" width="20" height="2" fill="#FFFFFF"/>
+      <rect x="716" y="54" width="28" height="2" fill="#FFFFFF"/>
+      <rect x="718" y="56" width="24" height="2" fill="#94A3B8"/>
+    </g>
+
+    <!-- Stepped Pixel Cyber-Citadel Skyline -->
+    <g shape-rendering="crispEdges" fill="#DECFA9">
+      <rect x="8" y="114" width="824" height="50"/>
+      <rect x="18" y="96" width="36" height="18"/><rect x="66" y="82" width="28" height="32"/>
+      <rect x="108" y="100" width="44" height="14"/><rect x="530" y="98" width="34" height="16"/>
+      <rect x="576" y="80" width="26" height="34"/><rect x="614" y="90" width="42" height="24"/>
+      <rect x="668" y="72" width="32" height="42"/><rect x="712" y="94" width="38" height="20"/>
+      <rect x="762" y="84" width="26" height="30"/><rect x="796" y="102" width="36" height="12"/>
+    </g>
+    <!-- Blinking Citadel Window LEDs -->
+    <g shape-rendering="crispEdges">
+      <rect class="twinkle-a" x="74" y="88" width="4" height="4" fill="#1D4ED8"/>
+      <rect class="twinkle-b" x="84" y="98" width="4" height="4" fill="#B45309"/>
+      <rect class="twinkle-b" x="584" y="88" width="4" height="4" fill="#15803D"/>
+      <rect class="twinkle-a" x="584" y="100" width="4" height="4" fill="#1D4ED8"/>
+      <rect class="twinkle-a" x="628" y="96" width="4" height="4" fill="#B45309"/>
+      <rect class="twinkle-b" x="676" y="80" width="4" height="4" fill="#1D4ED8"/>
+      <rect class="twinkle-a" x="688" y="90" width="4" height="4" fill="#BE123C"/>
+      <rect class="twinkle-b" x="770" y="92" width="4" height="4" fill="#15803D"/>
+    </g>
+
+    <!-- CRT Scanline Texture + Animated Laser Sweep -->
+    <rect x="8" y="8" width="824" height="156" fill="url(#hero-scan-light)"/>
+    <rect class="scan-beam" x="8" y="8" width="824" height="3" fill="#1D4ED8"/>
+  </g>
+
+  <!-- Corner Pixel Brackets & Rivets -->
+  <g shape-rendering="crispEdges" fill="#1D4ED8">
+    <rect x="4" y="4" width="14" height="3"/><rect x="4" y="4" width="3" height="14"/>
+    <rect x="822" y="4" width="14" height="3"/><rect x="833" y="4" width="3" height="14"/>
+    <rect x="4" y="165" width="14" height="3"/><rect x="4" y="154" width="3" height="14"/>
+    <rect x="822" y="165" width="14" height="3"/><rect x="833" y="154" width="3" height="14"/>
+  </g>
+
+  <!-- Top Telemetry Line -->
+  <rect class="blink-led" x="24" y="21" width="7" height="7" rx="1" fill="#15803D"/>
+  <text x="38" y="28" class="mono" font-size="10.5" font-weight="700" fill="#15803D" letter-spacing="0.8">SYS.ONLINE // VERIFIED TELEMETRY PROFILE</text>
+  <text x="814" y="28" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="#594D39">@25sarvesh2005 · SYNC 2026-11-27</text>
+
+  <!-- Hero Display Name + Pixel Shadow -->
+  <text x="26" y="72" class="sans" font-size="30" font-weight="800" fill="#8C7A58" opacity="0.55" letter-spacing="1.4">SARVESH SHARMA</text>
+  <text x="24" y="70" class="sans" font-size="30" font-weight="800" fill="#201D1E" letter-spacing="1.4">SARVESH SHARMA</text>
+  <text x="25" y="92" class="mono" font-size="11.5" font-weight="600" fill="#1D4ED8" letter-spacing="0.6">TELEMETRY LEAD · VERIFIABLE AI PIPELINES · DETERMINISTIC SYSTEMS</text>
+
+  <!-- Bottom 5 Live Stat HUD Chips -->
+  <rect x="24" y="110" width="150" height="42" rx="3" fill="#EAE0C6" stroke="#8C7A58" stroke-width="1.2"/>
+  <rect x="24" y="110" width="150" height="3" rx="1" fill="#1D4ED8"/>
+  <text x="34" y="126" class="mono" font-size="8.5" font-weight="700" fill="#594D39">RANK / LVL</text>
+  <text x="34" y="143" class="mono" font-size="12" font-weight="700" fill="#1D4ED8">LVL 15</text>
+  <rect x="184" y="110" width="150" height="42" rx="3" fill="#EAE0C6" stroke="#8C7A58" stroke-width="1.2"/>
+  <rect x="184" y="110" width="150" height="3" rx="1" fill="#B45309"/>
+  <text x="194" y="126" class="mono" font-size="8.5" font-weight="700" fill="#594D39">VERIFIED XP</text>
+  <text x="194" y="143" class="mono" font-size="12" font-weight="700" fill="#B45309">4,389 XP</text>
+  <rect x="344" y="110" width="150" height="42" rx="3" fill="#EAE0C6" stroke="#8C7A58" stroke-width="1.2"/>
+  <rect x="344" y="110" width="150" height="3" rx="1" fill="#15803D"/>
+  <text x="354" y="126" class="mono" font-size="8.5" font-weight="700" fill="#594D39">ACTIVITY</text>
+  <text x="354" y="143" class="mono" font-size="12" font-weight="700" fill="#15803D">1017 CONTRIBS</text>
+  <rect x="504" y="110" width="150" height="42" rx="3" fill="#EAE0C6" stroke="#8C7A58" stroke-width="1.2"/>
+  <rect x="504" y="110" width="150" height="3" rx="1" fill="#6D28D9"/>
+  <text x="514" y="126" class="mono" font-size="8.5" font-weight="700" fill="#594D39">RELIABILITY</text>
+  <text x="514" y="143" class="mono" font-size="12" font-weight="700" fill="#6D28D9">8 CI · 10 DOCS</text>
+  <rect x="664" y="110" width="150" height="42" rx="3" fill="#EAE0C6" stroke="#8C7A58" stroke-width="1.2"/>
+  <rect x="664" y="110" width="150" height="3" rx="1" fill="#BE123C"/>
+  <text x="674" y="126" class="mono" font-size="8.5" font-weight="700" fill="#594D39">BADGE CASE</text>
+  <text x="674" y="143" class="mono" font-size="12" font-weight="700" fill="#BE123C">9 / 12 QUESTS</text>
+</svg>

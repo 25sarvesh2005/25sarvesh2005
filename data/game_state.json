@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "boss_index": 0,
-  "boss_hp": 102,
-  "bosses_slain": 0,
+  "boss_index": 1,
+  "boss_hp": 320,
+  "bosses_slain": 1,
   "total_raids": 0,
   "hero_buff_charges": 0,
-  "last_synced_contributions": 615,
-  "last_event": "Architect @25sarvesh2005 pushed +3 contribs (9 DMG)!",
+  "last_synced_contributions": 1017,
+  "last_event": "Architect @25sarvesh2005 pushed +402 contribs (240 DMG)! KO! NullPointer Wyrm defeated \u2014 Merge Conflict Golem enters!",
   "recent_raiders": [],
   "tavern_log": []
 }
