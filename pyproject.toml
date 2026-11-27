@@ -19,8 +19,13 @@ dev = [
     "ruff>=0.5.0",
 ]
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 python_files = ["test_*.py"]
 addopts = "-v"
 
