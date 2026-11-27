@@ -1,0 +1,182 @@
+{
+  "username": "25sarvesh2005",
+  "display_name": "Sarvesh Sharma",
+  "generated_at_utc": "2026-11-27T07:49:36Z",
+  "total_contributions": 569,
+  "contributions_12m": 558,
+  "active_days": 62,
+  "peak_day_contributions": 46,
+  "current_streak": 1,
+  "longest_streak": 9,
+  "owned_repo_count": 11,
+  "non_empty_owned_repos": 9,
+  "documented_repos": 7,
+  "ci_repos": 6,
+  "merged_prs": 1,
+  "external_merged_prs": 0,
+  "external_stars": 2,
+  "languages_ge_1pct": 6,
+  "account_age_days": 1160,
+  "xp": 2473,
+  "level": 12,
+  "level_title": "Systems Architect",
+  "xp_in_level": 53,
+  "xp_for_next_level": 460,
+  "level_progress_pct": 11.5,
+  "top_languages": [
+    {
+      "name": "Python",
+      "bytes_count": 3930845,
+      "percentage": 64.0,
+      "color": "#3572A5"
+    },
+    {
+      "name": "TypeScript",
+      "bytes_count": 1553623,
+      "percentage": 25.3,
+      "color": "#3178C6"
+    },
+    {
+      "name": "JavaScript",
+      "bytes_count": 282504,
+      "percentage": 4.6,
+      "color": "#F1E05A"
+    },
+    {
+      "name": "CSS",
+      "bytes_count": 127917,
+      "percentage": 2.1,
+      "color": "#563D7C"
+    },
+    {
+      "name": "HTML",
+      "bytes_count": 112506,
+      "percentage": 1.8,
+      "color": "#E34C26"
+    }
+  ],
+  "quests": [
+    {
+      "key": "genesis_commit",
+      "title": "Genesis Commit",
+      "current": 1160,
+      "target": 365,
+      "unit": "d",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Account active >= 1 year with verified public activity."
+    },
+    {
+      "key": "shipwright",
+      "title": "Shipwright",
+      "current": 9,
+      "target": 5,
+      "unit": "repos",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Ship 5+ non-empty public repositories."
+    },
+    {
+      "key": "doc_architect",
+      "title": "Doc Architect",
+      "current": 7,
+      "target": 5,
+      "unit": "docs",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Maintain 5+ owned repositories with README documentation."
+    },
+    {
+      "key": "ci_guardian",
+      "title": "CI Guardian",
+      "current": 6,
+      "target": 5,
+      "unit": "ci",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Configure GitHub Actions CI workflows on 5+ repositories."
+    },
+    {
+      "key": "polyglot_stack",
+      "title": "Polyglot Stack",
+      "current": 6,
+      "target": 4,
+      "unit": "langs",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Write 4+ languages comprising >= 1% of owned codebases."
+    },
+    {
+      "key": "club_500",
+      "title": "500 Club",
+      "current": 569,
+      "target": 500,
+      "unit": "",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Reach 500+ verified GitHub contributions."
+    },
+    {
+      "key": "week_sprint",
+      "title": "Week Sprint",
+      "current": 9,
+      "target": 7,
+      "unit": "d",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Maintain a 7+ consecutive day contribution streak."
+    },
+    {
+      "key": "first_merge",
+      "title": "First Merge",
+      "current": 1,
+      "target": 1,
+      "unit": "pr",
+      "unlocked": true,
+      "progress_pct": 100.0,
+      "description": "Land your first merged Pull Request."
+    },
+    {
+      "key": "builder_1k",
+      "title": "1K Builder",
+      "current": 569,
+      "target": 1000,
+      "unit": "",
+      "unlocked": false,
+      "progress_pct": 56.9,
+      "description": "Reach 1,000 verified GitHub contributions."
+    },
+    {
+      "key": "fortnight_streak",
+      "title": "14d Streak",
+      "current": 9,
+      "target": 14,
+      "unit": "d",
+      "unlocked": false,
+      "progress_pct": 64.3,
+      "description": "Maintain a 14-day consecutive contribution streak."
+    },
+    {
+      "key": "os_ally",
+      "title": "OSS Ally",
+      "current": 0,
+      "target": 1,
+      "unit": "pr",
+      "unlocked": false,
+      "progress_pct": 0.0,
+      "description": "Merge a Pull Request into an external open-source repository."
+    },
+    {
+      "key": "community_signal",
+      "title": "Star Signal",
+      "current": 2,
+      "target": 10,
+      "unit": "\u2605",
+      "unlocked": false,
+      "progress_pct": 20.0,
+      "description": "Earn 10 non-self stars across owned repositories."
+    }
+  ],
+  "unlocked_count": 8,
+  "total_quests": 12
+}
