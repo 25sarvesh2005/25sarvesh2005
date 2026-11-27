@@ -1,7 +1,7 @@
 {
   "username": "25sarvesh2005",
   "display_name": "Sarvesh Sharma",
-  "generated_at_utc": "2026-11-27T18:55:46Z",
+  "generated_at_utc": "2026-11-27T20:11:37Z",
   "total_contributions": 927,
   "contributions_12m": 913,
   "active_days": 130,
@@ -26,8 +26,8 @@
   "top_languages": [
     {
       "name": "Python",
-      "bytes_count": 4112998,
-      "percentage": 64.7,
+      "bytes_count": 4137706,
+      "percentage": 64.8,
       "color": "#3572A5",
       "repo_count": 9,
       "mastery": "MASTERED",
@@ -37,7 +37,7 @@
     {
       "name": "TypeScript",
       "bytes_count": 1564282,
-      "percentage": 24.6,
+      "percentage": 24.5,
       "color": "#3178C6",
       "repo_count": 5,
       "mastery": "MASTERED",

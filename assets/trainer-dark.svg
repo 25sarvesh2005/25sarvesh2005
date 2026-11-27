@@ -351,12 +351,12 @@
   <rect x="26" y="258" width="141" height="19" rx="2.5" fill="#182032" stroke="#364666" stroke-width="0.9"/>
   <rect x="31" y="264" width="6" height="6" rx="1" fill="#3572A5"/>
   <text x="40" y="270.5" class="sans" font-size="8" font-weight="700" fill="#EDF2FA">Python</text>
-  <text x="130" y="270.5" text-anchor="end" class="mono" font-size="7.5" font-weight="700" fill="#FBBF24">64.7%</text>
+  <text x="130" y="270.5" text-anchor="end" class="mono" font-size="7.5" font-weight="700" fill="#FBBF24">64.8%</text>
   <text x="163" y="270.5" text-anchor="end" class="mono" font-size="7" fill="#9AAAD0">9 repos</text>
   <rect x="175" y="258" width="141" height="19" rx="2.5" fill="#182032" stroke="#364666" stroke-width="0.9"/>
   <rect x="180" y="264" width="6" height="6" rx="1" fill="#3178C6"/>
   <text x="189" y="270.5" class="sans" font-size="8" font-weight="700" fill="#EDF2FA">TypeScript</text>
-  <text x="279" y="270.5" text-anchor="end" class="mono" font-size="7.5" font-weight="700" fill="#FBBF24">24.6%</text>
+  <text x="279" y="270.5" text-anchor="end" class="mono" font-size="7.5" font-weight="700" fill="#FBBF24">24.5%</text>
   <text x="312" y="270.5" text-anchor="end" class="mono" font-size="7" fill="#9AAAD0">5 repos</text>
   <rect x="26" y="280" width="141" height="19" rx="2.5" fill="#182032" stroke="#364666" stroke-width="0.9"/>
   <rect x="31" y="286" width="6" height="6" rx="1" fill="#F1E05A"/>
