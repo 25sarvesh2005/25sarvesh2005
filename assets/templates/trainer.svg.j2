@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 316" width="840" height="316" role="img" aria-labelledby="trainer-title-{{ mode }} trainer-desc-{{ mode }}">
+  <title id="trainer-title-{{ mode }}">RPG Trainer Card &amp; Pixel Badge Case — {{ report.display_name }} (@{{ report.username }})</title>
+  <desc id="trainer-desc-{{ mode }}">Level {{ report.level }} {{ report.level_title }} with {{ report.xp }} verified XP, {{ report.unlocked_count }}/{{ report.total_quests }} pixel badges, and owned code stack.</desc>
+  <defs>
+    <clipPath id="trainer-lang-clip-{{ mode }}">
+      <rect x="306" y="276" width="506" height="8" rx="2"/>
+    </clipPath>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Outer Pixel Cartridge Frame -->
+  <rect x="2" y="2" width="836" height="312" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
+  <rect x="6" y="6" width="828" height="304" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
+
+  <!-- Top Chrome -->
+  <rect x="6" y="6" width="828" height="28" fill="{{ theme.bg_panel }}"/>
+  <line x1="6" y1="34" x2="834" y2="34" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <text x="18" y="24" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}" letter-spacing="0.8">TRAINER CARD // PIXEL PROFILE</text>
+  <text x="822" y="24" text-anchor="end" class="mono" font-size="10.5" font-weight="600" fill="{{ theme.accent_signal }}">{{ report.unlocked_count }} / {{ report.total_quests }} BADGES UNLOCKED · SYNC {{ sync_date }}</text>
+
+  <!-- LEFT PANEL: Pixel Portrait + Trainer Attributes -->
+  <rect x="16" y="44" width="264" height="256" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+
+  <!-- Portrait Screen -->
+  <rect x="28" y="54" width="240" height="94" rx="3" fill="{{ theme.bg_stage }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
+  <g shape-rendering="crispEdges">
+    {% for r in avatar_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+    {% for r in pet_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+  </g>
+  <rect x="166" y="66" width="88" height="24" rx="3" fill="{{ theme.accent_primary }}"/>
+  <text x="210" y="82" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="{{ theme.accent_pill_text }}">LVL {{ report.level }}</text>
+  <text x="254" y="108" text-anchor="end" class="mono" font-size="12.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ "{:,}".format(report.xp) }} XP</text>
+  <text x="254" y="124" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_muted }}">VERIFIED DATA</text>
+
+  <!-- Trainer Name & EXP Bar -->
+  <text x="28" y="168" class="sans" font-size="15.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.display_name }}</text>
+  <text x="268" y="168" text-anchor="end" class="mono" font-size="10.5" fill="{{ theme.accent_primary }}">@{{ report.username }}</text>
+  <text x="28" y="185" class="mono" font-size="10" font-weight="600" fill="{{ theme.accent_arcane }}">CLASS: {{ report.level_title.upper() }}</text>
+
+  <rect x="28" y="196" width="240" height="7" rx="2" fill="{{ theme.bg_track }}"/>
+  {% if xp_bar_width > 0 %}
+  <rect x="28" y="196" width="{{ xp_bar_width }}" height="7" rx="2" fill="{{ theme.accent_primary }}"/>
+  {% endif %}
+  <text x="28" y="216" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.xp_in_level }} / {{ report.xp_for_next_level }} XP TO LVL {{ report.level + 1 }}</text>
+
+  <!-- RPG Attribute Rows -->
+  <line x1="28" y1="226" x2="268" y2="226" stroke="{{ theme.border }}" stroke-width="1"/>
+  <text x="28" y="244" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">CONTRIBS</text>
+  <text x="268" y="244" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.total_contributions }} ({{ report.contributions_12m }}/12m)</text>
+
+  <text x="28" y="264" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">STREAK</text>
+  <text x="268" y="264" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.longest_streak }}d best · {{ report.active_days }}d</text>
+
+  <text x="28" y="284" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">QUALITY</text>
+  <text x="268" y="284" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.ci_repos }} CI · {{ report.documented_repos }} Doc · {{ report.merged_prs }} PR</text>
+
+  <!-- RIGHT PANEL: 4x3 Custom Pixel Badge Case + Stack Bar -->
+  <rect x="294" y="44" width="530" height="256" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <text x="306" y="61" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}" letter-spacing="0.5">BADGE CASE (EARNED &amp; LOCKED QUESTS)</text>
+  <text x="812" y="61" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_subtle }}">SELF-STARS EXCLUDED</text>
+
+  {% for tile in badge_tiles %}
+  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="121" height="55" rx="3" fill="{{ theme.bg_canvas }}" stroke="{{ theme.accent_amber if tile.unlocked else theme.border }}" stroke-width="{{ 1.4 if tile.unlocked else 1 }}"/>
+  <g shape-rendering="crispEdges">
+    {% for r in tile.rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+  </g>
+  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 39 }}" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="{{ theme.text_primary if tile.unlocked else theme.text_muted }}">{{ tile.title }}</text>
+  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 50 }}" text-anchor="middle" class="mono" font-size="8.5" fill="{{ theme.accent_signal if tile.unlocked else theme.text_subtle }}">{{ tile.sub }}</text>
+  {% endfor %}
+
+  <!-- Stack Affinity Bar -->
+  <text x="306" y="269" class="mono" font-size="9" font-weight="700" fill="{{ theme.text_muted }}">OWNED STACK</text>
+  <text x="812" y="269" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_muted }}">
+    {%- for lang in report.top_languages[:4] -%}
+      {{ lang.name }} {{ lang.percentage }}%{% if not loop.last %} · {% endif %}
+    {%- endfor -%}
+  </text>
+  <rect x="306" y="276" width="506" height="8" rx="2" fill="{{ theme.bg_track }}"/>
+  <g clip-path="url(#trainer-lang-clip-{{ mode }})">
+    {% for seg in lang_segments %}
+    <rect x="{{ 306 + seg.x }}" y="276" width="{{ seg.width }}" height="8" fill="{{ seg.color }}"/>
+    {% endfor %}
+  </g>
+</svg>

@@ -1,0 +1,137 @@
+name: Refresh Profile Telemetry & Snake
+
+on:
+  schedule:
+    # Twice daily at off-peak minutes UTC
+    - cron: "23 1,13 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - "assets/templates/**"
+      - "pyproject.toml"
+      - ".github/workflows/refresh-profile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-profile-output
+  cancel-in-progress: false
+
+jobs:
+  telemetry:
+    name: Compile Trainer Card, Battle Synergy & Metrics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          path: repo-main
+
+      - name: Checkout output branch (or bootstrap orphan)
+        shell: bash
+        run: |
+          git clone --branch output --single-branch "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" repo-output 2>/dev/null || (
+            mkdir -p repo-output
+            cd repo-output
+            git init -b output
+            git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          )
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: repo-main/pyproject.toml
+
+      - name: Install dependencies and run tests
+        working-directory: repo-main
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          ruff check scripts tests
+          pytest -v
+
+      - name: Fetch GitHub metrics, apply commit synergy, and render Light/Dark SVGs
+        working-directory: repo-main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_READ_TOKEN: ${{ secrets.PROFILE_READ_TOKEN }}
+        run: |
+          mkdir -p ../repo-output/data ../repo-output/assets
+          python -m scripts.fetch_github_data \
+            --out ../repo-output/data/metrics.json \
+            --fallback ../repo-output/data/metrics.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.compute_gamification import evaluate_metrics
+          from scripts.game_engine import init_game_state, sync_commit_synergy
+
+          metrics_path = Path("../repo-output/data/metrics.json")
+          state_path = Path("../repo-output/data/game_state.json")
+          raw = json.loads(metrics_path.read_text(encoding="utf-8"))
+          report = evaluate_metrics(raw)
+          if state_path.exists():
+              state = json.loads(state_path.read_text(encoding="utf-8"))
+              state = sync_commit_synergy(state, report.total_contributions)
+          else:
+              state = init_game_state(report.total_contributions)
+          state_path.write_text(json.dumps(state, indent=2), encoding="utf-8")
+          PY
+
+          python -m scripts.render_svgs \
+            --metrics ../repo-output/data/metrics.json \
+            --game-state ../repo-output/data/game_state.json \
+            --out-dir ../repo-output/assets \
+            --report-out ../repo-output/data/gamification.json
+
+      - name: Commit and push updated SVGs to output branch
+        working-directory: repo-output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data assets
+          if git diff --cached --quiet; then
+            echo "No profile SVG changes detected."
+          else
+            git commit -m "chore(telemetry): refresh pixel trainer & battle SVGs"
+            git push origin output
+          fi
+
+  snake:
+    name: Generate Contribution Snake SVGs
+    needs: telemetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Light and Dark snake SVGs
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: 25sarvesh2005
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          outputs: |
+            dist/snake-light.svg?palette=github-light&color_snake=#1d4ed8
+            dist/snake-dark.svg?palette=github-dark&color_snake=#38bdf8
+
+      - name: Push snake SVGs to output branch
+        shell: bash
+        run: |
+          git clone --branch output --single-branch "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" repo-output
+          mkdir -p repo-output/assets
+          cp dist/snake-light.svg repo-output/assets/snake-light.svg
+          cp dist/snake-dark.svg repo-output/assets/snake-dark.svg
+          cd repo-output
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/snake-light.svg assets/snake-dark.svg
+          if git diff --cached --quiet; then
+            echo "No snake SVG changes detected."
+          else
+            git commit -m "chore(snake): refresh contribution snake SVGs"
+            git push origin output
+          fi

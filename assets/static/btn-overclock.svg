@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 42" width="188" height="42" role="img" aria-label="Overclock Crit (26 to 44 DMG)">
+  <rect x="2" y="2" width="184" height="38" rx="4" fill="#2A1422" stroke="#F43F5E" stroke-width="2"/>
+  <rect x="4" y="34" width="180" height="4" fill="#170A12"/>
+  <!-- Pixel Flame/Bolt -->
+  <g shape-rendering="crispEdges">
+    <rect x="22" y="9" width="4" height="4" fill="#FBBF24"/>
+    <rect x="18" y="13" width="8" height="4" fill="#F43F5E"/>
+    <rect x="16" y="17" width="12" height="4" fill="#FBBF24"/>
+    <rect x="20" y="21" width="8" height="6" fill="#F43F5E"/>
+    <rect x="22" y="27" width="4" height="4" fill="#9F1239"/>
+  </g>
+  <text x="44" y="20" font-family="ui-monospace, Consolas, monospace" font-size="12" font-weight="700" fill="#FFF1F2">OVERCLOCK</text>
+  <text x="44" y="32" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#FDA4AF">26-44 CRIT · CLICK</text>
+</svg>

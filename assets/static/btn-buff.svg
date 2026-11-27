@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 42" width="188" height="42" role="img" aria-label="Brew Buff (+10 Next Hit DMG)">
+  <rect x="2" y="2" width="184" height="38" rx="4" fill="#102922" stroke="#34D399" stroke-width="2"/>
+  <rect x="4" y="34" width="180" height="4" fill="#071914"/>
+  <!-- Pixel Potion -->
+  <g shape-rendering="crispEdges">
+    <rect x="20" y="9" width="8" height="3" fill="#D97706"/>
+    <rect x="22" y="12" width="4" height="3" fill="#94A3B8"/>
+    <rect x="18" y="15" width="12" height="4" fill="#34D399"/>
+    <rect x="16" y="19" width="16" height="8" fill="#059669"/>
+    <rect x="20" y="21" width="4" height="4" fill="#F8FAFC"/>
+  </g>
+  <text x="44" y="20" font-family="ui-monospace, Consolas, monospace" font-size="12" font-weight="700" fill="#ECFDF5">BREW POTION</text>
+  <text x="44" y="32" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#6EE7B7">+10 NEXT HIT · CLICK</text>
+</svg>
