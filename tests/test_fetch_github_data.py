@@ -89,3 +89,26 @@ def test_main_preserves_fallback_metrics_on_fetch_failure(
     )
     fetch_github_data.main()
     assert json.loads(out_file.read_text(encoding="utf-8")) == cached_payload
+
+
+def test_fetch_user_starred_set_retries_without_auth_on_403(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[dict[str, str]] = []
+
+    def fake_request(client, method, url, headers=None, **kwargs):  # noqa: ARG001
+        calls.append(dict(headers or {}))
+        if "Authorization" in (headers or {}):
+            return _mock_response(403, {"message": "Resource not accessible by integration"}, url)
+        return _mock_response(200, [{"full_name": "25sarvesh2005/VeriRAG"}], url)
+
+    monkeypatch.setattr(fetch_github_data, "_request_with_retry", fake_request)
+    with httpx.Client() as client:
+        starred = fetch_github_data._fetch_user_starred_set(
+            client,
+            "25sarvesh2005",
+            {"Authorization": "Bearer installation-token"},
+        )
+    assert starred == {"25sarvesh2005/verirag"}
+    assert len(calls) == 2
+    assert "Authorization" not in calls[1]

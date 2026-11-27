@@ -122,16 +122,30 @@ def _fetch_owned_repos(client: httpx.Client, username: str, headers: dict[str, s
     return repos
 
 
+def _get_with_public_fallback(
+    client: httpx.Client,
+    url: str,
+    headers: dict[str, str],
+) -> tuple[httpx.Response, dict[str, str]]:
+    """Perform GET and retry once without Authorization if an installation token gets 403."""
+    resp = _request_with_retry(client, "GET", url, headers=headers)
+    if resp.status_code == 403 and "Authorization" in headers:
+        public_headers = {k: v for k, v in headers.items() if k != "Authorization"}
+        resp = _request_with_retry(client, "GET", url, headers=public_headers)
+        return resp, public_headers
+    return resp, headers
+
+
 def _fetch_user_starred_set(client: httpx.Client, username: str, headers: dict[str, str]) -> set[str]:
-    """Fetch lowercase full_names of repositories starred by the user (fallback when unauthenticated)."""
+    """Fetch lowercase full_names of repositories starred by the user."""
     starred: set[str] = set()
+    active_headers = headers
     page = 1
     while page <= 10:
-        resp = _request_with_retry(
+        resp, active_headers = _get_with_public_fallback(
             client,
-            "GET",
             f"{API_BASE}/users/{username}/starred?per_page=100&page={page}",
-            headers=headers,
+            active_headers,
         )
         if resp.status_code != 200:
             resp.raise_for_status()
@@ -205,6 +219,11 @@ def _fetch_repo_signals(
                         f"{API_BASE}/repos/{full_name}/stargazers?per_page=100&page={star_page}",
                         headers=headers,
                     )
+                    if star_resp.status_code in {401, 403}:
+                        starred_fallback = _fetch_user_starred_set(client, username, headers)
+                        self_starred = 1 if full_name.lower() in starred_fallback else 0
+                        external_stars = max(0, total_stars - self_starred)
+                        break
                     if star_resp.status_code != 200:
                         star_resp.raise_for_status()
                     stargazers = star_resp.json()
@@ -345,11 +364,10 @@ def _fetch_merged_prs(
             )
             return total, external
 
-    resp = _request_with_retry(
+    resp, _ = _get_with_public_fallback(
         client,
-        "GET",
         f"{API_BASE}/search/issues?q=author:{username}+type:pr+is:merged&per_page=100",
-        headers=headers,
+        headers,
     )
     resp.raise_for_status()
     data = resp.json()
@@ -377,16 +395,21 @@ def collect_github_metrics(username: str = GITHUB_USERNAME, token: str | None = 
         end_year = now.year
 
         repos = _fetch_owned_repos(client, username, headers)
-        user_starred = None if token else _fetch_user_starred_set(client, username, headers)
+        user_starred = _fetch_user_starred_set(client, username, headers)
         repo_signals = [
             _fetch_repo_signals(client, username, repo, headers, user_starred=user_starred)
             for repo in repos
         ]
 
         if token:
-            daily_calendar, restricted_count = _fetch_calendar_graphql(
-                client, username, start_year, end_year, headers
-            )
+            try:
+                daily_calendar, restricted_count = _fetch_calendar_graphql(
+                    client, username, start_year, end_year, headers
+                )
+            except (httpx.HTTPStatusError, RuntimeError):
+                daily_calendar, restricted_count = _fetch_calendar_public_html(
+                    client, username, start_year, end_year
+                )
         else:
             daily_calendar, restricted_count = _fetch_calendar_public_html(
                 client, username, start_year, end_year
