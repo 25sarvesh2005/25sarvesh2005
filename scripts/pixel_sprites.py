@@ -18,17 +18,22 @@ class PixelRect:
 
 SPRITE_PALETTE: dict[str, str] = {
     "K": "#141824",  # dark ink outline
+    "U": "#0B1120",  # deep obsidian shadow
     "W": "#F8FAFC",  # crisp highlight white
     "S": "#94A3B8",  # steel / slate
     "D": "#475569",  # dark steel / shadow
+    "H": "#7DD3FC",  # plasma cyan highlight
     "B": "#38BDF8",  # hero cyan / visor
     "I": "#1D4ED8",  # deep cobalt armor/cloak
     "N": "#1E293B",  # dark cloak body
     "F": "#FDBA74",  # warm skin tone
+    "L": "#A7F3D0",  # mint lime glow
     "G": "#34D399",  # emerald / green
     "E": "#059669",  # deep emerald
+    "A": "#FEF08A",  # bright solar yellow
     "Y": "#FBBF24",  # gold / amber
     "O": "#D97706",  # deep gold / wood
+    "T": "#FDA4AF",  # bright rose highlight
     "R": "#F43F5E",  # crimson / fire
     "M": "#9F1239",  # dark crimson
     "P": "#A78BFA",  # arcane purple
@@ -38,12 +43,12 @@ SPRITE_PALETTE: dict[str, str] = {
 
 # 6x10 Wall Torch (scenery)
 WALL_TORCH: tuple[str, ...] = (
-    "..YY..",
-    ".YRRY.",
+    "..AA..",
+    ".AYYA.",
     ".RYYR.",
-    "..RR..",
+    ".MRRM.",
     ".KKKK.",
-    ".KDDK.",
+    ".KODK.",
     "..KK..",
     "..KK..",
     "..KK..",
@@ -52,25 +57,25 @@ WALL_TORCH: tuple[str, ...] = (
 
 # 8x8 Crescent Moon (dark sky) & Sun / Cloud (light sky)
 PIXEL_MOON: tuple[str, ...] = (
-    "..YYYY..",
-    ".YYY....",
-    "YYY.....",
+    "..AAAA..",
+    ".AYYY...",
+    "AYYY....",
     "YY......",
     "YY......",
-    "YYY.....",
-    ".YYY....",
-    "..YYYY..",
+    "AYYY....",
+    ".AYYY...",
+    "..AAAA..",
 )
 
 PIXEL_SUN: tuple[str, ...] = (
-    "...YY...",
+    "...AA...",
     ".Y.YY.Y.",
-    "..YYYY..",
-    "YYYYYYYY",
-    "YYYYYYYY",
-    "..YYYY..",
+    "..AAAA..",
+    "AYYYYYYA",
+    "AYYYYYYA",
+    "..AAAA..",
     ".Y.YY.Y.",
-    "...YY...",
+    "...AA...",
 )
 
 PIXEL_CLOUD: tuple[str, ...] = (
@@ -93,42 +98,84 @@ COFFEE_MUG: tuple[str, ...] = (
     ".KKKKKK.",
 )
 
+# 7x7 Pixel Padlock (for locked badge corners)
+PIXEL_PADLOCK: tuple[str, ...] = (
+    "..SSS..",
+    ".S...S.",
+    ".S...S.",
+    "KKKKKKK",
+    "KSSSSSK",
+    "KSSKSSK",
+    "KKKKKKK",
+)
+
+# 12x10 Dual-Monitor Cyber Shrine & 8x12 Server Rack (Trainer Portrait Diorama)
+CYBER_TERMINAL: tuple[str, ...] = (
+    "KKKKKKKKKKKK",
+    "KUUUUUUUUUUK",
+    "KUHHHKBGGGGK",
+    "KUUUUUUUUUUK",
+    "KUBBBUHYYYYK",
+    "KUUUUUUUUUUK",
+    "KKKKKKKKKKKK",
+    "....KKKK....",
+    "..KKKKKKKK..",
+    "............",
+)
+
+SERVER_RACK: tuple[str, ...] = (
+    "KKKKKKKK",
+    "KDDDDDDK",
+    "KDGGGGDK",
+    "KDDDDDDK",
+    "KDBBBBDK",
+    "KDDDDDDK",
+    "KDYYYYDK",
+    "KDDDDDDK",
+    "KDGGGGDK",
+    "KDDDDDDK",
+    "KKKKKKKK",
+    "........",
+)
+
 # 8x8 Energy Clash Spark (high-contrast on both light & dark arenas)
 SWORD_CLASH: tuple[str, ...] = (
     "...RR...",
-    ".R.YY.R.",
+    ".R.AA.R.",
     "..RYYR..",
-    "RYYOOYYR",
+    "RYAWWAYR",
     "..RYYR..",
-    ".R.YY.R.",
+    ".R.AA.R.",
     "...RR...",
     "........",
 )
 
-# 16x16 Hooded Systems Architect holding a cyan terminal blade
+# 18x18 Hooded Cyber-Architect wielding an energized cyan plasma blade
 HERO_ARCHITECT: tuple[str, ...] = (
-    ".....KKKKKK.....",
-    "....KIIIIIIK....",
-    "...KIIIIIIIIK...",
-    "...KIKKKKKKIK...",
-    "...KIKBBBBKIK...",
-    "...KIKKKKKKIK...",
-    "....KKFFFFKK..B.",
-    "...KNNNNNNNK..BB",
-    "..KNNIIIIINNK.BW",
-    "..KNKIIIIINKNBW.",
-    "..KNKIIIIINKKY..",
-    "..KKNIIIIINKK...",
-    "...KNNNNNNNK....",
-    "...KNNK.KNNK....",
-    "...KKK...KKK....",
-    "................",
+    "......KKKKKK......",
+    ".....KIIIIIIK.....",
+    "....KIIHHHHIIK....",
+    "....KIKKKKKKIK....",
+    "....KIKHHHHKIK..W.",
+    "....KIKBBBBKIK..WH",
+    ".....KKFFFFKK..WHB",
+    "....KNNNNNNNK..HB.",
+    "...KNNIIIIINNK.HB.",
+    "..KNNYIIIIINYKBW..",
+    "..KNKIIIIIIKNKY...",
+    "..KKNIIIIIIKNNK...",
+    "...KNNNNNNNNNK....",
+    "....KNNNNNNNK.....",
+    "....KNNK.KNNK.....",
+    "....KNNK.KNNK.....",
+    "....KKK...KKK.....",
+    "..................",
 )
 
 # 10x10 Cute Terminal Spark Companion
 COMPANION_SPARK: tuple[str, ...] = (
     "...KKKK...",
-    "..KGGGGK..",
+    "..KLLLLK..",
     ".KGGGGGGK.",
     "KGGWGGWGGK",
     "KGGKGGKGGK",
@@ -146,13 +193,13 @@ BOSS_SPRITES: dict[str, tuple[str, ...]] = {
         ".KRRK......KRRK.",
         ".KRYRK....KRYRK.",
         "..KRRKKKKKKRRK..",
-        "..KRRRRRRRRRRK..",
+        "..KTRRRRRRRRTK..",
         ".KRRRRRYYRRRRRK.",
         ".KRRKWWKKWWKRRK.",
         ".KRRRRRRRRRRRRK.",
         "..KRRMMMMMMRRK..",
         "...KMMMMMMMMK...",
-        "..KMRRRRRRRRMK..",
+        "..KMRRRAARRRMK..",
         ".KMRRYYRRYYRRMK.",
         ".KMRRRRRRRRRRMK.",
         "..KKMRRKKRRMKK..",
@@ -164,11 +211,11 @@ BOSS_SPRITES: dict[str, tuple[str, ...]] = {
         "...KSSSSSSSSK...",
         "..KSSDDDDDDSSK..",
         "..KSDYYYYYYDSK..",
-        "..KSDYKWWKYDSK..",
+        "..KSDYKAAKYDSK..",
         "..KSDDDDDDDDSK..",
         ".KKSSDDDDDDSSKK.",
         "KSSSDDDDDDDDSSSK",
-        "KSDDSSYYYYSSDDKK",
+        "KSDDSSAAAASSDDKK",
         "KSDDSSSSSSSSDDKK",
         "KKDDSSDDDDSSDDKK",
         ".KK.KSDDDDSK.KK.",
@@ -183,7 +230,7 @@ BOSS_SPRITES: dict[str, tuple[str, ...]] = {
         "..KPPPVVVVPPPK..",
         ".KPPVPPPPPPVPPK.",
         ".KPVPKWWKKWKVPK.",
-        ".KPVPKBBKKBKVPK.",
+        ".KPVPKHHKKHKVPK.",
         ".KPPPPPPPPPPPPK.",
         ".KPPVVPPPPVVPPK.",
         "..KPVVVVVVVVPK..",
@@ -199,7 +246,7 @@ BOSS_SPRITES: dict[str, tuple[str, ...]] = {
         ".KK.KK.KK.KK.KK.",
         ".KKKKKKKKKKKKKK.",
         ".KDDDDDDDDDDDDK.",
-        ".KDDYDDDDDDYDDK.",
+        ".KDDADDDDDDADDK.",
         ".KDDDDDDDDDDDDK.",
         ".KDDKRRRRRRKDDK.",
         ".KDDKRWWWWKRDDK.",
@@ -212,6 +259,94 @@ BOSS_SPRITES: dict[str, tuple[str, ...]] = {
         ".KDDSSK..KSSDDK.",
         ".KKKKKKKKKKKKKK.",
         "................",
+    ),
+}
+
+# 12x12 Project Quest Cartridge Icons
+CARTRIDGE_ICONS: dict[str, tuple[str, ...]] = {
+    "shield_core": (
+        "..KKKKKKKK..",
+        ".KBBBBBBBBK.",
+        "KBHHHHHHHHBK",
+        "KBHGGGGGGHBK",
+        "KBHGWGGWGHBK",
+        "KBHGGGGGGHBK",
+        ".KBHHHHHHBK.",
+        ".KBBBBBBBBK.",
+        "..KBBBBBBK..",
+        "...KBBBBK...",
+        "....KKKK....",
+        "............",
+    ),
+    "crate_ledger": (
+        "....KKKK....",
+        "..KKGGGGKK..",
+        ".KGGGGGGGGK.",
+        "KGGLLLLLLGGK",
+        "KOOOOOOOKGGK",
+        "KOYOOOOOKGGK",
+        "KOOOOOOOKGGK",
+        "KOYOOOOOKEEK",
+        ".KOOOOOOEEK.",
+        "..KKKKKKKK..",
+        "............",
+        "............",
+    ),
+    "chart_core": (
+        ".KKKKKKKKKK.",
+        "KUUUUUUUUUUK",
+        "KUUUUUUUYYYK",
+        "KUUUUUUYYYUK",
+        "KUUUBBBYYYUK",
+        "KUUUBBBYYYUK",
+        "KUGGBBBYYYUK",
+        "KUGGBBBYYYUK",
+        "KUGGBBBYYYUK",
+        "KKKKKKKKKKKK",
+        "............",
+        "............",
+    ),
+    "prism_rag": (
+        ".....KK.....",
+        "....KPPK....",
+        "...KPPPPK...",
+        "..KPWWWWPK..",
+        ".KPPWHHWPBK.",
+        "KPPPWHHWPBBK",
+        ".KPPWWWWPBK.",
+        "..KPPGGPPK..",
+        "...KPPPPK...",
+        "....KKKK....",
+        "............",
+        "............",
+    ),
+    "clinic_core": (
+        "..KKKKKKKK..",
+        ".KTTTTTTTTK.",
+        "KTWWWRRWWWTK",
+        "KTWWWRRWWWTK",
+        "KTRRRRRRRRTK",
+        "KTRRRRRRRRTK",
+        "KTWWWRRWWWTK",
+        "KTWWWRRWWWTK",
+        ".KTTTTTTTTK.",
+        "..KKKKKKKK..",
+        "............",
+        "............",
+    ),
+    "wave_array": (
+        ".KK......KK.",
+        "KHHK....KHHK",
+        "KH.K.KK.K.HK",
+        "K..KHBBHK..K",
+        "K..KBBBBK..K",
+        "...KBBBBK...",
+        "....KBBK....",
+        "....KBBK....",
+        "...KDDDDK...",
+        "..KKKKKKKK..",
+        "............",
+        "............",
     ),
 }
 

@@ -2,15 +2,17 @@ name: Refresh Profile Telemetry & Snake
 
 on:
   schedule:
-    # Twice daily at off-peak minutes UTC
-    - cron: "23 1,13 * * *"
+    # Run every 20 minutes at off-peak minutes; commits only when metrics/SVGs change
+    - cron: "7,27,47 * * * *"
   workflow_dispatch:
+  repository_dispatch:
+    types: [refresh-profile]
   push:
     branches:
       - main
     paths:
       - "scripts/**"
-      - "assets/templates/**"
+      - "assets/**"
       - "pyproject.toml"
       - ".github/workflows/refresh-profile.yml"
 
@@ -23,7 +25,7 @@ concurrency:
 
 jobs:
   telemetry:
-    name: Compile Trainer Card, Battle Synergy & Metrics
+    name: Compile Pixel Profile, Quest Cartridges & Telemetry
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -64,7 +66,7 @@ jobs:
         run: |
           mkdir -p ../repo-output/data ../repo-output/assets
           python -m scripts.fetch_github_data \
-            --out ../repo-output/data/metrics.json \
+            --out /tmp/fresh_metrics.json \
             --fallback ../repo-output/data/metrics.json
 
           python - <<'PY'
@@ -73,8 +75,28 @@ jobs:
           from scripts.compute_gamification import evaluate_metrics
           from scripts.game_engine import init_game_state, sync_commit_synergy
 
+          fresh_path = Path("/tmp/fresh_metrics.json")
           metrics_path = Path("../repo-output/data/metrics.json")
           state_path = Path("../repo-output/data/game_state.json")
+
+          fresh = json.loads(fresh_path.read_text(encoding="utf-8"))
+
+          def _semantic(payload: dict) -> dict:
+              return {
+                  "user": payload.get("user"),
+                  "contributions": payload.get("contributions"),
+                  "pull_requests": payload.get("pull_requests"),
+                  "owned_repositories": payload.get("owned_repositories"),
+                  "sync_date": (payload.get("generated_at_utc") or "")[:10],
+              }
+
+          if metrics_path.exists():
+              existing = json.loads(metrics_path.read_text(encoding="utf-8"))
+              if _semantic(fresh) != _semantic(existing):
+                  metrics_path.write_text(json.dumps(fresh, indent=2), encoding="utf-8")
+          else:
+              metrics_path.write_text(json.dumps(fresh, indent=2), encoding="utf-8")
+
           raw = json.loads(metrics_path.read_text(encoding="utf-8"))
           report = evaluate_metrics(raw)
           if state_path.exists():
@@ -89,7 +111,23 @@ jobs:
             --metrics ../repo-output/data/metrics.json \
             --game-state ../repo-output/data/game_state.json \
             --out-dir ../repo-output/assets \
-            --report-out ../repo-output/data/gamification.json
+            --report-out /tmp/fresh_gamification.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          fresh_rep = json.loads(Path("/tmp/fresh_gamification.json").read_text(encoding="utf-8"))
+          rep_path = Path("../repo-output/data/gamification.json")
+          if not rep_path.exists():
+              rep_path.write_text(json.dumps(fresh_rep, indent=2), encoding="utf-8")
+          else:
+              prev = json.loads(rep_path.read_text(encoding="utf-8"))
+              cmp_fresh = {k: v for k, v in fresh_rep.items() if k != "generated_at_utc"}
+              cmp_prev = {k: v for k, v in prev.items() if k != "generated_at_utc"}
+              if cmp_fresh != cmp_prev or prev.get("generated_at_utc", "")[:10] != fresh_rep.get("generated_at_utc", "")[:10]:
+                  rep_path.write_text(json.dumps(fresh_rep, indent=2), encoding="utf-8")
+          PY
 
       - name: Commit and push updated SVGs to output branch
         working-directory: repo-output
@@ -98,9 +136,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data assets
           if git diff --cached --quiet; then
-            echo "No profile SVG changes detected."
+            echo "No profile telemetry or SVG changes detected."
           else
-            git commit -m "chore(telemetry): refresh pixel trainer & battle SVGs"
+            git commit -m "chore(telemetry): refresh pixel RPG profile assets"
             git push origin output
           fi
 
@@ -113,7 +151,7 @@ jobs:
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: 25sarvesh2005
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PROFILE_READ_TOKEN || secrets.GITHUB_TOKEN }}
           outputs: |
             dist/snake-light.svg?palette=github-light&color_snake=#1d4ed8
             dist/snake-dark.svg?palette=github-dark&color_snake=#38bdf8

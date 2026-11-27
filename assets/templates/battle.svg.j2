@@ -1,93 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 274" width="840" height="274" role="img" aria-labelledby="battle-title-{{ mode }} battle-desc-{{ mode }}">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 326" width="840" height="326" role="img" aria-labelledby="battle-title-{{ mode }} battle-desc-{{ mode }}">
   <title id="battle-title-{{ mode }}">Interactive RPG Dungeon Raid — {{ boss.name }} ({{ game.boss_hp }}/{{ boss.max_hp }} HP)</title>
   <desc id="battle-desc-{{ mode }}">Live GitHub Issues co-op boss fight on @{{ report.username }}'s profile.</desc>
   <defs>
+    <linearGradient id="arena-sky-{{ mode }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{{ theme.bg_stage_top }}"/>
+      <stop offset="100%" stop-color="{{ theme.bg_stage_bot }}"/>
+    </linearGradient>
+    <radialGradient id="aura-hero-{{ mode }}" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="{{ theme.accent_primary }}" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="{{ theme.accent_primary }}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aura-boss-{{ mode }}" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="{{ boss_accent }}" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="{{ boss_accent }}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aura-clash-{{ mode }}" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="{{ theme.accent_amber }}" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="{{ theme.accent_amber }}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="boss-hp-grad-{{ mode }}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="{{ boss_accent }}"/>
+      <stop offset="100%" stop-color="{{ theme.accent_amber }}"/>
+    </linearGradient>
+    <pattern id="arena-scan-{{ mode }}" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="4" height="1" fill="{{ theme.scanline }}" opacity="0.08"/>
+    </pattern>
+    <pattern id="dungeon-tile-{{ mode }}" width="32" height="18" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="32" height="18" fill="{{ theme.ground }}"/>
+      <rect x="0" y="0" width="16" height="9" fill="{{ theme.ground_alt }}"/>
+      <rect x="16" y="9" width="16" height="9" fill="{{ theme.ground_alt }}"/>
+      <line x1="0" y1="9" x2="32" y2="9" stroke="{{ theme.border }}" stroke-width="0.6" opacity="0.45"/>
+      <line x1="16" y1="0" x2="16" y2="18" stroke="{{ theme.border }}" stroke-width="0.6" opacity="0.45"/>
+    </pattern>
+    <clipPath id="arena-stage-clip-{{ mode }}">
+      <rect x="14" y="44" width="812" height="214" rx="3"/>
+    </clipPath>
+    <clipPath id="boss-hp-clip-{{ mode }}">
+      <rect x="592" y="79" width="212" height="10" rx="2"/>
+    </clipPath>
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-      .bob-hero { animation: bob 1.8s steps(2, end) infinite; }
-      .bob-pet { animation: bob 1.4s steps(2, end) infinite; }
-      .bob-boss { animation: boss-bob 2.2s steps(2, end) infinite; }
-      .flicker { animation: torch 0.9s steps(2, end) infinite; }
+      .bob-hero { animation: bob 1.7s steps(2, end) infinite; }
+      .bob-pet { animation: pet-bob 1.2s steps(2, end) infinite; }
+      .bob-boss { animation: boss-bob 2.1s steps(2, end) infinite; }
+      .flicker { animation: torch 0.75s steps(2, end) infinite; }
       .twinkle-a { animation: twinkle 2.4s steps(2, end) infinite; }
       .twinkle-b { animation: twinkle 3.1s steps(2, end) 0.8s infinite; }
-      @keyframes bob {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-3px); }
+      .ember-1 { animation: ember 2.2s linear infinite; }
+      .ember-2 { animation: ember 2.7s linear 0.9s infinite; }
+      .hero-bolt { animation: hbolt 2.4s ease-in-out infinite; }
+      .boss-bolt { animation: bbolt 2.4s ease-in-out 1.2s infinite; }
+      .clash-pulse { animation: clash 1.2s ease-in-out infinite; transform-origin: 420px 144px; }
+      .dmg-float { animation: dmg-pop 2.4s ease-out infinite; }
+      .hp-sheen { animation: sheen 3.2s linear infinite; }
+      .cursor-blink { animation: cursor 1.1s steps(2, end) infinite; }
+      @keyframes bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
+      @keyframes pet-bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+      @keyframes boss-bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+      @keyframes torch { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+      @keyframes twinkle { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.25; } }
+      @keyframes ember {
+        0% { transform: translateY(0px); opacity: 0.95; }
+        100% { transform: translateY(-28px); opacity: 0; }
       }
-      @keyframes boss-bob {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-4px); }
+      @keyframes hbolt {
+        0% { transform: translateX(18px); opacity: 0.95; }
+        72% { transform: translateX(186px); opacity: 1; }
+        100% { transform: translateX(204px); opacity: 0; }
       }
-      @keyframes torch {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.72; }
+      @keyframes bbolt {
+        0% { transform: translateX(-18px); opacity: 0.95; }
+        72% { transform: translateX(-182px); opacity: 1; }
+        100% { transform: translateX(-204px); opacity: 0; }
       }
-      @keyframes twinkle {
-        0%, 100% { opacity: 0.95; }
-        50% { opacity: 0.3; }
+      @keyframes clash {
+        0%, 100% { transform: scale(0.92); opacity: 0.72; }
+        50% { transform: scale(1.16); opacity: 1; }
       }
+      @keyframes dmg-pop {
+        0% { transform: translateY(0px); opacity: 0.95; }
+        68% { transform: translateY(-10px); opacity: 1; }
+        100% { transform: translateY(-18px); opacity: 0; }
+      }
+      @keyframes sheen {
+        0% { transform: translateX(-48px); }
+        100% { transform: translateX(260px); }
+      }
+      @keyframes cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
   </defs>
 
-  <!-- Outer Pixel Cartridge Border + Corner Rivets -->
-  <rect x="2" y="2" width="836" height="270" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
-  <rect x="6" y="6" width="828" height="262" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
+  <!-- Outer Cartridge Frame & Stepped Corner Brackets -->
+  <rect x="2" y="2" width="836" height="322" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
+  <rect x="6" y="6" width="828" height="314" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
   <g shape-rendering="crispEdges" fill="{{ theme.accent_amber }}">
-    <rect x="4" y="4" width="4" height="4"/><rect x="832" y="4" width="4" height="4"/>
-    <rect x="4" y="266" width="4" height="4"/><rect x="832" y="266" width="4" height="4"/>
+    <rect x="4" y="4" width="12" height="3"/><rect x="4" y="4" width="3" height="12"/>
+    <rect x="824" y="4" width="12" height="3"/><rect x="833" y="4" width="3" height="12"/>
+    <rect x="4" y="319" width="12" height="3"/><rect x="4" y="310" width="3" height="12"/>
+    <rect x="824" y="319" width="12" height="3"/><rect x="833" y="310" width="3" height="12"/>
   </g>
 
-  <!-- Top Chrome -->
-  <rect x="6" y="6" width="828" height="28" fill="{{ theme.bg_panel }}"/>
-  <line x1="6" y1="34" x2="834" y2="34" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <text x="18" y="24" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}" letter-spacing="0.8">DUNGEON RAID // LIVE VISITOR CO-OP</text>
-  <text x="822" y="24" text-anchor="end" class="mono" font-size="10.5" font-weight="600" fill="{{ theme.text_muted }}">BOSSES SLAIN: {{ game.bosses_slain }} · RAID MOVES: {{ game.total_raids }}</text>
+  <!-- Top Arcade Chrome -->
+  <rect x="6" y="6" width="828" height="30" fill="{{ theme.bg_panel }}"/>
+  <line x1="6" y1="36" x2="834" y2="36" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect class="flicker" x="18" y="17" width="8" height="8" rx="1" fill="{{ boss_accent }}"/>
+  <text x="33" y="25" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_amber }}" letter-spacing="0.8">DUNGEON RAID ARENA // INTERACTIVE VISITOR CO-OP</text>
+  <text x="822" y="25" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_muted }}">BOSSES SLAIN: {{ game.bosses_slain }} · RAID MOVES: {{ game.total_raids }}</text>
 
-  <!-- Arena Stage Backdrop -->
-  <rect x="16" y="42" width="808" height="162" rx="3" fill="{{ theme.bg_stage }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <!-- Stage Canvas -->
+  <rect x="14" y="44" width="812" height="214" rx="3" fill="url(#arena-sky-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <g clip-path="url(#arena-stage-clip-{{ mode }})">
+    <!-- Atmospheric Boss / Hero / Clash Glows -->
+    <ellipse cx="114" cy="182" rx="115" ry="74" fill="url(#aura-hero-{{ mode }})"/>
+    <ellipse cx="420" cy="144" rx="95" ry="62" fill="url(#aura-clash-{{ mode }})"/>
+    <ellipse cx="702" cy="176" rx="120" ry="78" fill="url(#aura-boss-{{ mode }})"/>
 
-  <!-- Sky Celestial (Moon in dark, Sun + Cloud in light) & Twinkling Stars -->
-  <g shape-rendering="crispEdges">
-    {% for r in celestial_rects %}
-    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
-    {% endfor %}
-    {% for r in cloud_rects %}
-    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
-    {% endfor %}
+    <!-- Stars & Sky Celestial -->
+    {% if mode == "dark" %}
+    <g shape-rendering="crispEdges" fill="{{ theme.star }}">
+      <rect class="twinkle-a" x="48" y="108" width="3" height="3"/>
+      <rect class="twinkle-b" x="272" y="60" width="3" height="3"/>
+      <rect class="twinkle-a" x="314" y="84" width="2" height="2"/>
+      <rect class="twinkle-b" x="546" y="76" width="3" height="3"/>
+      <rect class="twinkle-a" x="564" y="56" width="2" height="2"/>
+      <rect class="twinkle-b" x="768" y="110" width="3" height="3"/>
+    </g>
+    {% endif %}
+    <g shape-rendering="crispEdges">
+      {% for r in celestial_rects %}
+      <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+      {% endfor %}
+      {% for r in cloud_rects %}
+      <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+      {% endfor %}
+    </g>
+
+    <!-- Distant Stepped Citadel Battlements & Lit Arches -->
+    <g shape-rendering="crispEdges" fill="{{ theme.horizon }}">
+      <rect x="14" y="182" width="812" height="32"/>
+      <rect x="24" y="164" width="30" height="18"/><rect x="64" y="170" width="20" height="12"/>
+      <rect x="206" y="166" width="38" height="16"/><rect x="254" y="154" width="24" height="28"/>
+      <rect x="288" y="168" width="28" height="14"/><rect x="520" y="166" width="32" height="16"/>
+      <rect x="560" y="156" width="24" height="26"/><rect x="748" y="162" width="36" height="20"/>
+    </g>
+    <g shape-rendering="crispEdges" fill="{{ theme.horizon_lit }}" opacity="0.28">
+      <rect x="262" y="164" width="8" height="12"/><rect x="568" y="166" width="8" height="12"/>
+      <rect x="762" y="170" width="8" height="10"/><rect x="35" y="172" width="8" height="10"/>
+    </g>
+
+    <!-- Checkered Dungeon Stone Floor -->
+    <rect x="14" y="214" width="812" height="44" fill="url(#dungeon-tile-{{ mode }})"/>
+    <line x1="14" y1="214" x2="826" y2="214" stroke="{{ theme.border }}" stroke-width="1.8"/>
+
+    <!-- Subtle Scanlines -->
+    <rect x="14" y="44" width="812" height="214" fill="url(#arena-scan-{{ mode }})"/>
   </g>
-  {% if mode == "dark" %}
-  <g shape-rendering="crispEdges" fill="{{ theme.star }}">
-    <rect class="twinkle-a" x="48" y="96" width="3" height="3"/>
-    <rect class="twinkle-b" x="268" y="58" width="3" height="3"/>
-    <rect class="twinkle-a" x="315" y="78" width="2" height="2"/>
-    <rect class="twinkle-b" x="556" y="70" width="3" height="3"/>
-    <rect class="twinkle-a" x="572" y="54" width="2" height="2"/>
-    <rect class="twinkle-b" x="760" y="98" width="3" height="3"/>
-  </g>
-  {% endif %}
 
-  <!-- Distant Stepped Pixel Battlement / Ruin Horizon -->
-  <g shape-rendering="crispEdges" fill="{{ theme.horizon }}">
-    <rect x="17" y="148" width="806" height="22"/>
-    <rect x="26" y="136" width="24" height="12"/><rect x="64" y="140" width="18" height="8"/>
-    <rect x="210" y="138" width="36" height="10"/><rect x="256" y="130" width="20" height="18"/>
-    <rect x="288" y="140" width="26" height="8"/><rect x="524" y="138" width="30" height="10"/>
-    <rect x="562" y="132" width="22" height="16"/><rect x="752" y="136" width="34" height="12"/>
-  </g>
-
-  <!-- Pixel Dungeon / Cobblestone Ground -->
-  <rect x="17" y="170" width="806" height="33" fill="{{ theme.ground }}"/>
-  <line x1="17" y1="170" x2="823" y2="170" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <g shape-rendering="crispEdges" fill="{{ theme.border }}" opacity="0.55">
-    <rect x="30" y="180" width="32" height="3"/><rect x="92" y="191" width="36" height="3"/>
-    <rect x="164" y="179" width="28" height="3"/><rect x="234" y="192" width="34" height="3"/>
-    <rect x="318" y="182" width="38" height="3"/><rect x="412" y="190" width="32" height="3"/>
-    <rect x="498" y="180" width="34" height="3"/><rect x="582" y="192" width="36" height="3"/>
-    <rect x="668" y="181" width="30" height="3"/><rect x="748" y="191" width="34" height="3"/>
-  </g>
-
-  <!-- Flanking Animated Wall Torches -->
+  <!-- Torch Halos, Torches & Rising Embers -->
+  <ellipse class="flicker" cx="33" cy="144" rx="22" ry="22" fill="url(#aura-clash-{{ mode }})"/>
+  <ellipse class="flicker" cx="805" cy="144" rx="22" ry="22" fill="url(#aura-clash-{{ mode }})"/>
   <g class="flicker" shape-rendering="crispEdges">
     {% for r in torch_left_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
@@ -96,12 +168,29 @@
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
+  <g shape-rendering="crispEdges">
+    <rect class="ember-1" x="28" y="132" width="3" height="3" fill="{{ theme.accent_amber }}"/>
+    <rect class="ember-2" x="36" y="130" width="2" height="2" fill="{{ theme.accent_boss }}"/>
+    <rect class="ember-1" x="800" y="132" width="3" height="3" fill="{{ theme.accent_amber }}"/>
+    <rect class="ember-2" x="808" y="130" width="2" height="2" fill="{{ theme.accent_boss }}"/>
+  </g>
 
-  <!-- LEFT: Hero Nameplate & Sprites -->
-  <rect x="30" y="50" width="218" height="34" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <text x="40" y="65" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}">SARVESH · LVL {{ report.level }}</text>
-  <text x="40" y="78" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">BUFF +{{ game.hero_buff_charges * 10 }} DMG · {{ report.contributions_12m }} COMMITS/YR</text>
+  <!-- LEFT: Hero JRPG Plate -->
+  <rect x="26" y="52" width="234" height="48" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.accent_primary }}" stroke-width="1.4"/>
+  <text x="36" y="68" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_primary }}">SARVESH · LVL {{ report.level }}</text>
+  <text x="250" y="68" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.contributions_12m }} / 12M</text>
+  <text x="36" y="88" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_muted }}">BUFF</text>
+  {% for slot in range(5) %}
+  <rect x="{{ 68 + slot * 14 }}" y="79" width="11" height="10" rx="1" fill="{{ theme.accent_signal if slot < buff_charges else theme.bg_track }}" stroke="{{ theme.border }}" stroke-width="0.8"/>
+  {% endfor %}
+  <text x="144" y="88" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">+{{ buff_charges * 10 }} CRIT</text>
 
+  <!-- Hero Ground Shadow, Optional Buff Aura, Hero & Companion -->
+  <ellipse cx="104" cy="218" rx="44" ry="6" fill="{{ theme.scanline }}" opacity="0.35"/>
+  <ellipse cx="180" cy="216" rx="22" ry="4" fill="{{ theme.scanline }}" opacity="0.3"/>
+  {% if buff_charges > 0 %}
+  <ellipse class="clash-pulse" cx="104" cy="172" rx="52" ry="52" fill="none" stroke="{{ theme.accent_signal }}" stroke-width="2" stroke-dasharray="6 4" opacity="0.7"/>
+  {% endif %}
   <g class="bob-hero" shape-rendering="crispEdges">
     {% for r in hero_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
@@ -113,37 +202,73 @@
     {% endfor %}
   </g>
 
-  <!-- CENTER: Stage Crest & Spark -->
-  <rect x="358" y="50" width="124" height="22" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <text x="420" y="65" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.accent_signal }}">STAGE 0{{ boss_index_1 }} / 04</text>
-  <g class="flicker" shape-rendering="crispEdges">
-    {% for r in clash_rects %}
-    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+  <!-- CENTER: Stage Crest, Animated Flying Bolts, Impact Clash & Floating Damage -->
+  <rect x="342" y="52" width="156" height="24" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.3"/>
+  <text x="420" y="68" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.accent_signal }}">STAGE 0{{ boss_index_1 }} / 04 · RAID LIVE</text>
+
+  <!-- Hero Plasma Slash Bolt (left -> center) -->
+  <g class="hero-bolt" shape-rendering="crispEdges">
+    <rect x="196" y="142" width="32" height="4" fill="{{ theme.accent_primary }}"/>
+    <rect x="208" y="141" width="18" height="6" fill="#7DD3FC"/>
+    <rect x="220" y="143" width="10" height="2" fill="#FFFFFF"/>
+  </g>
+  <!-- Boss Glitch Orb (right -> center) -->
+  <g class="boss-bolt" shape-rendering="crispEdges">
+    <rect x="612" y="142" width="28" height="4" fill="{{ boss_accent }}"/>
+    <rect x="612" y="140" width="12" height="8" fill="{{ theme.accent_amber }}"/>
+    <rect x="614" y="142" width="6" height="4" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Central Energy Clash & VS Badge -->
+  <g class="clash-pulse">
+    <circle cx="420" cy="144" r="22" fill="none" stroke="{{ theme.accent_amber }}" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <g shape-rendering="crispEdges">
+      {% for r in clash_rects %}
+      <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+      {% endfor %}
+    </g>
+  </g>
+  <rect x="394" y="176" width="52" height="22" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.accent_amber }}" stroke-width="1.4"/>
+  <text x="420" y="191" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="{{ theme.accent_amber }}">VS</text>
+  <text x="420" y="238" text-anchor="middle" class="mono" font-size="9.5" font-weight="600" fill="{{ theme.text_muted }}">CLICK COMMAND BELOW TO PLAY · NEW COMMITS = 3x DMG</text>
+
+  <!-- Floating Combat Popup over Boss -->
+  <g class="dmg-float">
+    <rect x="596" y="110" width="76" height="17" rx="2" fill="{{ theme.bg_panel }}" stroke="{{ boss_accent }}" stroke-width="1"/>
+    <text x="634" y="122" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">-CRIT SYNC!</text>
+  </g>
+
+  <!-- RIGHT: Boss JRPG Plate & Segmented HP Bar -->
+  <rect x="580" y="52" width="234" height="48" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ boss_accent }}" stroke-width="1.5"/>
+  <text x="592" y="68" class="mono" font-size="10.5" font-weight="700" fill="{{ boss_accent }}">{{ boss.name.upper() }}</text>
+  <text x="804" y="68" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_primary }}">{{ game.boss_hp }}/{{ boss.max_hp }}</text>
+  <rect x="592" y="79" width="212" height="10" rx="2" fill="{{ theme.bg_track }}"/>
+  {% if boss_hp_width > 0 %}
+  <g clip-path="url(#boss-hp-clip-{{ mode }})">
+    <rect x="592" y="79" width="{{ boss_hp_width }}" height="10" fill="url(#boss-hp-grad-{{ mode }})"/>
+    <rect class="hp-sheen" x="592" y="79" width="28" height="10" fill="#FFFFFF" opacity="0.28"/>
+  </g>
+  {% endif %}
+  <!-- 10-Tick HP Bar Segmented Dividers -->
+  <g stroke="{{ theme.bg_panel }}" stroke-width="1.2" opacity="0.65">
+    {% for tick in range(1, 10) %}
+    {% set tx = 592 + tick * 21.2 %}
+    <line x1="{{ tx }}" y1="79" x2="{{ tx }}" y2="89"/>
     {% endfor %}
   </g>
-  <text x="420" y="118" text-anchor="middle" class="mono" font-size="22" font-weight="700" fill="{{ theme.accent_amber }}">VS</text>
-  <text x="420" y="140" text-anchor="middle" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">OPEN AN ISSUE MOVE BELOW TO FIGHT</text>
-  <text x="420" y="155" text-anchor="middle" class="mono" font-size="9" fill="{{ theme.text_subtle }}">NEW GITHUB COMMITS AUTO-STRIKE BOSS</text>
 
-  <!-- RIGHT: Boss Nameplate, HP Bar & Sprite -->
-  <rect x="590" y="50" width="218" height="38" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.accent_boss }}" stroke-width="1.3"/>
-  <text x="600" y="65" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.accent_boss }}">{{ boss.name.upper() }}</text>
-  <text x="800" y="65" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_primary }}">{{ game.boss_hp }}/{{ boss.max_hp }}</text>
-  <rect x="600" y="73" width="198" height="8" rx="2" fill="{{ theme.bg_track }}"/>
-  {% if boss_hp_width > 0 %}
-  <rect x="600" y="73" width="{{ boss_hp_width }}" height="8" rx="2" fill="{{ theme.accent_boss }}"/>
-  {% endif %}
-
+  <ellipse cx="698" cy="218" rx="46" ry="6" fill="{{ theme.scanline }}" opacity="0.38"/>
   <g class="bob-boss" shape-rendering="crispEdges">
     {% for r in boss_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
 
-  <!-- BOTTOM: Combat Log & Tavern Ticker -->
-  <rect x="16" y="212" width="808" height="48" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <text x="28" y="231" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}">▶</text>
-  <text x="43" y="231" class="sans" font-size="12" font-weight="600" fill="{{ theme.text_primary }}">{{ game.last_event }}</text>
-  <text x="28" y="250" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">RAIDERS: {{ raiders_text }}</text>
-  <text x="812" y="250" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.accent_signal }}">TAVERN: {{ tavern_text }}</text>
+  <!-- BOTTOM: Arcade Raid Terminal Log -->
+  <rect x="14" y="266" width="812" height="48" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.3"/>
+  <text x="26" y="285" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_amber }}">&gt;</text>
+  <rect class="cursor-blink" x="36" y="276" width="6" height="10" fill="{{ theme.accent_amber }}"/>
+  <text x="48" y="285" class="sans" font-size="12" font-weight="700" fill="{{ theme.text_primary }}">{{ game.last_event }}</text>
+  <text x="26" y="304" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">RAIDERS: {{ raiders_text }}</text>
+  <text x="814" y="304" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.accent_signal }}">TAVERN: {{ tavern_text }}</text>
 </svg>

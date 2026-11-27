@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 52" width="840" height="52" role="img" aria-labelledby="snake-banner-title-{{ mode }}">
+  <title id="snake-banner-title-{{ mode }}">Live Contribution Matrix Snake — @{{ report.username }}</title>
+  <defs>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .slither { animation: slither 1.4s steps(2, end) infinite; }
+      @keyframes slither { 0%, 100% { transform: translateX(0px); } 50% { transform: translateX(4px); } }
+    </style>
+  </defs>
+  <rect x="2" y="2" width="836" height="48" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
+  <rect x="6" y="6" width="828" height="40" rx="2" fill="{{ theme.bg_panel }}"/>
+  <!-- Mini Pixel Snake Icon -->
+  <g class="slither" shape-rendering="crispEdges">
+    <rect x="18" y="24" width="6" height="6" fill="{{ theme.accent_signal }}"/>
+    <rect x="24" y="24" width="6" height="6" fill="{{ theme.accent_signal }}"/>
+    <rect x="30" y="18" width="6" height="6" fill="{{ theme.accent_primary }}"/>
+    <rect x="36" y="18" width="6" height="6" fill="{{ theme.accent_primary }}"/>
+    <rect x="42" y="18" width="6" height="6" fill="#FFFFFF"/>
+  </g>
+  <text x="58" y="24" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}" letter-spacing="0.8">CONTRIBUTION SNAKE // LIVE COMMIT GRID</text>
+  <text x="58" y="38" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">AUTO-SYNCED EVERY 20M VIA GITHUB ACTIONS</text>
+  <text x="820" y="30" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.contributions_12m }} CONTRIBS · {{ report.active_days }} ACTIVE DAYS · PEAK {{ report.peak_day_contributions }}/DAY</text>
+</svg>

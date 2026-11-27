@@ -1,109 +1,155 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 316" width="840" height="316" role="img" aria-labelledby="trainer-title-{{ mode }} trainer-desc-{{ mode }}">
-  <title id="trainer-title-{{ mode }}">RPG Trainer Card &amp; Pixel Badge Case — {{ report.display_name }} (@{{ report.username }})</title>
-  <desc id="trainer-desc-{{ mode }}">Level {{ report.level }} {{ report.level_title }} with {{ report.xp }} verified XP, {{ report.unlocked_count }}/{{ report.total_quests }} pixel badges, and owned code stack.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 364" width="840" height="364" role="img" aria-labelledby="trainer-title-{{ mode }} trainer-desc-{{ mode }}">
+  <title id="trainer-title-{{ mode }}">RPG Trainer Card &amp; 12-Badge Trophy Case — {{ report.display_name }} (@{{ report.username }})</title>
+  <desc id="trainer-desc-{{ mode }}">Level {{ report.level }} {{ report.level_title }} with {{ report.xp }} verified XP, {{ report.unlocked_count }}/{{ report.total_quests }} rarity-tiered badges, and verified RPG power bars.</desc>
   <defs>
+    <linearGradient id="shrine-bg-{{ mode }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{{ theme.bg_stage_top }}"/>
+      <stop offset="100%" stop-color="{{ theme.bg_stage_bot }}"/>
+    </linearGradient>
+    <linearGradient id="xp-grad-{{ mode }}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="{{ theme.accent_primary }}"/>
+      <stop offset="100%" stop-color="{{ theme.accent_arcane }}"/>
+    </linearGradient>
+    <clipPath id="trainer-xp-clip-{{ mode }}">
+      <rect x="26" y="210" width="252" height="8" rx="2"/>
+    </clipPath>
     <clipPath id="trainer-lang-clip-{{ mode }}">
-      <rect x="306" y="276" width="506" height="8" rx="2"/>
+      <rect x="308" y="328" width="508" height="9" rx="2"/>
     </clipPath>
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-      .steam { animation: steam 1.8s steps(2, end) infinite; }
+      .steam { animation: steam 1.7s steps(2, end) infinite; }
+      .led { animation: led 1.4s steps(2, end) infinite; }
+      .sheen { animation: sheen 3.4s linear infinite; }
       @keyframes steam {
         0%, 100% { transform: translateY(0px); opacity: 0.9; }
-        50% { transform: translateY(-3px); opacity: 0.35; }
+        50% { transform: translateY(-4px); opacity: 0.3; }
+      }
+      @keyframes led { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+      @keyframes sheen {
+        0% { transform: translateX(-50px); }
+        100% { transform: translateX(300px); }
       }
     </style>
   </defs>
 
-  <!-- Outer Pixel Cartridge Frame + Corner Rivets -->
-  <rect x="2" y="2" width="836" height="312" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
-  <rect x="6" y="6" width="828" height="304" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
+  <!-- Outer Pixel Cartridge Frame -->
+  <rect x="2" y="2" width="836" height="360" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="2"/>
+  <rect x="6" y="6" width="828" height="352" rx="2" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
   <g shape-rendering="crispEdges" fill="{{ theme.accent_primary }}">
-    <rect x="4" y="4" width="4" height="4"/><rect x="832" y="4" width="4" height="4"/>
-    <rect x="4" y="308" width="4" height="4"/><rect x="832" y="308" width="4" height="4"/>
+    <rect x="4" y="4" width="12" height="3"/><rect x="4" y="4" width="3" height="12"/>
+    <rect x="824" y="4" width="12" height="3"/><rect x="833" y="4" width="3" height="12"/>
+    <rect x="4" y="357" width="12" height="3"/><rect x="4" y="348" width="3" height="12"/>
+    <rect x="824" y="357" width="12" height="3"/><rect x="833" y="348" width="3" height="12"/>
   </g>
 
   <!-- Top Chrome -->
-  <rect x="6" y="6" width="828" height="28" fill="{{ theme.bg_panel }}"/>
-  <line x1="6" y1="34" x2="834" y2="34" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <text x="18" y="24" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_primary }}" letter-spacing="0.8">TRAINER CARD // PIXEL PROFILE</text>
-  <text x="822" y="24" text-anchor="end" class="mono" font-size="10.5" font-weight="600" fill="{{ theme.accent_signal }}">{{ report.unlocked_count }} / {{ report.total_quests }} BADGES UNLOCKED · SYNC {{ sync_date }}</text>
+  <rect x="6" y="6" width="828" height="30" fill="{{ theme.bg_panel }}"/>
+  <line x1="6" y1="36" x2="834" y2="36" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <text x="18" y="25" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_primary }}" letter-spacing="0.8">TRAINER CARD // CYBER-SANCTUARY &amp; TROPHY CASE</text>
+  <text x="822" y="25" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.unlocked_count }} / {{ report.total_quests }} BADGES UNLOCKED · SYNC {{ sync_date }}</text>
 
-  <!-- LEFT PANEL: Pixel Portrait + Trainer Attributes -->
-  <rect x="16" y="44" width="264" height="256" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <!-- LEFT PANEL: Sanctuary Diorama + Attribute Matrix -->
+  <rect x="14" y="44" width="276" height="306" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
 
-  <!-- Portrait Screen -->
-  <rect x="28" y="54" width="240" height="94" rx="3" fill="{{ theme.bg_stage }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <rect x="29" y="136" width="238" height="11" fill="{{ theme.ground }}"/>
+  <!-- Cyber-Sanctuary Portrait Window -->
+  <rect x="26" y="54" width="252" height="102" rx="3" fill="url(#shrine-bg-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.3"/>
+  <rect x="27" y="142" width="250" height="13" fill="{{ theme.ground }}"/>
+  <line x1="27" y1="142" x2="277" y2="142" stroke="{{ theme.border }}" stroke-width="1"/>
   <g shape-rendering="crispEdges">
+    {% for r in rack_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
     {% for r in avatar_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
     {% for r in pet_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
+    {% for r in term_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
     {% for r in mug_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
+    <g class="led">
+      <rect x="38" y="115" width="12" height="3" fill="{{ theme.accent_signal }}"/>
+      <rect x="211" y="118" width="18" height="3" fill="{{ theme.accent_primary }}"/>
+    </g>
     <g class="steam" fill="{{ theme.text_muted }}">
-      <rect x="148" y="118" width="2" height="4"/><rect x="154" y="116" width="2" height="4"/>
+      <rect x="178" y="120" width="2" height="4"/><rect x="184" y="118" width="2" height="4"/>
     </g>
   </g>
-  <rect x="166" y="66" width="88" height="24" rx="3" fill="{{ theme.accent_primary }}"/>
-  <text x="210" y="82" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="{{ theme.accent_pill_text }}">LVL {{ report.level }}</text>
-  <text x="254" y="108" text-anchor="end" class="mono" font-size="12.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ "{:,}".format(report.xp) }} XP</text>
-  <text x="254" y="124" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_muted }}">VERIFIED DATA</text>
+  <rect x="190" y="62" width="80" height="22" rx="3" fill="{{ theme.accent_primary }}"/>
+  <text x="230" y="77" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_pill_text }}">LVL {{ report.level }}</text>
+  <text x="270" y="96" text-anchor="end" class="mono" font-size="11.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ "{:,}".format(report.xp) }} XP</text>
 
-  <!-- Trainer Name & EXP Bar -->
-  <text x="28" y="168" class="sans" font-size="15.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.display_name }}</text>
-  <text x="268" y="168" text-anchor="end" class="mono" font-size="10.5" fill="{{ theme.accent_primary }}">@{{ report.username }}</text>
-  <text x="28" y="185" class="mono" font-size="10" font-weight="600" fill="{{ theme.accent_arcane }}">CLASS: {{ report.level_title.upper() }}</text>
+  <!-- Identity + Gradient Shimmer XP Bar -->
+  <text x="26" y="176" class="sans" font-size="16" font-weight="700" fill="{{ theme.text_primary }}">{{ report.display_name }}</text>
+  <text x="278" y="176" text-anchor="end" class="mono" font-size="10.5" fill="{{ theme.accent_primary }}">@{{ report.username }}</text>
+  <text x="26" y="194" class="mono" font-size="10" font-weight="700" fill="{{ theme.accent_arcane }}">CLASS: {{ report.level_title.upper() }}</text>
 
-  <rect x="28" y="196" width="240" height="7" rx="2" fill="{{ theme.bg_track }}"/>
+  <rect x="26" y="210" width="252" height="8" rx="2" fill="{{ theme.bg_track }}"/>
   {% if xp_bar_width > 0 %}
-  <rect x="28" y="196" width="{{ xp_bar_width }}" height="7" rx="2" fill="{{ theme.accent_primary }}"/>
+  <g clip-path="url(#trainer-xp-clip-{{ mode }})">
+    <rect x="26" y="210" width="{{ xp_bar_width }}" height="8" fill="url(#xp-grad-{{ mode }})"/>
+    <rect class="sheen" x="26" y="210" width="28" height="8" fill="#FFFFFF" opacity="0.28"/>
+  </g>
   {% endif %}
-  <text x="28" y="216" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.xp_in_level }} / {{ report.xp_for_next_level }} XP TO LVL {{ report.level + 1 }}</text>
+  <text x="26" y="230" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.xp_in_level }} / {{ report.xp_for_next_level }} XP TO LVL {{ report.level + 1 }} ({{ report.level_progress_pct }}%)</text>
 
-  <!-- RPG Attribute Rows -->
-  <line x1="28" y1="226" x2="268" y2="226" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="28" y="244" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">CONTRIBS</text>
-  <text x="268" y="244" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.total_contributions }} ({{ report.contributions_12m }}/12m)</text>
+  <!-- 4 RPG Verified Power Bars -->
+  <line x1="26" y1="241" x2="278" y2="241" stroke="{{ theme.border }}" stroke-width="1"/>
+  {% for bar in power_bars %}
+  <text x="26" y="{{ bar.y + 13 }}" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_muted }}">{{ bar.label }}</text>
+  <rect x="56" y="{{ bar.y + 6 }}" width="118" height="7" rx="1.5" fill="{{ theme.bg_track }}"/>
+  <rect x="56" y="{{ bar.y + 6 }}" width="{{ bar.fill_w }}" height="7" rx="1.5" fill="{{ bar.color }}"/>
+  <text x="278" y="{{ bar.y + 13 }}" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_primary }}">{{ bar.value }}</text>
+  {% endfor %}
 
-  <text x="28" y="264" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">STREAK</text>
-  <text x="268" y="264" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.longest_streak }}d best · {{ report.active_days }}d</text>
-
-  <text x="28" y="284" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}">QUALITY</text>
-  <text x="268" y="284" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.ci_repos }} CI · {{ report.documented_repos }} Doc · {{ report.merged_prs }} PR</text>
-
-  <!-- RIGHT PANEL: 4x3 Custom Pixel Badge Case + Stack Bar -->
-  <rect x="294" y="44" width="530" height="256" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <text x="306" y="61" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}" letter-spacing="0.5">BADGE CASE (EARNED &amp; LOCKED QUESTS)</text>
-  <text x="812" y="61" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_subtle }}">SELF-STARS EXCLUDED</text>
+  <!-- RIGHT PANEL: 4x3 Rarity-Tiered Pixel Trophy Case + Stack Bar -->
+  <rect x="298" y="44" width="528" height="306" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <text x="308" y="61" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_muted }}" letter-spacing="0.5">TROPHY CASE (12 VERIFIED QUESTS)</text>
+  <text x="816" y="61" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_subtle }}">SELF-STARS EXCLUDED</text>
 
   {% for tile in badge_tiles %}
-  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="121" height="55" rx="3" fill="{{ theme.bg_canvas }}" stroke="{{ theme.accent_amber if tile.unlocked else theme.border }}" stroke-width="{{ 1.4 if tile.unlocked else 1 }}"/>
+  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="{{ tile.w }}" height="{{ tile.h }}" rx="3" fill="{{ theme.bg_canvas }}" stroke="{{ tile.rarity_color }}" stroke-width="{{ 1.5 if tile.unlocked else 1 }}"/>
+  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="{{ tile.w }}" height="3" rx="1" fill="{{ tile.rarity_color }}" opacity="{{ 0.95 if tile.unlocked else 0.45 }}"/>
+  {% if tile.unlocked %}
+  <text x="{{ tile.x + 6 }}" y="{{ tile.y + 14 }}" class="mono" font-size="7" font-weight="700" fill="{{ tile.rarity_color }}">{{ tile.rarity }}</text>
+  {% else %}
+  <g shape-rendering="crispEdges">
+    {% for pr in tile.padlock_rects %}
+    <rect x="{{ pr.x }}" y="{{ pr.y }}" width="{{ pr.w }}" height="{{ pr.h }}" fill="{{ pr.fill }}"/>
+    {% endfor %}
+  </g>
+  {% endif %}
   <g shape-rendering="crispEdges">
     {% for r in tile.rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
-  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 39 }}" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="{{ theme.text_primary if tile.unlocked else theme.text_muted }}">{{ tile.title }}</text>
-  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 50 }}" text-anchor="middle" class="mono" font-size="8.5" fill="{{ theme.accent_signal if tile.unlocked else theme.text_subtle }}">{{ tile.sub }}</text>
+  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 45 }}" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" fill="{{ theme.text_primary if tile.unlocked else theme.text_muted }}">{{ tile.title }}</text>
+  <text x="{{ tile.x + 60.5 }}" y="{{ tile.y + 56 }}" text-anchor="middle" class="mono" font-size="8.5" fill="{{ tile.rarity_color if tile.unlocked else theme.text_subtle }}">{{ tile.sub }}</text>
+  <!-- Bottom Progress Hairline -->
+  <rect x="{{ tile.x + 7 }}" y="{{ tile.y + 62 }}" width="107" height="3" rx="1" fill="{{ theme.bg_track }}"/>
+  {% if tile.progress_w > 0 %}
+  <rect x="{{ tile.x + 7 }}" y="{{ tile.y + 62 }}" width="{{ tile.progress_w }}" height="3" rx="1" fill="{{ tile.rarity_color }}"/>
+  {% endif %}
   {% endfor %}
 
   <!-- Stack Affinity Bar -->
-  <text x="306" y="269" class="mono" font-size="9" font-weight="700" fill="{{ theme.text_muted }}">OWNED STACK</text>
-  <text x="812" y="269" text-anchor="end" class="mono" font-size="9" fill="{{ theme.text_muted }}">
+  <text x="308" y="320" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_muted }}">OWNED CODEBASE STACK</text>
+  <text x="816" y="320" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">
     {%- for lang in report.top_languages[:4] -%}
       {{ lang.name }} {{ lang.percentage }}%{% if not loop.last %} · {% endif %}
     {%- endfor -%}
   </text>
-  <rect x="306" y="276" width="506" height="8" rx="2" fill="{{ theme.bg_track }}"/>
+  <rect x="308" y="328" width="508" height="9" rx="2" fill="{{ theme.bg_track }}"/>
   <g clip-path="url(#trainer-lang-clip-{{ mode }})">
     {% for seg in lang_segments %}
-    <rect x="{{ 306 + seg.x }}" y="276" width="{{ seg.width }}" height="8" fill="{{ seg.color }}"/>
+    <rect x="{{ 308 + seg.x }}" y="328" width="{{ seg.width }}" height="9" fill="{{ seg.color }}"/>
     {% endfor %}
   </g>
 </svg>

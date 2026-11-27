@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from scripts.compute_gamification import evaluate_metrics
+from scripts.config import FEATURED_CARTRIDGES
 from scripts.game_engine import apply_visitor_move, init_game_state
 from scripts.render_svgs import render_all_svgs, validate_svg_xml
 from tests.test_compute_gamification import _sample_raw_metrics
@@ -28,14 +29,24 @@ def test_render_all_svgs_outputs_valid_pure_svgs(tmp_path: Path) -> None:
         raw_note="Nice <script>test</script>!",
     )
 
-    paths = render_all_svgs(report, tmp_path, game_state=game_state)
+    paths = render_all_svgs(report, tmp_path, game_state=game_state, raw_metrics=raw)
     names = sorted(p.name for p in paths)
-    assert names == [
-        "battle-dark.svg",
-        "battle-light.svg",
-        "trainer-dark.svg",
-        "trainer-light.svg",
-    ]
+    expected = sorted(
+        [
+            "hero-dark.svg",
+            "hero-light.svg",
+            "battle-dark.svg",
+            "battle-light.svg",
+            "trainer-dark.svg",
+            "trainer-light.svg",
+            "armory-dark.svg",
+            "armory-light.svg",
+            "snake-banner-dark.svg",
+            "snake-banner-light.svg",
+            *[f"quest-{c.slug}-{mode}.svg" for c in FEATURED_CARTRIDGES for mode in ("dark", "light")],
+        ]
+    )
+    assert names == expected
     for p in paths:
         content = p.read_text(encoding="utf-8")
         validate_svg_xml(content)
