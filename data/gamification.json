@@ -1,45 +1,45 @@
 {
   "username": "25sarvesh2005",
   "display_name": "Sarvesh Sharma",
-  "generated_at_utc": "2026-11-27T08:02:31Z",
-  "total_contributions": 578,
-  "contributions_12m": 567,
-  "active_days": 62,
+  "generated_at_utc": "2026-11-27T09:55:55Z",
+  "total_contributions": 610,
+  "contributions_12m": 599,
+  "active_days": 63,
   "peak_day_contributions": 46,
   "current_streak": 1,
   "longest_streak": 9,
   "owned_repo_count": 11,
-  "non_empty_owned_repos": 9,
-  "documented_repos": 9,
-  "ci_repos": 6,
+  "non_empty_owned_repos": 10,
+  "documented_repos": 10,
+  "ci_repos": 7,
   "merged_prs": 4,
   "external_merged_prs": 0,
   "external_stars": 2,
   "languages_ge_1pct": 6,
   "account_age_days": 1160,
-  "xp": 2676,
+  "xp": 2845,
   "level": 12,
   "level_title": "Systems Architect",
-  "xp_in_level": 256,
+  "xp_in_level": 425,
   "xp_for_next_level": 460,
-  "level_progress_pct": 55.7,
+  "level_progress_pct": 92.4,
   "top_languages": [
     {
       "name": "Python",
-      "bytes_count": 3930845,
-      "percentage": 64.0,
+      "bytes_count": 4000524,
+      "percentage": 64.3,
       "color": "#3572A5"
     },
     {
       "name": "TypeScript",
       "bytes_count": 1553623,
-      "percentage": 25.3,
+      "percentage": 25.0,
       "color": "#3178C6"
     },
     {
       "name": "JavaScript",
       "bytes_count": 282504,
-      "percentage": 4.6,
+      "percentage": 4.5,
       "color": "#F1E05A"
     },
     {
@@ -69,7 +69,7 @@
     {
       "key": "shipwright",
       "title": "Shipwright",
-      "current": 9,
+      "current": 10,
       "target": 5,
       "unit": "repos",
       "unlocked": true,
@@ -79,7 +79,7 @@
     {
       "key": "doc_architect",
       "title": "Doc Architect",
-      "current": 9,
+      "current": 10,
       "target": 5,
       "unit": "docs",
       "unlocked": true,
@@ -89,7 +89,7 @@
     {
       "key": "ci_guardian",
       "title": "CI Guardian",
-      "current": 6,
+      "current": 7,
       "target": 5,
       "unit": "ci",
       "unlocked": true,
@@ -109,7 +109,7 @@
     {
       "key": "club_500",
       "title": "500 Club",
-      "current": 578,
+      "current": 610,
       "target": 500,
       "unit": "",
       "unlocked": true,
@@ -139,11 +139,11 @@
     {
       "key": "builder_1k",
       "title": "1K Builder",
-      "current": 578,
+      "current": 610,
       "target": 1000,
       "unit": "",
       "unlocked": false,
-      "progress_pct": 57.8,
+      "progress_pct": 61.0,
       "description": "Reach 1,000 verified GitHub contributions."
     },
     {
