@@ -43,13 +43,16 @@ def test_render_all_svgs_outputs_valid_pure_svgs(tmp_path: Path) -> None:
         assert "<script" not in content
 
 
-def test_select_display_quests_dedupes_superseded_tiers() -> None:
+def test_select_display_quests_dedupes_superseded_tiers_and_caps_at_8() -> None:
     raw = _sample_raw_metrics()
     raw["contributions"]["daily"]["2026-11-24"] = 950  # crosses both 500 Club & 1K Builder
     report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
-    keys = {q.key for q in _select_display_quests(report)}
+    selected, next_target = _select_display_quests(report)
+    keys = {q.key for q in selected}
+    assert len(selected) <= 8
     assert "builder_1k" in keys
     assert "club_500" not in keys
+    assert next_target is not None and not next_target.unlocked
 
 
 def test_static_action_buttons_are_valid_pure_svgs() -> None:

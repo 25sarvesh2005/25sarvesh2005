@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 42" width="188" height="42" role="img" aria-label="Focus Buff (+10 Next Hit DMG)">
-  <rect x="2" y="4" width="184" height="36" rx="4" fill="#061611"/>
-  <rect x="2" y="2" width="184" height="35" rx="4" fill="#102921" stroke="#34D399" stroke-width="1.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 42" width="196" height="42" role="img" aria-label="Focus Buff (+10 Next Hit DMG)">
+  <rect x="2" y="4" width="192" height="36" rx="4" fill="#061611"/>
+  <rect x="2" y="2" width="192" height="35" rx="4" fill="#102921" stroke="#34D399" stroke-width="1.6"/>
   <g shape-rendering="crispEdges">
-    <rect x="19" y="9" width="8" height="3" fill="#D97706"/>
-    <rect x="21" y="12" width="4" height="2" fill="#94A3B8"/>
-    <rect x="17" y="14" width="12" height="4" fill="#34D399"/>
-    <rect x="15" y="18" width="16" height="8" fill="#059669"/>
-    <rect x="19" y="20" width="4" height="4" fill="#F8FAFC"/>
+    <rect x="20" y="9" width="8" height="3" fill="#D97706"/>
+    <rect x="22" y="12" width="4" height="2" fill="#94A3B8"/>
+    <rect x="18" y="14" width="12" height="4" fill="#34D399"/>
+    <rect x="16" y="18" width="16" height="8" fill="#059669"/>
+    <rect x="20" y="20" width="4" height="4" fill="#F8FAFC"/>
   </g>
-  <text x="42" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#ECFDF5">Focus Buff</text>
-  <text x="42" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#6EE7B7">+10 Next Hit</text>
+  <text x="44" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#ECFDF5">Focus Buff</text>
+  <text x="44" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#6EE7B7">+10 Next Hit</text>
 </svg>

@@ -66,70 +66,80 @@ def _build_language_segments(
     return segments
 
 
-def _select_display_quests(report: GamificationReport) -> list[QuestProgress]:
-    """Select up to 9 high-signal unique milestones, hiding superseded tiers and 0-count locks."""
+def _select_display_quests(report: GamificationReport) -> tuple[list[QuestProgress], QuestProgress | None]:
+    """Return up to 8 high-signal milestones (unlocked first) plus the closest next target."""
     by_key = {q.key: q for q in report.quests}
     unlocked = [
         q
         for q in report.quests
         if q.unlocked and not (q.key in SUPERSEDED_QUESTS and by_key[SUPERSEDED_QUESTS[q.key]].unlocked)
     ]
-    in_progress = [
-        q
-        for q in report.quests
-        if not q.unlocked and q.current > 0
-    ]
-    selected = unlocked[:9]
-    if len(selected) < 9:
-        selected.extend(in_progress[: 9 - len(selected)])
+    locked = sorted(
+        (q for q in report.quests if not q.unlocked),
+        key=lambda q: (-q.progress_pct, q.key),
+    )
+    next_target = next((q for q in locked if q.current > 0), locked[0] if locked else None)
+
+    selected = unlocked[:8]
+    if len(selected) < 8:
+        in_progress = [q for q in locked if q.current > 0]
+        selected.extend(in_progress[: 8 - len(selected)])
     if len(selected) < 6:
-        remaining = [q for q in report.quests if q not in selected]
+        remaining = [q for q in locked if q not in selected]
         selected.extend(remaining[: 6 - len(selected)])
-    return selected[:9]
+    return selected[:8], next_target
+
+
+def _format_quest_sub(quest: QuestProgress) -> str:
+    plain_unit = QUEST_PLAIN_LABELS.get(quest.key, quest.unit)
+    if quest.key == "genesis_commit":
+        years = round(quest.current / 365.0, 1)
+        return f"{years:g} yrs on GitHub" if quest.unlocked else f"{quest.current}/{quest.target} days"
+    if quest.unlocked:
+        return f"{quest.current:,} {plain_unit}".strip()
+    return f"{quest.current}/{quest.target} {plain_unit}".strip()
 
 
 def _build_badge_tiles(
     report: GamificationReport,
     theme: dict[str, str],
-) -> list[dict[str, object]]:
-    """Build 3x3 horizontal achievement plaques with crisp 3x pixel sprites."""
+) -> tuple[list[dict[str, object]], str]:
+    """Build 2x4 earned milestone plaques with crisp 3x pixel sprites and next-target summary."""
+    selected, next_target = _select_display_quests(report)
     tiles: list[dict[str, object]] = []
-    for idx, quest in enumerate(_select_display_quests(report)):
-        col = idx % 3
-        row = idx // 3
-        bx = 324 + col * 168
-        by = 72 + row * 58
+    for idx, quest in enumerate(selected):
+        col = idx % 2
+        row = idx // 2
+        bx = 326 + col * 248
+        by = 72 + row * 46
         sprite_rects = compile_pixel_grid(
             QUEST_SPRITES[quest.key],
             scale=3,
             ox=bx + 9,
-            oy=by + 11,
+            oy=by + 5,
             locked_color=None if quest.unlocked else theme["bg_track"],
         )
-        plain_unit = QUEST_PLAIN_LABELS.get(quest.key, quest.unit)
-        if quest.key == "genesis_commit":
-            years = round(quest.current / 365.0, 1)
-            sub = f"{years:g} yrs on GitHub" if quest.unlocked else f"{quest.current}/{quest.target} days"
-        elif quest.unlocked:
-            sub = f"{quest.current:,} {plain_unit}".strip()
-        else:
-            sub = f"{quest.current}/{quest.target} {plain_unit}".strip()
-
-        progress_w = round(max(0.0, min(1.0, quest.progress_pct / 100.0)) * 112.0, 1)
+        progress_w = round(max(0.0, min(1.0, quest.progress_pct / 100.0)) * 178.0, 1)
         tiles.append(
             {
                 "x": bx,
                 "y": by,
-                "w": 160,
-                "h": 52,
+                "w": 240,
+                "h": 40,
                 "title": quest.title,
-                "sub": sub,
+                "sub": _format_quest_sub(quest),
                 "unlocked": quest.unlocked,
                 "progress_w": progress_w,
                 "rects": sprite_rects,
             }
         )
-    return tiles
+
+    if next_target is not None:
+        unit = QUEST_PLAIN_LABELS.get(next_target.key, next_target.unit)
+        next_label = f"Next: {next_target.title} ({next_target.current}/{next_target.target} {unit})".strip()
+    else:
+        next_label = "All quests completed"
+    return tiles, next_label
 
 
 def validate_svg_xml(svg_text: str) -> None:
@@ -168,12 +178,12 @@ def render_all_svgs(
     boss_accent_key = BOSS_ACCENT_MAP.get(boss.key, "accent_boss")
 
     # Strict 4px world-pixel sprites grounded cleanly on stone floor y=204
-    hero_rects = compile_pixel_grid(HERO_ARCHITECT, scale=4, ox=68, oy=140)
-    pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=4, ox=160, oy=166)
-    boss_rects = compile_pixel_grid(BOSS_SPRITES[boss.key], scale=4, ox=672, oy=140)
+    hero_rects = compile_pixel_grid(HERO_ARCHITECT, scale=4, ox=78, oy=140)
+    pet_rects = compile_pixel_grid(COMPANION_SPARK, scale=4, ox=170, oy=166)
+    boss_rects = compile_pixel_grid(BOSS_SPRITES[boss.key], scale=4, ox=662, oy=140)
 
-    hero_wave_rects = compile_pixel_grid(HERO_WAVE, scale=4, ox=224, oy=160)
-    boss_wave_rects = compile_pixel_grid(BOSS_WAVE, scale=4, ox=584, oy=160)
+    hero_wave_rects = compile_pixel_grid(HERO_WAVE, scale=4, ox=234, oy=160)
+    boss_wave_rects = compile_pixel_grid(BOSS_WAVE, scale=4, ox=574, oy=160)
     clash_rects = compile_pixel_grid(SWORD_CLASH, scale=4, ox=406, oy=156)
 
     torch_left_rects = compile_pixel_grid(WALL_TORCH, scale=4, ox=24, oy=142)
@@ -184,14 +194,17 @@ def render_all_svgs(
     cloud_rects = compile_pixel_grid(PIXEL_CLOUD, scale=3, ox=342, oy=66)
 
     raiders_list = state.get("recent_raiders") or []
-    raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Awaiting first challenger"
+    raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Open to visitors"
 
     tavern_list = state.get("tavern_log") or []
     if tavern_list:
         latest = tavern_list[0]
         tavern_text = f"@{latest['user']}: \"{latest['note'][:34]}\""
     else:
-        tavern_text = "Sign guestbook below"
+        tavern_text = "Leave a note via Issue"
+
+    raw_event = str(state.get("last_event") or "")
+    last_event_text = raw_event if len(raw_event) <= 88 else f"{raw_event[:85]}..."
 
     lang_segments = _build_language_segments(report, bar_width=266.0)
     xp_bar_width = round((report.level_progress_pct / 100.0) * 266.0, 2)
@@ -220,6 +233,7 @@ def render_all_svgs(
                 boss_hp_width=boss_hp_width,
                 boss_accent=theme[boss_accent_key],
                 buff_charges=buff_charges,
+                last_event_text=last_event_text,
                 hero_rects=hero_rects,
                 pet_rects=pet_rects,
                 boss_rects=boss_rects,
@@ -235,6 +249,7 @@ def render_all_svgs(
             ),
         )
 
+        badge_tiles, next_label = _build_badge_tiles(report, theme)
         _emit(
             f"trainer-{mode}.svg",
             trainer_tpl.render(
@@ -242,7 +257,8 @@ def render_all_svgs(
                 theme=theme,
                 report=report,
                 xp_bar_width=xp_bar_width,
-                badge_tiles=_build_badge_tiles(report, theme),
+                badge_tiles=badge_tiles,
+                next_label=next_label,
                 lang_segments=lang_segments,
                 sync_date=sync_date,
             ),

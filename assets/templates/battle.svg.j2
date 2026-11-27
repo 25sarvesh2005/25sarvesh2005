@@ -26,26 +26,27 @@
       .flicker { animation: torch 0.8s steps(2, end) infinite; }
       .twinkle-a { animation: twinkle 2.4s steps(2, end) infinite; }
       .twinkle-b { animation: twinkle 3.1s steps(2, end) 0.8s infinite; }
-      .hero-wave { animation: hwave 2.2s ease-in-out infinite; }
-      .boss-wave { animation: bwave 2.2s ease-in-out 1.1s infinite; }
-      .clash-spark { animation: clash 1.1s steps(2, end) infinite; }
+      .hero-wave { animation: hwave 2.6s ease-in-out infinite; }
+      .boss-wave { animation: bwave 2.6s ease-in-out infinite; }
+      .clash-spark { animation: clash 2.6s steps(2, end) infinite; }
       @keyframes bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
       @keyframes boss-bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }
       @keyframes torch { 0%, 100% { opacity: 1; } 50% { opacity: 0.72; } }
       @keyframes twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.25; } }
       @keyframes hwave {
         0% { transform: translateX(0px); opacity: 0.95; }
-        78% { transform: translateX(152px); opacity: 0.9; }
-        100% { transform: translateX(168px); opacity: 0; }
+        42% { transform: translateX(148px); opacity: 0.95; }
+        52%, 100% { transform: translateX(158px); opacity: 0; }
       }
       @keyframes bwave {
-        0% { transform: translateX(0px); opacity: 0.95; }
-        78% { transform: translateX(-152px); opacity: 0.9; }
-        100% { transform: translateX(-168px); opacity: 0; }
+        0%, 48% { transform: translateX(0px); opacity: 0; }
+        54% { transform: translateX(0px); opacity: 0.95; }
+        92% { transform: translateX(-146px); opacity: 0.95; }
+        100% { transform: translateX(-158px); opacity: 0; }
       }
       @keyframes clash {
-        0%, 100% { opacity: 0.95; }
-        50% { opacity: 0.45; }
+        0%, 34%, 64%, 100% { opacity: 0; }
+        42%, 56% { opacity: 1; }
       }
     </style>
   </defs>
@@ -60,14 +61,14 @@
   <!-- Top Title Strip -->
   <rect x="3" y="3" width="834" height="31" fill="{{ theme.bg_panel }}"/>
   <line x1="3" y1="34" x2="837" y2="34" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="18" y="23" class="sans" font-size="12" font-weight="700" fill="{{ theme.text_primary }}">Boss Raid · Live GitHub Issues Co-op</text>
+  <text x="18" y="23" class="sans" font-size="12" font-weight="700" fill="{{ theme.text_primary }}">Boss Raid · Interactive Profile Game</text>
   <text x="822" y="23" text-anchor="end" class="mono" font-size="10.5" fill="{{ theme.text_muted }}">{{ game.bosses_slain }} Slain · Stage {{ boss_index_1 }}/4 · {{ game.total_raids }} Moves</text>
 
   <!-- Stage Backdrop -->
   <rect x="14" y="42" width="812" height="202" rx="3" fill="url(#arena-sky-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.2"/>
   <g clip-path="url(#arena-clip-{{ mode }})">
-    <ellipse cx="108" cy="176" rx="110" ry="70" fill="url(#aura-hero-{{ mode }})"/>
-    <ellipse cx="716" cy="174" rx="116" ry="72" fill="url(#aura-boss-{{ mode }})"/>
+    <ellipse cx="118" cy="176" rx="110" ry="70" fill="url(#aura-hero-{{ mode }})"/>
+    <ellipse cx="706" cy="174" rx="116" ry="72" fill="url(#aura-boss-{{ mode }})"/>
 
     {% if mode == "dark" %}
     <g shape-rendering="crispEdges" fill="{{ theme.star }}">
@@ -103,9 +104,9 @@
     <rect x="14" y="204" width="812" height="40" fill="{{ theme.ground }}"/>
     <rect x="14" y="204" width="812" height="4" fill="{{ theme.ground_edge }}"/>
     <g shape-rendering="crispEdges" fill="{{ theme.ground_edge }}" opacity="0.55">
-      <rect x="44" y="220" width="36" height="4"/><rect x="140" y="232" width="44" height="4"/>
-      <rect x="256" y="218" width="32" height="4"/><rect x="372" y="232" width="48" height="4"/>
-      <rect x="512" y="220" width="36" height="4"/><rect x="640" y="232" width="40" height="4"/>
+      <rect x="44" y="220" width="36" height="4"/><rect x="140" y="230" width="44" height="4"/>
+      <rect x="256" y="218" width="32" height="4"/><rect x="384" y="228" width="48" height="4"/>
+      <rect x="512" y="220" width="36" height="4"/><rect x="640" y="230" width="40" height="4"/>
       <rect x="748" y="218" width="32" height="4"/>
     </g>
   </g>
@@ -140,13 +141,13 @@
   {% endif %}
 
   <!-- Grounded Character Shadows (right at y=206) -->
-  <ellipse cx="106" cy="206" rx="34" ry="4" fill="{{ theme.shadow }}" opacity="0.45"/>
-  <ellipse cx="178" cy="206" rx="16" ry="3" fill="{{ theme.shadow }}" opacity="0.35"/>
-  <ellipse cx="716" cy="206" rx="38" ry="4" fill="{{ theme.shadow }}" opacity="0.45"/>
+  <ellipse cx="116" cy="206" rx="34" ry="4" fill="{{ theme.shadow }}" opacity="0.45"/>
+  <ellipse cx="188" cy="206" rx="16" ry="3" fill="{{ theme.shadow }}" opacity="0.35"/>
+  <ellipse cx="706" cy="206" rx="38" ry="4" fill="{{ theme.shadow }}" opacity="0.45"/>
 
   <!-- Side-View Hero (facing right), Optional Buff Halo & Companion -->
   {% if buff_charges > 0 %}
-  <ellipse cx="106" cy="172" rx="46" ry="40" fill="none" stroke="{{ theme.accent_signal }}" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.75"/>
+  <ellipse cx="116" cy="172" rx="46" ry="40" fill="none" stroke="{{ theme.accent_signal }}" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.75"/>
   {% endif %}
   <g class="bob-hero" shape-rendering="crispEdges">
     {% for r in hero_rects %}
@@ -159,7 +160,7 @@
     {% endfor %}
   </g>
 
-  <!-- Uniform 4px Pixel Waves & Center Impact Spark -->
+  <!-- Staggered 4px Pixel Waves & Center Impact Spark -->
   <g class="hero-wave" shape-rendering="crispEdges">
     {% for r in hero_wave_rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
@@ -183,12 +184,10 @@
     {% endfor %}
   </g>
 
-  <text x="420" y="232" text-anchor="middle" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">Pick a command below to fight · Pushing new commits auto-strikes (3x DMG)</text>
-
   <!-- Bottom Combat Log -->
   <rect x="14" y="250" width="812" height="44" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
   <text x="26" y="268" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}">&gt;</text>
-  <text x="40" y="268" class="sans" font-size="11" font-weight="600" fill="{{ theme.text_primary }}">{{ game.last_event }}</text>
+  <text x="40" y="268" class="sans" font-size="11.5" font-weight="600" fill="{{ theme.text_primary }}">{{ last_event_text }}</text>
   <text x="26" y="285" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">Party: {{ raiders_text }}</text>
   <text x="814" y="285" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.accent_signal }}">Guestbook: {{ tavern_text }}</text>
 </svg>

@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 42" width="188" height="42" role="img" aria-label="Sign Guestbook Note">
-  <rect x="2" y="4" width="184" height="36" rx="4" fill="#140E05"/>
-  <rect x="2" y="2" width="184" height="35" rx="4" fill="#2A2013" stroke="#FBBF24" stroke-width="1.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 42" width="196" height="42" role="img" aria-label="Sign Guestbook Note">
+  <rect x="2" y="4" width="192" height="36" rx="4" fill="#140E05"/>
+  <rect x="2" y="2" width="192" height="35" rx="4" fill="#2A2013" stroke="#FBBF24" stroke-width="1.6"/>
   <g shape-rendering="crispEdges">
-    <rect x="16" y="10" width="14" height="3" fill="#FBBF24"/>
-    <rect x="17" y="13" width="12" height="12" fill="#FEF3C7"/>
-    <rect x="19" y="16" width="8" height="2" fill="#92400E"/>
-    <rect x="19" y="20" width="8" height="2" fill="#92400E"/>
-    <rect x="16" y="25" width="14" height="3" fill="#FBBF24"/>
+    <rect x="17" y="10" width="14" height="3" fill="#FBBF24"/>
+    <rect x="18" y="13" width="12" height="12" fill="#FEF3C7"/>
+    <rect x="20" y="16" width="8" height="2" fill="#92400E"/>
+    <rect x="20" y="20" width="8" height="2" fill="#92400E"/>
+    <rect x="17" y="25" width="14" height="3" fill="#FBBF24"/>
   </g>
-  <text x="42" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#FFFBEB">Guestbook</text>
-  <text x="42" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#FDE68A">Leave a Note</text>
+  <text x="44" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#FFFBEB">Guestbook</text>
+  <text x="44" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#FDE68A">Leave a Note</text>
 </svg>
