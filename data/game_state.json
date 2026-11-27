@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "boss_index": 0,
-  "boss_hp": 240,
+  "boss_hp": 222,
   "bosses_slain": 0,
   "total_raids": 0,
   "hero_buff_charges": 0,
-  "last_synced_contributions": 569,
-  "last_event": "NullPointer Wyrm appeared! Click an action below to attack.",
+  "last_synced_contributions": 575,
+  "last_event": "Architect @25sarvesh2005 pushed +6 contribs (18 DMG)!",
   "recent_raiders": [],
   "tavern_log": []
 }
