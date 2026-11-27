@@ -1,9 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 272" width="840" height="272" role="img" aria-labelledby="trainer-title-{{ mode }} trainer-desc-{{ mode }}">
-  <title id="trainer-title-{{ mode }}">GitHub Telemetry &amp; Earned Milestones — {{ report.display_name }} (@{{ report.username }})</title>
-  <desc id="trainer-desc-{{ mode }}">Level {{ report.level }} {{ report.level_title }} with {{ report.xp }} XP, {{ report.contributions_12m }} trailing 12-month contributions, and {{ report.unlocked_count }} earned milestones.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 314" width="840" height="314" role="img" aria-labelledby="trainer-title-{{ mode }} trainer-desc-{{ mode }}">
+  <title id="trainer-title-{{ mode }}">Pokédex Developer Registry — {{ report.display_name }} (@{{ report.username }})</title>
+  <desc id="trainer-desc-{{ mode }}">GBA Pokédex style developer card for Level {{ report.level }} {{ report.level_title }} with {{ report.xp }} XP and {{ report.unlocked_count }} caught milestones.</desc>
   <defs>
-    <clipPath id="trainer-lang-clip-{{ mode }}">
-      <rect x="26" y="232" width="266" height="8" rx="2"/>
+    <radialGradient id="dex-lens-{{ mode }}" cx="38%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#BAE6FD"/>
+      <stop offset="45%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </radialGradient>
+    <pattern id="dex-lcd-grid-{{ mode }}" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="1" height="1" fill="{{ theme.dex_dot }}" opacity="0.45"/>
+    </pattern>
+    <clipPath id="dex-lang-clip-{{ mode }}">
+      <rect x="26" y="276" width="278" height="8" rx="2"/>
     </clipPath>
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
@@ -11,74 +19,103 @@
     </style>
   </defs>
 
-  <!-- Outer Frame -->
-  <rect x="2" y="2" width="836" height="268" rx="4" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <g shape-rendering="crispEdges" fill="{{ theme.accent_primary }}">
-    <rect x="6" y="6" width="4" height="4"/><rect x="830" y="6" width="4" height="4"/>
-    <rect x="6" y="262" width="4" height="4"/><rect x="830" y="262" width="4" height="4"/>
+  <!-- Outer Crimson Pokedex Hardware Shell -->
+  <rect x="2" y="2" width="836" height="310" rx="10" fill="{{ theme.dex_shell }}" stroke="{{ theme.border }}" stroke-width="2"/>
+  <rect x="5" y="5" width="830" height="304" rx="8" fill="none" stroke="{{ theme.dex_shell_hi }}" stroke-width="1.5" opacity="0.65"/>
+
+  <!-- Iconic Pokedex Blue Camera Lens + R/Y/G LED Lights -->
+  <circle cx="28" cy="24" r="14" fill="#E2E8F0" stroke="#1E293B" stroke-width="1.5"/>
+  <circle cx="28" cy="24" r="10.5" fill="url(#dex-lens-{{ mode }})" stroke="#0369A1" stroke-width="1"/>
+  <ellipse cx="24" cy="20" rx="3.5" ry="2.2" fill="#FFFFFF" opacity="0.85"/>
+
+  <circle cx="52" cy="18" r="4" fill="#EF4444" stroke="#1E293B" stroke-width="1"/>
+  <circle cx="50.8" cy="16.8" r="1.2" fill="#FCA5A5"/>
+  <circle cx="66" cy="18" r="4" fill="#FBBF24" stroke="#1E293B" stroke-width="1"/>
+  <circle cx="64.8" cy="16.8" r="1.2" fill="#FEF08A"/>
+  <circle cx="80" cy="18" r="4" fill="#22C55E" stroke="#1E293B" stroke-width="1"/>
+  <circle cx="78.8" cy="16.8" r="1.2" fill="#A7F3D0"/>
+
+  <!-- Top Pokedex Header Line -->
+  <text x="98" y="29" class="mono" font-size="11.5" font-weight="700" fill="#F8FAFC" letter-spacing="0.6">POKéDEX · No.{{ "%03d" | format(report.level) }} {{ report.level_title.upper() }}</text>
+  <text x="820" y="29" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="#FDE68A">@{{ report.username }} · ID {{ "%05d" | format(report.total_contributions) }} · {{ sync_date }}</text>
+
+  <!-- LEFT SCREEN: Specimen LCD + Pokémon Summary Base Stats -->
+  <rect x="16" y="46" width="300" height="252" rx="5" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
+
+  <!-- Pale LCD Habitat Box -->
+  <rect x="26" y="56" width="280" height="96" rx="4" fill="{{ theme.dex_lcd }}" stroke="{{ theme.border }}" stroke-width="1.4"/>
+  <rect x="26" y="56" width="280" height="96" rx="4" fill="url(#dex-lcd-grid-{{ mode }})"/>
+  <ellipse cx="80" cy="142" rx="46" ry="7" fill="{{ theme.dex_dot }}"/>
+  <g shape-rendering="crispEdges">
+    {% for r in dex_hero_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+    {% for r in dex_pet_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
   </g>
 
-  <!-- Header Chrome -->
-  <rect x="3" y="3" width="834" height="31" fill="{{ theme.bg_panel }}"/>
-  <line x1="3" y1="34" x2="837" y2="34" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="18" y="23" class="sans" font-size="12" font-weight="700" fill="{{ theme.text_primary }}">GitHub Telemetry &amp; Earned Milestones</text>
-  <text x="822" y="23" text-anchor="end" class="mono" font-size="10.5" fill="{{ theme.text_muted }}">Level {{ report.level }} ({{ report.level_title }}) · {{ "{:,}".format(report.xp) }} XP · Synced {{ sync_date }}</text>
+  <!-- Specimen Name, Level & GBA Type Pills -->
+  <text x="296" y="75" text-anchor="end" class="sans" font-size="13" font-weight="700" fill="{{ theme.text_primary }}">{{ report.display_name }}</text>
+  <text x="296" y="91" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">Lv{{ report.level }} · {{ "{:,}".format(report.xp) }} XP</text>
+  <text x="296" y="106" text-anchor="end" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">{{ report.level_title.upper() }}</text>
 
-  <!-- LEFT PANE: Readable Engineering Snapshot -->
-  <rect x="14" y="42" width="290" height="216" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
+  <rect x="190" y="118" width="50" height="16" rx="3" fill="#2563EB"/>
+  <text x="215" y="129.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="#FFFFFF">PYTHON</text>
+  <rect x="245" y="118" width="51" height="16" rx="3" fill="#7C3AED"/>
+  <text x="270.5" y="129.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="#FFFFFF">AI · TS</text>
 
-  <text x="26" y="63" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.accent_primary }}">Level {{ report.level }} → {{ report.level + 1 }}</text>
-  <text x="292" y="63" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">{{ report.xp_in_level }} / {{ report.xp_for_next_level }} XP</text>
-  <rect x="26" y="72" width="266" height="7" rx="2" fill="{{ theme.bg_track }}"/>
-  {% if xp_bar_width > 0 %}
-  <rect x="26" y="72" width="{{ xp_bar_width }}" height="7" rx="2" fill="{{ theme.accent_primary }}"/>
-  {% endif %}
-
-  <line x1="26" y1="90" x2="292" y2="90" stroke="{{ theme.border }}" stroke-width="1" opacity="0.7"/>
-
-  {% set rows = [
-    ("12-Month Contribs", "{:,}".format(report.contributions_12m) ~ " (" ~ "{:,}".format(report.total_contributions) ~ " total)"),
-    ("Active Coding Days", report.active_days ~ " days (" ~ report.longest_streak ~ "d streak)"),
-    ("Peak Single Day", report.peak_day_contributions ~ " commits"),
-    ("CI & Docs", report.ci_repos ~ " CI · " ~ report.documented_repos ~ " READMEs"),
-    ("PRs & Stars", report.merged_prs ~ " merged · " ~ report.external_stars ~ " stars")
-  ] %}
-  {% for label, value in rows %}
-  {% set ry = 109 + loop.index0 * 21 %}
-  <text x="26" y="{{ ry }}" class="sans" font-size="10.5" fill="{{ theme.text_muted }}">{{ label }}</text>
-  <text x="292" y="{{ ry }}" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">{{ value }}</text>
+  <!-- GBA Base Stat Meters -->
+  {% for bar in dex_stat_bars %}
+  <text x="26" y="{{ bar.y + 10 }}" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_primary }}">{{ bar.code }}</text>
+  <rect x="56" y="{{ bar.y + 3 }}" width="110" height="7" rx="1.5" fill="{{ theme.bg_track }}"/>
+  <rect x="56" y="{{ bar.y + 3 }}" width="{{ bar.fill_w }}" height="7" rx="1.5" fill="{{ bar.color }}"/>
+  <text x="306" y="{{ bar.y + 10 }}" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="{{ theme.text_muted }}">{{ bar.value }}</text>
   {% endfor %}
 
-  <text x="26" y="223" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">
+  <!-- Owned Language Habitat Bar -->
+  <text x="26" y="268" class="mono" font-size="8.5" font-weight="600" fill="{{ theme.text_muted }}">
     {%- for lang in report.top_languages[:3] -%}
       {{ lang.name }} {{ lang.percentage }}%{% if not loop.last %} · {% endif %}
     {%- endfor -%}
   </text>
-  <rect x="26" y="232" width="266" height="8" rx="2" fill="{{ theme.bg_track }}"/>
-  <g clip-path="url(#trainer-lang-clip-{{ mode }})">
+  <rect x="26" y="276" width="278" height="8" rx="2" fill="{{ theme.bg_track }}"/>
+  <g clip-path="url(#dex-lang-clip-{{ mode }})">
     {% for seg in lang_segments %}
-    <rect x="{{ 26 + seg.x }}" y="232" width="{{ seg.width }}" height="8" fill="{{ seg.color }}"/>
+    <rect x="{{ 26 + seg.x }}" y="276" width="{{ seg.width }}" height="8" fill="{{ seg.color }}"/>
     {% endfor %}
   </g>
 
-  <!-- RIGHT PANE: 2x4 Roomy Earned Milestones Wall -->
-  <rect x="314" y="42" width="512" height="216" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <text x="326" y="61" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.text_primary }}">Earned Milestones</text>
-  <text x="814" y="61" text-anchor="end" class="mono" font-size="9.5" fill="{{ theme.text_muted }}">{{ next_label }}</text>
+  <!-- Center Pokedex Hardware Hinge -->
+  <rect x="320" y="48" width="10" height="248" rx="3" fill="{{ theme.dex_hinge }}"/>
+  <rect x="321" y="72" width="8" height="20" rx="1" fill="{{ theme.dex_shell_hi }}" opacity="0.6"/>
+  <rect x="321" y="162" width="8" height="20" rx="1" fill="{{ theme.dex_shell_hi }}" opacity="0.6"/>
+  <rect x="321" y="252" width="8" height="20" rx="1" fill="{{ theme.dex_shell_hi }}" opacity="0.6"/>
+
+  <!-- RIGHT SCREEN: Caught Milestones Pokedex Entries -->
+  <rect x="334" y="46" width="490" height="252" rx="5" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
+  <text x="346" y="64" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">CAUGHT MILESTONES ({{ report.unlocked_count }}/{{ report.total_quests }})</text>
+  <text x="812" y="64" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="{{ theme.text_muted }}">{{ next_label }}</text>
 
   {% for tile in badge_tiles %}
-  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="{{ tile.w }}" height="{{ tile.h }}" rx="3" fill="{{ theme.bg_canvas }}" stroke="{{ theme.accent_amber if tile.unlocked else theme.border }}" stroke-width="{{ 1.3 if tile.unlocked else 1 }}"/>
+  <rect x="{{ tile.x }}" y="{{ tile.y }}" width="{{ tile.w }}" height="{{ tile.h }}" rx="3" fill="{{ theme.bg_hud }}" stroke="{{ theme.accent_amber if tile.unlocked else theme.border }}" stroke-width="{{ 1.3 if tile.unlocked else 1 }}"/>
+  <rect x="{{ tile.x + 5 }}" y="{{ tile.y + 8 }}" width="26" height="26" rx="2" fill="{{ theme.dex_lcd }}" stroke="{{ theme.border }}" stroke-width="0.8"/>
+  <circle cx="{{ tile.x + 215 }}" cy="{{ tile.y + 12 }}" r="6.5" fill="{{ theme.bg_hud_inner }}"/>
   <g shape-rendering="crispEdges">
     {% for r in tile.rects %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
+    {% for br in tile.ball_rects %}
+    <rect x="{{ br.x }}" y="{{ br.y }}" width="{{ br.w }}" height="{{ br.h }}" fill="{{ br.fill }}"/>
+    {% endfor %}
   </g>
-  <text x="{{ tile.x + 48 }}" y="{{ tile.y + 18 }}" class="sans" font-size="11" font-weight="700" fill="{{ theme.text_primary if tile.unlocked else theme.text_muted }}">{{ tile.title }}</text>
-  <text x="{{ tile.x + 48 }}" y="{{ tile.y + 32 }}" class="mono" font-size="9.5" fill="{{ theme.accent_signal if tile.unlocked else theme.text_subtle }}">{{ tile.sub }}</text>
+  <text x="{{ tile.x + 38 }}" y="{{ tile.y + 18 }}" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_primary if tile.unlocked else theme.text_subtle }}">{{ tile.dex_no }}</text>
+  <text x="{{ tile.x + 64 }}" y="{{ tile.y + 18 }}" class="sans" font-size="10.5" font-weight="700" fill="{{ theme.text_primary if tile.unlocked else theme.text_muted }}">{{ tile.title }}</text>
+  <text x="{{ tile.x + 38 }}" y="{{ tile.y + 34 }}" class="mono" font-size="9" fill="{{ theme.accent_signal if tile.unlocked else theme.text_subtle }}">{{ tile.sub }}</text>
   {% if not tile.unlocked %}
-  <rect x="{{ tile.x + 48 }}" y="{{ tile.y + 35 }}" width="178" height="2.5" rx="1" fill="{{ theme.bg_track }}"/>
+  <rect x="{{ tile.x + 38 }}" y="{{ tile.y + 39 }}" width="176" height="2" rx="1" fill="{{ theme.bg_track }}"/>
   {% if tile.progress_w > 0 %}
-  <rect x="{{ tile.x + 48 }}" y="{{ tile.y + 35 }}" width="{{ tile.progress_w }}" height="2.5" rx="1" fill="{{ theme.accent_primary }}"/>
+  <rect x="{{ tile.x + 38 }}" y="{{ tile.y + 39 }}" width="{{ tile.progress_w }}" height="2" rx="1" fill="{{ theme.accent_primary }}"/>
   {% endif %}
   {% endif %}
   {% endfor %}

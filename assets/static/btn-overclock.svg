@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 42" width="196" height="42" role="img" aria-label="Overclock Crit (26 to 44 DMG)">
-  <rect x="2" y="4" width="192" height="36" rx="4" fill="#180812"/>
-  <rect x="2" y="2" width="192" height="35" rx="4" fill="#2A1221" stroke="#F43F5E" stroke-width="1.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 42" width="156" height="42" role="img" aria-label="Overclock Crit (26 to 44 DMG)">
+  <rect x="2" y="4" width="152" height="36" rx="4" fill="#180812"/>
+  <rect x="2" y="2" width="152" height="35" rx="4" fill="#2A1221" stroke="#F43F5E" stroke-width="1.6"/>
   <g shape-rendering="crispEdges">
-    <rect x="22" y="9" width="4" height="4" fill="#FEF08A"/>
-    <rect x="19" y="13" width="8" height="4" fill="#F43F5E"/>
-    <rect x="16" y="17" width="12" height="4" fill="#FBBF24"/>
-    <rect x="20" y="21" width="8" height="5" fill="#F43F5E"/>
-    <rect x="22" y="26" width="4" height="4" fill="#9F1239"/>
+    <rect x="19" y="9" width="4" height="4" fill="#FEF08A"/>
+    <rect x="16" y="13" width="8" height="4" fill="#F43F5E"/>
+    <rect x="13" y="17" width="12" height="4" fill="#FBBF24"/>
+    <rect x="17" y="21" width="8" height="5" fill="#F43F5E"/>
+    <rect x="19" y="26" width="4" height="4" fill="#9F1239"/>
   </g>
-  <text x="44" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#FFF1F2">Overclock Crit</text>
-  <text x="44" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9.5" fill="#FDA4AF">26–44 DMG</text>
+  <text x="38" y="19" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#FFF1F2">Overclock</text>
+  <text x="38" y="31" font-family="ui-monospace, Consolas, monospace" font-size="9" fill="#FDA4AF">26–44 Crit</text>
 </svg>

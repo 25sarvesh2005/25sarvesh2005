@@ -73,7 +73,7 @@ jobs:
           import json
           from pathlib import Path
           from scripts.compute_gamification import evaluate_metrics
-          from scripts.game_engine import init_game_state, sync_commit_synergy
+          from scripts.game_engine import init_game_state, sync_commit_synergy, sync_external_star_ko
 
           fresh_path = Path("/tmp/fresh_metrics.json")
           metrics_path = Path("../repo-output/data/metrics.json")
@@ -102,8 +102,9 @@ jobs:
           if state_path.exists():
               state = json.loads(state_path.read_text(encoding="utf-8"))
               state = sync_commit_synergy(state, report.total_contributions)
+              state = sync_external_star_ko(state, report.external_stars)
           else:
-              state = init_game_state(report.total_contributions)
+              state = init_game_state(report.total_contributions, report.external_stars)
           state_path.write_text(json.dumps(state, indent=2), encoding="utf-8")
           PY
 

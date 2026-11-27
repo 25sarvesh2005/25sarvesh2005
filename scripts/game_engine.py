@@ -1,4 +1,4 @@
-"""Deterministic interactive RPG Boss Raid engine powered by GitHub Issues & commits."""
+"""Deterministic interactive RPG Boss Raid engine powered by GitHub Issues, commits & stars."""
 
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ BOSS_ROSTER: tuple[BossSpec, ...] = (
 VALID_ACTIONS = frozenset({"strike", "overclock", "buff", "tavern"})
 
 
-def init_game_state(initial_contributions: int = 565) -> dict[str, Any]:
+def init_game_state(initial_contributions: int = 565, initial_stars: int = 0) -> dict[str, Any]:
     """Create clean initial Boss Raid state anchored to verified baseline."""
     first_boss = BOSS_ROSTER[0]
     return {
@@ -63,7 +63,9 @@ def init_game_state(initial_contributions: int = 565) -> dict[str, Any]:
         "total_raids": 0,
         "hero_buff_charges": 0,
         "last_synced_contributions": initial_contributions,
-        "last_event": f"{first_boss.name} appeared! Click an action below to attack.",
+        "last_synced_external_stars": initial_stars,
+        "star_finishers": [],
+        "last_event": f"Wild {first_boss.name} appeared! Star or choose a move.",
         "recent_raiders": [],
         "tavern_log": [],
     }
@@ -148,16 +150,16 @@ def apply_visitor_move(
         dmg = _deterministic_roll(seed, 26, 44) + bonus_dmg
         next_state["hero_buff_charges"] = 0
         next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
-        summary = f"@{player} cast Overclock Crit for {dmg} DMG!"
+        summary = f"@{player} used Overclock Crit for {dmg} DMG!"
     elif action == "buff":
         next_state["hero_buff_charges"] = min(5, buffs + 1)
-        summary = f"@{player} brewed Focus Potion (+10 next hit DMG)!"
+        summary = f"@{player} used Focus Potion (+10 next hit DMG)!"
     else:  # tavern
         clean_msg = note or "Dropped by to explore the builds!"
         entry = {"user": player, "note": clean_msg, "issue": issue_number}
         log = [entry, *[x for x in next_state.get("tavern_log", []) if x.get("issue") != issue_number]]
         next_state["tavern_log"] = log[:4]
-        summary = f"@{player} signed Tavern: \"{clean_msg[:36]}\""
+        summary = f"@{player} signed Guestbook: \"{clean_msg[:36]}\""
 
     next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
     ko_msg = _advance_boss_if_defeated(next_state)
@@ -173,9 +175,34 @@ def apply_visitor_move(
         + (f"🏆 **{ko_msg}**\n\n" if ko_msg else "")
         + f"- **Active Boss:** {new_boss.name} (`{next_state['boss_hp']} / {new_boss.max_hp} HP`)\n"
         + f"- **Bosses Slain:** `{next_state['bosses_slain']}` · **Total Raid Moves:** `{next_state['total_raids']}`\n\n"
-        + "Thanks for playing! The profile battle scene updates automatically on `https://github.com/25sarvesh2005`."
+        + "Thanks for playing! The battle screen updates automatically on `https://github.com/25sarvesh2005`."
     )
     return next_state, reply
+
+
+def apply_star_ko(state: dict[str, Any], *, user_login: str) -> dict[str, Any]:
+    """Deal an instant 1-Hit KO when a user stars the repository (once per username)."""
+    next_state = json.loads(json.dumps(state))
+    player = sanitize_username(user_login)
+    finishers: list[str] = list(next_state.get("star_finishers") or [])
+    if player.lower() in finishers:
+        return next_state
+
+    finishers.append(player.lower())
+    next_state["star_finishers"] = finishers[-200:]
+    boss = get_active_boss(next_state)
+    dealt = int(next_state.get("boss_hp", boss.max_hp))
+    next_state["boss_hp"] = 0
+    next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
+    _advance_boss_if_defeated(next_state)
+    next_boss = get_active_boss(next_state)
+    next_state["last_event"] = (
+        f"★ @{player} starred the repo! 1-HIT KO ({dealt} DMG) on {boss.name} — {next_boss.name} enters!"
+    )
+
+    raiders = [r for r in next_state.get("recent_raiders", []) if r != player]
+    next_state["recent_raiders"] = [player, *raiders][:4]
+    return next_state
 
 
 def sync_commit_synergy(state: dict[str, Any], total_contributions: int) -> dict[str, Any]:
@@ -197,11 +224,54 @@ def sync_commit_synergy(state: dict[str, Any], total_contributions: int) -> dict
     return next_state
 
 
+def sync_external_star_ko(state: dict[str, Any], external_stars: int) -> dict[str, Any]:
+    """Trigger instant Boss KOs when newly earned external stars appear across owned repos."""
+    next_state = json.loads(json.dumps(state))
+    if "last_synced_external_stars" not in next_state:
+        next_state["last_synced_external_stars"] = external_stars
+        return next_state
+
+    prev = int(next_state["last_synced_external_stars"])
+    delta = max(0, external_stars - prev)
+    next_state["last_synced_external_stars"] = max(prev, external_stars)
+
+    if delta <= 0:
+        return next_state
+
+    slain_names: list[str] = []
+    for _ in range(min(delta, len(BOSS_ROSTER))):
+        cur = get_active_boss(next_state)
+        slain_names.append(cur.name)
+        next_state["boss_hp"] = 0
+        next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
+        _advance_boss_if_defeated(next_state)
+
+    next_boss = get_active_boss(next_state)
+    star_word = "star" if delta == 1 else "stars"
+    next_state["last_event"] = (
+        f"★ New repo {star_word} (+{delta})! 1-HIT KO on {slain_names[-1]} — {next_boss.name} enters!"
+    )
+    return next_state
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Process a visitor issue raid move.")
+    parser = argparse.ArgumentParser(description="Process a visitor issue raid move or star KO.")
     parser.add_argument("--state", type=Path, required=True, help="Path to game_state.json")
-    parser.add_argument("--reply-out", type=Path, required=True, help="Markdown reply output file")
+    parser.add_argument("--reply-out", type=Path, default=None, help="Markdown reply output file")
     args = parser.parse_args()
+
+    state = json.loads(args.state.read_text(encoding="utf-8")) if args.state.exists() else init_game_state()
+    star_user = os.environ.get("EVENT_STAR_USER", "").strip()
+
+    if star_user:
+        updated = apply_star_ko(state, user_login=star_user)
+        args.state.parent.mkdir(parents=True, exist_ok=True)
+        args.state.write_text(json.dumps(updated, indent=2), encoding="utf-8")
+        print(f"Processed star 1-HIT KO from @{sanitize_username(star_user)}")
+        return
+
+    if args.reply_out is None:
+        raise SystemExit("--reply-out is required for issue events.")
 
     issue_title = os.environ.get("EVENT_ISSUE_TITLE", "")
     issue_body = os.environ.get("EVENT_ISSUE_BODY", "")
@@ -215,11 +285,6 @@ def main() -> None:
             encoding="utf-8",
         )
         raise SystemExit(2)
-
-    if args.state.exists():
-        state = json.loads(args.state.read_text(encoding="utf-8"))
-    else:
-        state = init_game_state()
 
     updated, reply = apply_visitor_move(
         state,

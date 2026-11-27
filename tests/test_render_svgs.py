@@ -58,7 +58,7 @@ def test_select_display_quests_dedupes_superseded_tiers_and_caps_at_8() -> None:
 def test_static_action_buttons_are_valid_pure_svgs() -> None:
     static_dir = Path(__file__).resolve().parent.parent / "assets" / "static"
     buttons = sorted(p.name for p in static_dir.glob("btn-*.svg"))
-    assert buttons == ["btn-buff.svg", "btn-overclock.svg", "btn-strike.svg", "btn-tavern.svg"]
+    assert buttons == ["btn-buff.svg", "btn-overclock.svg", "btn-star.svg", "btn-strike.svg", "btn-tavern.svg"]
     for name in buttons:
         validate_svg_xml((static_dir / name).read_text(encoding="utf-8"))
 

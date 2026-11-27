@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from scripts.game_engine import (
     BOSS_ROSTER,
+    apply_star_ko,
     apply_visitor_move,
     init_game_state,
     parse_issue_action,
     sanitize_note,
     sync_commit_synergy,
+    sync_external_star_ko,
 )
 
 
@@ -67,3 +69,30 @@ def test_sync_commit_synergy_deals_damage_only_on_delta() -> None:
     updated = sync_commit_synergy(state, 575)
     assert updated["boss_hp"] == BOSS_ROSTER[0].max_hp - 30
     assert updated["last_synced_contributions"] == 575
+
+
+def test_apply_star_ko_defeats_boss_once_per_user() -> None:
+    state = init_game_state(565)
+    after_star = apply_star_ko(state, user_login="alice")
+    assert after_star["bosses_slain"] == 1
+    assert after_star["boss_index"] == 1
+    assert after_star["boss_hp"] == BOSS_ROSTER[1].max_hp
+    assert "1-HIT KO" in after_star["last_event"]
+    assert "alice" in after_star["recent_raiders"]
+
+    # Re-starring by the same user must not farm extra KOs
+    repeat = apply_star_ko(after_star, user_login="alice")
+    assert repeat["bosses_slain"] == 1
+    assert repeat["boss_index"] == 1
+
+
+def test_sync_external_star_ko_triggers_on_new_portfolio_stars() -> None:
+    state = init_game_state(565, initial_stars=2)
+    unchanged = sync_external_star_ko(state, 2)
+    assert unchanged["bosses_slain"] == 0
+
+    incremented = sync_external_star_ko(unchanged, 3)
+    assert incremented["bosses_slain"] == 1
+    assert incremented["boss_index"] == 1
+    assert incremented["last_synced_external_stars"] == 3
+    assert "1-HIT KO" in incremented["last_event"]

@@ -12,30 +12,34 @@ I build backend systems, data/BI engines, and applied AI tools in **Python**, **
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/battle-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/battle-light.svg" />
-    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/battle-light.svg" width="100%" alt="Interactive Dungeon Raid Battle Arena on @25sarvesh2005" />
+    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/battle-light.svg" width="100%" alt="Pokémon GBA Style Dungeon Raid Battle Arena on @25sarvesh2005" />
   </picture>
 </div>
 
 <p align="center">
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cstrike&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-strike.svg" width="196" alt="Strike Boss (16-28 DMG)" />
+    <img src="./assets/static/btn-strike.svg" width="156" alt="Strike Boss (16-28 DMG)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Coverclock&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-overclock.svg" width="196" alt="Overclock Crit (26-44 DMG)" />
+    <img src="./assets/static/btn-overclock.svg" width="156" alt="Overclock Crit (26-44 DMG)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cbuff&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-buff.svg" width="196" alt="Focus Buff (+10 Next Hit)" />
+    <img src="./assets/static/btn-buff.svg" width="156" alt="Potion Buff (+10 Next Hit)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Ctavern&body=Leave+a+short+hello+for+the+profile+log:+">
-    <img src="./assets/static/btn-tavern.svg" width="196" alt="Sign Guestbook Note" />
+    <img src="./assets/static/btn-tavern.svg" width="156" alt="Sign Guestbook Note" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/25sarvesh2005/25sarvesh2005">
+    <img src="./assets/static/btn-star.svg" width="156" alt="Star Repo for Instant 1-Hit Boss KO" />
   </a>
 </p>
 
 <p align="center">
-  <sub>Click any action above and submit the pre-filled Issue to play—GitHub Actions processes your roll, updates the battle log, and closes the Issue in ~15 seconds. New repository commits also auto-strike the active boss (`3x DMG`).</sub>
+  <sub><b>Star</b> <code>25sarvesh2005/25sarvesh2005</code> (top-right ★) for an <b>instant 1-Hit Boss KO</b> (~15s), or pick an Issue command above to roll damage / sign the guestbook. Stars on any owned repo &amp; new commits also damage or KO the active boss.</sub>
 </p>
 
 ---
@@ -66,13 +70,13 @@ Additional shipped projects: [**telephony_ai**](https://github.com/25sarvesh2005
 
 ---
 
-### GitHub Telemetry & Earned Milestones
+### Pokédex · GitHub Telemetry & Milestones
 
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" />
-    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" width="100%" alt="GitHub Telemetry & Earned Milestones for @25sarvesh2005" />
+    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" width="100%" alt="Pokédex Developer Registry & Milestones for @25sarvesh2005" />
   </picture>
 </div>
 
@@ -83,7 +87,7 @@ Additional shipped projects: [**telephony_ai**](https://github.com/25sarvesh2005
 
 - **XP formula:** `(Contributions × 2) + (Active Days × 5) + (Merged PRs × 35) + (Documented Repos × 40) + (CI Repos × 60) + (External Stars × 25) + (Languages ≥1% × 50)`
 - **Level curve:** `floor(sqrt(XP / 20)) + 1`
-- **Commit synergy:** New contributions detected between syncs deal `delta × 3 DMG` to the active raid boss.
+- **Star & Commit Combat:** Starring `25sarvesh2005/25sarvesh2005` triggers an instant **1-Hit KO** via GitHub Actions `watch`; new portfolio stars on other owned repos trigger KOs on the 20-minute sync, and new commits deal `delta × 3 DMG`.
 
 </details>
 

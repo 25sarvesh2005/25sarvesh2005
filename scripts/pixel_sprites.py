@@ -1,4 +1,4 @@
-"""Pure-SVG uniform-grid pixel-art sprite compiler with horizontal run-length merging."""
+"""Pure-SVG GBA 2px pixel-art sprite compiler with tinted outlines & run-length merging."""
 
 from __future__ import annotations
 
@@ -17,211 +17,221 @@ class PixelRect:
 
 
 SPRITE_PALETTE: dict[str, str] = {
-    "K": "#121622",  # ink outline
-    "W": "#F8FAFC",  # crisp highlight white
-    "S": "#94A3B8",  # steel / slate
-    "D": "#475569",  # dark steel / stone
-    "H": "#7DD3FC",  # plasma cyan highlight
-    "B": "#38BDF8",  # hero cyan
-    "I": "#1D4ED8",  # cobalt cloak
-    "N": "#1E293B",  # dark armor
-    "F": "#FDBA74",  # skin tone
-    "L": "#A7F3D0",  # mint lime highlight
-    "G": "#34D399",  # emerald
-    "E": "#059669",  # deep emerald
-    "A": "#FEF08A",  # solar flare yellow
-    "Y": "#FBBF24",  # amber gold
-    "O": "#D97706",  # deep gold / wood
-    "T": "#FDA4AF",  # bright rose highlight
-    "R": "#F43F5E",  # crimson fire
-    "M": "#9F1239",  # deep crimson
-    "P": "#A78BFA",  # arcane purple
+    "K": "#182032",  # tinted dark navy ink
+    "Z": "#4C0519",  # deep crimson ink
+    "Q": "#2E1065",  # deep twilight purple ink
+    "X": "#064E3B",  # deep forest ink
+    "W": "#F8FAFC",  # crisp specular white
+    "C": "#FFFFFF",  # pure highlight white
+    "S": "#94A3B8",  # cool steel grey
+    "D": "#475569",  # dark slate shadow
+    "H": "#BAE6FD",  # ice cyan highlight
+    "B": "#38BDF8",  # radiant sky cyan
+    "I": "#1D4ED8",  # deep sapphire blue
+    "N": "#1E293B",  # dark navy cloth
+    "F": "#FDBA74",  # warm skin midtone
+    "J": "#EA580C",  # warm skin shadow
+    "L": "#A7F3D0",  # bright mint emerald
+    "G": "#10B981",  # vibrant emerald
+    "E": "#047857",  # deep emerald shadow
+    "A": "#FEF08A",  # bright yellow spark
+    "Y": "#F59E0B",  # golden amber
+    "O": "#B45309",  # deep amber bronze
+    "T": "#FDA4AF",  # rose highlight
+    "R": "#E11D48",  # crimson scale / coat
+    "M": "#9F1239",  # shaded crimson
+    "P": "#A78BFA",  # arcane lavender
+    "U": "#C4B5FD",  # pale spectral mist
     "V": "#6D28D9",  # deep violet
-    "C": "#FFFFFF",  # cloud white
 }
 
-# 5x9 Wall Torch (uniform 4px world scale -> 20x36)
-WALL_TORCH: tuple[str, ...] = (
-    "..A..",
-    ".AYY.",
-    ".RYY.",
-    ".MRM.",
-    "KKKKK",
-    ".KOD.",
-    "..K..",
-    "..K..",
-    "..K..",
+# 10x10 Classic Pokeball Icon (caught milestone indicator in Pokedex)
+PIXEL_POKEBALL: tuple[str, ...] = (
+    "...KKKK...",
+    ".KKRRRRKK.",
+    "KRRRRRRRKK",
+    "KRRTRRRRKK",
+    "KKKKWWKKKK",
+    "KKKWWWWKKK",
+    "KSSWWWWSSK",
+    ".KSSSSSSK.",
+    "..KKKKKK..",
+    "..........",
 )
 
-# 8x8 Sky Celestials & Cloud
-PIXEL_MOON: tuple[str, ...] = (
-    "..AAAA..",
-    ".AYYY...",
-    "AYYY....",
-    "YY......",
-    "YY......",
-    "AYYY....",
-    ".AYYY...",
-    "..AAAA..",
+# 26x28 Three-Quarter Back-View GBA Pokémon Trainer (sapphire cap, crimson visor band, satchel & jacket facing up-right)
+HERO_TRAINER: tuple[str, ...] = (
+    "........KKKKKKKK..........",
+    "......KKIIIIIIIIKK........",
+    ".....KIIHHHHHHIIIIK.......",
+    "....KIIHHWWWWWHIIIIK......",
+    "....KIIRRRRRRRRRRIIK......",
+    "...KIKKKKKKKKKKKKKKKK.....",
+    "...KIKNNNHHHKNNNNFJK......",
+    "...KNNNNNNNKFFFFFJK.......",
+    "....KNNNNNNKFFFJJK........",
+    ".....KKKKKKKFFKK..........",
+    "....KKIIIIIIIIIKK.........",
+    "...KIIHHHHIIIIIHIK....W...",
+    "..KIIHHHHIIOOOIHIK...WH...",
+    "..KIIIIIINNOOONIIK..WHB...",
+    ".KIIIINNNNNNOONNNK.WHB....",
+    ".KIIINNNNNNNNNNNK.WHB.....",
+    "..KKKNNNNNNNNNNK.KYK......",
+    "....KNNNNNNNNNK..K........",
+    "....KNNNNNNNNNK...........",
+    "....KNNNNKKNNNK...........",
+    "....KNNNK..KNNK...........",
+    "....KNNNK..KNNK...........",
+    "....KDDDK..KDDK...........",
+    "....KDDDK..KDDK...........",
+    "....KWWWK..KWWK...........",
+    "...KRRRRK..KRRRRK.........",
+    "...KKKKKK..KKKKKK.........",
+    "..........................",
 )
 
-PIXEL_SUN: tuple[str, ...] = (
-    "...AA...",
-    ".Y.YY.Y.",
-    "..AAAA..",
-    "AYYYYYYA",
-    "AYYYYYYA",
-    "..AAAA..",
-    ".Y.YY.Y.",
-    "...AA...",
+# 24x20 Shaded GBA Starter Companion ("Sparklynx" crouched facing up-right with curled tail & bright catchlight eye)
+COMPANION_FOX: tuple[str, ...] = (
+    "............KK....KK....",
+    "...........KLLK..KGGK...",
+    ".KKKK......KLGK..KGEK...",
+    "KLLLLKK....KGGKKKKGEK...",
+    "KLLGGGGK..KGGGGGGGGGEK..",
+    ".KGGGEEEKKGGGGGGGGGGWK..",
+    "..KKGEEEKGGGGGLLLGGKWWK.",
+    "....KGGGKGGGGGLLLGKKKK..",
+    ".....KGGGEEEEGGGGGGGGK..",
+    "......KGGGGGGGGGGGYYGK..",
+    "......KGGGGGGGGGGGGGGK..",
+    ".....KGGGGGGGGGGEEEEGK..",
+    ".....KGGGEEGGGGEEEEEEKK.",
+    ".....KGGK.KGGGKEEEKK....",
+    "....KGGK..KGGK.KGGK.....",
+    "....KLLK..KLLK.KLLK.....",
+    "....KKKK..KKKK.KKKK.....",
+    "........................",
+    "........................",
+    "........................",
 )
 
-PIXEL_CLOUD: tuple[str, ...] = (
-    "....CCCC......",
-    "..CCCCCCCC....",
-    ".CCCCCCCCCC...",
-    "CCCCCCCCCCCCCC",
-    ".SSSSSSSSSSSS.",
-)
-
-# 20x16 Right-Facing Side-Profile Hooded Hero swinging an angled cyan plasma blade
-HERO_ARCHITECT: tuple[str, ...] = (
-    ".....KKKKKK.........",
-    "....KIIIIIIKK.......",
-    "...KIIIIHHHHIK......",
-    "..KIIIIIKKKKKK......",
-    "..KIIIIKHHHHBK....W.",
-    "..KIIIIKKKKKK....WH.",
-    "...KKIIKFFKK....WHB.",
-    "..KKIIIIINNNK..WHB..",
-    ".KIIIIIINNNNNKWHB...",
-    "KIIIINNNNNNNNYKB....",
-    "KIIKNNNNNNNNKYK.....",
-    ".KK.KNNNNNNNK.......",
-    "....KNNNNKNNK.......",
-    "....KNNK..KNNK......",
-    "...KNNK....KNNK.....",
-    "...KKKK....KKKK.....",
-)
-
-# 9x9 Side-Facing Emerald Spark Familiar (facing right)
-COMPANION_SPARK: tuple[str, ...] = (
-    "...KKKK..",
-    "..KLLLLK.",
-    ".KGGGGGGK",
-    "KGGGGGWGK",
-    "KGGGGGGGK",
-    "KGGEEEEGK",
-    ".KKEEEEK.",
-    "..KKKKKK.",
-    ".........",
-)
-
-# 8x5 Arcing Pixel Blade Wave (rightward) & Boss Ember Blast (leftward)
-HERO_WAVE: tuple[str, ...] = (
-    "..KKK...",
-    ".BHHWK..",
-    "BBHHWWK.",
-    ".BHHWK..",
-    "..KKK...",
-)
-
-BOSS_WAVE: tuple[str, ...] = (
-    "...KKK..",
-    "..KYYRR.",
-    ".KAAYYRM",
-    "..KYYRR.",
-    "...KKK..",
-)
-
-# 7x7 Pixel Impact Spark
-SWORD_CLASH: tuple[str, ...] = (
-    "...R...",
-    ".R.A.R.",
-    "..RYR..",
-    "RAYWYAR",
-    "..RYR..",
-    ".R.A.R.",
-    "...R...",
-)
-
-# 22x16 Left-Facing Side-Profile Boss Sprites (tail/wings right, jaws/weapon left)
+# 34x26 Shaded Pokémon GBA Bosses facing down-left toward Player (full 26-row height)
 BOSS_SPRITES: dict[str, tuple[str, ...]] = {
     "nullpointer_wyrm": (
-        "......KK...KK...KK....",
-        ".....KRRK.KRYKKMMMK...",
-        "....KRRRRKKRYYMMMMMK..",
-        "..KKRWWYRRRRRMMMMMMMM.",
-        ".KRRRRRRRRRRRMMMMKMMMK",
-        "KRRRRMMMMRRRRMMMM.KMK.",
-        "KWWK.KRRRRYYYMMMM.....",
-        ".KK...KRRRYYYYMMK.....",
-        "......KRRRYYYYRRK.....",
-        ".....KMRRRYYYYRRK.....",
-        "....KMRRRRRRRRRRRK....",
-        "...KMMK.KRRRRRKMRRK...",
-        "...KKK..KMRK.KKRMMMK..",
-        "........KMK....KMRRK..",
-        ".......KMMK.....KKKK..",
-        ".......KKKK...........",
+        "......ZZ........ZZ......ZZZZZ.....",
+        ".....ZRRZ......ZRZZ...ZZMMMMMZ....",
+        "....ZRTTRZ....ZRTZZ..ZMMMMMMMMZ...",
+        "...ZRRRRRRZZZZRRRRZ.ZMMMMRRMMMMZ..",
+        "..ZRRRRRAAARRRRRRRZ.ZMMMZZRMMMMZ..",
+        ".ZRRRRAAWWWRRRRRRRZ.ZMMZ..ZZMMZ...",
+        "ZRRRRRKKKKRRRRRRRRZZZMZ.....ZZ....",
+        "ZRRWWWRRRRRRYYYYRRRZZZ............",
+        ".ZZWWZ.ZRRRRYYYYYYRZ..............",
+        "...ZZ...ZRRRYYAAYYRZZ........ZZ...",
+        ".......ZMRRRYYAAYYRMMZ......ZRMZ..",
+        "......ZMMRRRYYYYYYRRMMZ....ZRRRMZ.",
+        ".....ZMMRRRRYYYYYYRRRMMZ..ZRRRRMMZ",
+        "....ZMMRRRRRRRRRRRRRRRMMZZRRMMMMZ.",
+        "....ZMMRRRRMMRRRRMMRRRRMMMMRRMMZ..",
+        ".....ZMMMRRMMZ..ZMMRRRRRRRRRMMZ...",
+        "......ZMMRRMMZ...ZMMMRRRRRRMMZ....",
+        "......ZMMZZMMZ....ZMMMRRRRMMZ.....",
+        ".....ZMMZ..ZMMZ....ZZMMMMMMZ......",
+        ".....ZMRZ..ZMRZ......ZZZZZZ.......",
+        "....ZRRZ....ZRRZ..................",
+        "....ZYYZ....ZYYZ..................",
+        "....ZZZZ....ZZZZ..................",
+        "..................................",
+        "..................................",
+        "..................................",
     ),
     "merge_golem": (
-        ".....KKKKKKKK.........",
-        "....KSSSSSSSSKK.......",
-        "...KSDDDDDDDDSSK......",
-        "...KSDAAKAAKDDDSK.....",
-        "..KKSDDDDDDDDDSSKK....",
-        ".KSSSDDDYYYYDDDSSSK...",
-        "KSSSKSDDYAAYDDSSDDDK..",
-        "KDDKKSDDYYYYDDSSDDDK..",
-        "KKKK.KSDDDDDDDSSDDK...",
-        "......KSSSSSSSSSSK....",
-        ".....KSSDDDDDDSSSK....",
-        ".....KSDDK..KDDDSK....",
-        "....KSSDK....KDDSSK...",
-        "....KSSK......KSSSK...",
-        "...KKKKK......KKKKK...",
-        "......................",
+        "..........KKKKKKKKKK..............",
+        "........KKSSSSSSSSSSKK............",
+        "......KKSSWWWWSSSSDDSSKK..........",
+        ".....KSSWWSSSSSSSDDDDDSSK.........",
+        "....KSSKKKKKKKKKKDDDDDDDSK........",
+        "...KSSKAAAAKKAAAAKDDDDDDDSK.......",
+        "...KSSKYYYYKKYYYYKDDDDDDDDSSKK....",
+        "..KSSSKKKKKKKKKKKKSSDDDDDDDDSSK...",
+        ".KSSDDSSSSSSSSSSSSDDSSDDDDSSDDDK..",
+        "KSSSDDDSSYYYYYYSSSDDSSDDDDSSDDDK..",
+        "KSDDDDDSSYYAAYYSSSDDDDDDDDSSDDDK..",
+        "KSDDDDDSSYYYYYYSSSDDDDDDDDSSDDDK..",
+        "KSSDDKKSSSSSSSSSSSDDDDDDDSSSDDDK..",
+        ".KKKK.KSSDDDDDDDDDDDDDDSSSDDDKK...",
+        "......KSSDDDDDDDDDDDDDDSSSSKK.....",
+        "......KSSDDDDKKKKKKDDDDSSSK.......",
+        "......KSSDDDK......KDDDDSSK.......",
+        ".....KSSDDDK........KDDDSSK.......",
+        ".....KSSDDK..........KDDSSK.......",
+        ".....KSSDDK..........KDDSSK.......",
+        "....KSSDDK............KDDSSK......",
+        "....KSSSK..............KSSSK......",
+        "....KKKKK..............KKKKK......",
+        "..................................",
+        "..................................",
+        "..................................",
     ),
     "hallucination_phantom": (
-        ".....KKKKKKK..........",
-        "...KKPPPPPPPKK........",
-        "..KPPPVVVVVPPPK.......",
-        ".KPPVPKWWPKVPPPK......",
-        ".KPPPKKHHKKVPPPK......",
-        ".KPPPPPPPPPVPPPK......",
-        "KPPVK.KPPPPVVPPPK.....",
-        "KHHK...KPPPVVVPPPK....",
-        ".KK....KPPPPVVVPPPK...",
-        ".......KPPPVVVVVPPPK..",
-        "......KPPPKVPPPKKPPPK.",
-        "......KPPK.KPPK..KPK..",
-        ".....KPPK..KVK....K...",
-        ".....KPK...KK.........",
-        "......K...............",
-        "......................",
+        "...........QQQQQQQQQ..............",
+        "........QQQPPPPPPPPPQ.............",
+        "......QQPPUUUUPPPPPPPPQ...........",
+        ".....QPPPUUPPPPPPPPPPPPQ..........",
+        "....QPPPPQQQQQQPPPPQQQPPQ.........",
+        "...QPPPPQRRRRWWQPPQWWQPPPQ........",
+        "...QPPPPQRRRRKKQPPQKKQPPPQ........",
+        "..QPPPPPPQQQQQQPPPPQQQPPPPQ.......",
+        "..QPPVVPPPPPPPPPPPPPPPVVPPPQ......",
+        ".QPPVQ.QPPVVWWWWWWWWVVPPPPPPQ.....",
+        "QHHQQ..QPPVVVVWWWWVVVPPVVPPPPQ....",
+        ".QQ.....QPPVVVVVVVVVPPVVVVPPPQ....",
+        "........QPPVVVVVVVVPPPVVVVPPPQ....",
+        "........QPPPVVVVVVVPPPPVVVPPQ.....",
+        "........QPPPVVVVVVVPPPPVVPPQ......",
+        ".......QPPPQPPVVVVPPQQPPPPPPQ.....",
+        "......QPPPQ.QPVVVPQ..QPPQQPPPQ....",
+        "......QPPQ...QPVPQ....QQ..QPPQ....",
+        ".....QPPQ.....QPVQ.........QPQ....",
+        ".....QPQ.......QQ...........Q.....",
+        "......Q...........................",
+        "..................................",
+        "..................................",
+        "..................................",
+        "..................................",
+        "..................................",
     ),
     "legacy_monolith": (
-        "...KK.KK.KK.KK........",
-        "..KKKKKKKKKKKKK.......",
-        "..KDDDDDDDDDDDK.......",
-        "..KDDADDDDDADDK.......",
-        "..KDDDDDDDDDDDK.......",
-        ".KDDKRRRRRRRKDDK......",
-        ".KDDKRWWWWWRKDDK......",
-        ".KDDKRWKKKWRKDDK......",
-        ".KDDKRRRRRRRKDDK......",
-        "..KDDDDGGDDDDDK.......",
-        "..KDDGGGGGGGGDK.......",
-        "..KDDSSSSSSSSDK.......",
-        ".KDDSSKKKKKKSSDK......",
-        ".KDDSSK....KSSDK......",
-        ".KKKKKKKKKKKKKKK......",
-        "......................",
+        ".......KK..KKKKKK..KK.............",
+        "......KDDKKDDDDDDKKDDK............",
+        ".....KDDSSDDDDDDDDSSDDK...........",
+        ".....KDDDDAAAADDDDDDDDK...........",
+        ".....KDDDDYYYYDDDDDDDDK...........",
+        "....KDDKKKRRRRRRKKKDDDDK..........",
+        "...KDDDKRRWWAAWWRRKDDDDDK.........",
+        "...KDDDKRRWKKKKWRRKDDDDDK.........",
+        "....KDDKKKRRRRRRKKKDDDDK..........",
+        ".....KDDDDGGDDDDGGDDDDK...........",
+        ".....KDDDDLLGGGGLLDDDDK...........",
+        ".....KDDDDGGDDDDGGDDDDK...........",
+        ".....KDDDDDDDDDDDDDDDDK...........",
+        ".....KDDSSSSSSSSSSSSDDK...........",
+        "....KDDSSSDDDDDDDDSSSDDK..........",
+        "....KDDSSSDDDDDDDDSSSDDK..........",
+        "....KDDSSK.KDDDDK..KSSDK..........",
+        "....KDDSSK.KDDDDK..KSSDK..........",
+        "....KDDSSK.KDDDDK..KSSDK..........",
+        "....KDDSSK.KDDDDK..KSSDK..........",
+        "....KKKKKK.KKKKKK..KKKKK..........",
+        "..................................",
+        "..................................",
+        "..................................",
+        "..................................",
+        "..................................",
     ),
 }
 
-# 10x10 Achievement Badge Sprites (rendered cleanly at 3x = 30x30)
+# 10x10 Achievement Badge Sprites (rendered at 2px inside Pokedex slots = 20x20)
 QUEST_SPRITES: dict[str, tuple[str, ...]] = {
     "genesis_commit": (
         "....KK....",
@@ -370,10 +380,19 @@ QUEST_SPRITES: dict[str, tuple[str, ...]] = {
 }
 
 
+def sprite_bounds(grid: tuple[str, ...], *, scale: int = 2) -> tuple[int, int]:
+    """Return actual rendered (width, height) of non-empty pixel rows."""
+    non_empty_rows = [idx for idx, r in enumerate(grid) if any(ch != "." and ch in SPRITE_PALETTE for ch in r)]
+    if not non_empty_rows:
+        return 0, 0
+    max_col = max((len(r) for r in grid), default=0)
+    return max_col * scale, (max(non_empty_rows) + 1) * scale
+
+
 def compile_pixel_grid(
     grid: tuple[str, ...],
     *,
-    scale: int = 4,
+    scale: int = 2,
     ox: int = 0,
     oy: int = 0,
     locked_color: str | None = None,
