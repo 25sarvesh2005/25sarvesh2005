@@ -110,10 +110,10 @@
   <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">BUFF +0</text>
 
   <!-- Gen-3 Thin Blue EXP Strip -->
-  <text x="498" y="229" class="mono" font-size="9" fill="#9AAAD0">913/12m · 3,898 XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="#9AAAD0">913/12m · 3,905 XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#38BDF8">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="#253048"/>
-  <rect x="658" y="223" width="134.26" height="5" rx="1.5" fill="#38BDF8"/>
+  <rect x="658" y="223" width="136.08" height="5" rx="1.5" fill="#38BDF8"/>
 
   <!-- Natural Shaded 2px GBA Sprites -->
   <g class="bob-enemy" shape-rendering="crispEdges">
