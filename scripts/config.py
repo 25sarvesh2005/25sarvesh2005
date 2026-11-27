@@ -1,4 +1,4 @@
-"""Configuration, RPG color palettes, XP weights, quest badges, and featured cartridges."""
+"""Configuration, RPG color palettes, XP weights, and quest definitions."""
 
 from __future__ import annotations
 
@@ -29,47 +29,44 @@ DEFAULT_LANGUAGE_COLOR = "#8B949E"
 THEMES: dict[str, dict[str, str]] = {
     "dark": {
         "name": "Midnight Cartridge",
-        "bg_canvas": "#0B0F17",
-        "bg_stage": "#080C17",
-        "bg_stage_top": "#070A14",
-        "bg_stage_bot": "#121A30",
-        "bg_card": "#101624",
-        "bg_panel": "#172034",
-        "bg_track": "#222C47",
-        "bg_chip": "#11192B",
-        "border": "#36456A",
-        "border_hi": "#5A72AD",
-        "text_primary": "#F1F5FF",
-        "text_muted": "#9AAAD0",
-        "text_subtle": "#6E7FA8",
+        "bg_canvas": "#0D1117",
+        "bg_stage": "#0A0E19",
+        "bg_stage_top": "#090D18",
+        "bg_stage_bot": "#131B2E",
+        "bg_card": "#111622",
+        "bg_panel": "#171E2E",
+        "bg_track": "#232D45",
+        "border": "#303B56",
+        "border_hi": "#4A5B82",
+        "text_primary": "#E6EDF7",
+        "text_muted": "#93A3C2",
+        "text_subtle": "#687899",
         "accent_primary": "#38BDF8",
-        "accent_pill_text": "#09101F",
+        "accent_pill_text": "#0A101D",
         "accent_signal": "#34D399",
         "accent_amber": "#FBBF24",
         "accent_boss": "#F43F5E",
         "accent_arcane": "#A78BFA",
-        "star": "#6474A8",
-        "ground": "#1E2842",
-        "ground_alt": "#182138",
-        "horizon": "#131C32",
-        "horizon_lit": "#FBBF24",
-        "scanline": "#000000",
+        "star": "#5B6B94",
+        "ground": "#1B2338",
+        "ground_edge": "#2A3654",
+        "horizon": "#12192A",
+        "shadow": "#05070E",
     },
     "light": {
         "name": "Pocket Parchment",
         "bg_canvas": "#FFFFFF",
-        "bg_stage": "#F0E5CC",
-        "bg_stage_top": "#F5ECD8",
-        "bg_stage_bot": "#E3D4B2",
-        "bg_card": "#FAF6EA",
-        "bg_panel": "#F3EAD5",
-        "bg_track": "#DFD3B4",
-        "bg_chip": "#EAE0C6",
-        "border": "#8C7A58",
-        "border_hi": "#6A5A3E",
-        "text_primary": "#201D1E",
-        "text_muted": "#594D39",
-        "text_subtle": "#786A50",
+        "bg_stage": "#EDE4CE",
+        "bg_stage_top": "#F4ECDA",
+        "bg_stage_bot": "#E3D6B8",
+        "bg_card": "#FAF6EC",
+        "bg_panel": "#F2EAD6",
+        "bg_track": "#DFD4B8",
+        "border": "#9C8B6B",
+        "border_hi": "#78674A",
+        "text_primary": "#1F1D1E",
+        "text_muted": "#5A4F3C",
+        "text_subtle": "#7D6F56",
         "accent_primary": "#1D4ED8",
         "accent_pill_text": "#FFFFFF",
         "accent_signal": "#15803D",
@@ -77,11 +74,10 @@ THEMES: dict[str, dict[str, str]] = {
         "accent_boss": "#BE123C",
         "accent_arcane": "#6D28D9",
         "star": "#B8A985",
-        "ground": "#D9CBA7",
-        "ground_alt": "#CEBF98",
-        "horizon": "#DECFA9",
-        "horizon_lit": "#D97706",
-        "scanline": "#8C7A58",
+        "ground": "#D6C8A5",
+        "ground_edge": "#B9A882",
+        "horizon": "#DDD0B0",
+        "shadow": "#8C7B5B",
     },
 }
 
@@ -215,122 +211,23 @@ QUEST_SPECS: tuple[QuestSpec, ...] = (
     ),
 )
 
-# Quest rarity styling mapped to theme accent keys
-QUEST_RARITY: dict[str, tuple[str, str]] = {
-    "genesis_commit": ("RARE", "accent_signal"),
-    "shipwright": ("RARE", "accent_signal"),
-    "first_merge": ("RARE", "accent_signal"),
-    "week_sprint": ("RARE", "accent_primary"),
-    "doc_architect": ("EPIC", "accent_arcane"),
-    "ci_guardian": ("EPIC", "accent_primary"),
-    "polyglot_stack": ("EPIC", "accent_arcane"),
-    "fortnight_streak": ("EPIC", "accent_arcane"),
-    "club_500": ("LEGEND", "accent_amber"),
-    "builder_1k": ("LEGEND", "accent_amber"),
-    "os_ally": ("LEGEND", "accent_amber"),
-    "community_signal": ("LEGEND", "accent_amber"),
+# Higher-tier quest supersedes lower tier on the summary card once unlocked.
+SUPERSEDED_QUESTS: dict[str, str] = {
+    "club_500": "builder_1k",
+    "week_sprint": "fortnight_streak",
 }
 
-
-@dataclass(frozen=True)
-class CartridgeSpec:
-    """Featured flagship repository rendered as a clickable Pixel Quest Cartridge."""
-
-    slug: str
-    repo_name: str
-    title: str
-    sprite_key: str
-    accent_key: str
-    line1: str
-    line2: str
-    stack_label: str
-    live_url: str = ""
-
-
-FEATURED_CARTRIDGES: tuple[CartridgeSpec, ...] = (
-    CartridgeSpec(
-        slug="reposcore",
-        repo_name="REPO-Score",
-        title="RepoScore",
-        sprite_key="shield_core",
-        accent_key="accent_primary",
-        line1="Hardened Docker sandbox + AST/Semgrep/OSV",
-        line2="Deterministic 10-dimension repo evaluator",
-        stack_label="Python · FastAPI · Next.js · Docker",
-    ),
-    CartridgeSpec(
-        slug="whitfield-wms",
-        repo_name="WAREHOUSE-MANAGEMENT-SYSTEM",
-        title="Whitfield WMS",
-        sprite_key="crate_ledger",
-        accent_key="accent_signal",
-        line1="Double-entry SELECT FOR UPDATE ledger",
-        line2="FastMCP server & multi-modal voice intake",
-        stack_label="Python · FastAPI · React 19 · PostgreSQL",
-        live_url="https://warehouse-management-system-jade-seven.vercel.app",
-    ),
-    CartridgeSpec(
-        slug="revenueos",
-        repo_name="RevenueOS",
-        title="RevenueOS",
-        sprite_key="chart_core",
-        accent_key="accent_amber",
-        line1="Kimball star-schema ETL & DAX compiler",
-        line2="Automated .pbit Power BI + Electron studio",
-        stack_label="Python · Electron · FastAPI · PostgreSQL",
-    ),
-    CartridgeSpec(
-        slug="verirag",
-        repo_name="VeriRAG",
-        title="VeriRAG",
-        sprite_key="prism_rag",
-        accent_key="accent_arcane",
-        line1="Dual dense + BM25 RRF hybrid retriever",
-        line2="Cross-encoder reranking & claim verdicts",
-        stack_label="Python · FastAPI · PyTorch · Transformers",
-    ),
-    CartridgeSpec(
-        slug="citycare",
-        repo_name="CityCareClinic",
-        title="CityCare Clinic",
-        sprite_key="clinic_core",
-        accent_key="accent_boss",
-        line1="Multi-tenant clinical booking platform",
-        line2="ChromaDB RAG, FastMCP & Telegram bot",
-        stack_label="Python · React 19 · TanStack · MongoDB",
-    ),
-    CartridgeSpec(
-        slug="smartris",
-        repo_name="SMARTRIS",
-        title="SmartRIS",
-        sprite_key="wave_array",
-        accent_key="accent_primary",
-        line1="Reconfigurable Intelligent Surface & 6G",
-        line2="Holographic beamforming physics simulator",
-        stack_label="Python · FastAPI · React · TypeScript",
-        live_url="https://smartris.vercel.app",
-    ),
-)
-
-ARMORY_SLOTS: tuple[tuple[str, str, tuple[str, ...]], ...] = (
-    (
-        "BACKEND & STORAGE",
-        "accent_primary",
-        ("Python", "FastAPI", "Pydantic v2", "SQLAlchemy", "PostgreSQL", "MongoDB", "Redis"),
-    ),
-    (
-        "AI & VERIFICATION",
-        "accent_arcane",
-        ("Gemini", "PyTorch", "SentenceTransformers", "BM25", "ChromaDB", "FastMCP", "Playwright"),
-    ),
-    (
-        "FRONTEND & DESKTOP",
-        "accent_amber",
-        ("TypeScript", "React 19", "Next.js", "TanStack", "Vite", "Tailwind CSS", "Electron"),
-    ),
-    (
-        "INFRA & CI GATES",
-        "accent_signal",
-        ("Docker", "GitHub Actions", "Pytest", "Ruff", "Mypy", "ESLint"),
-    ),
-)
+QUEST_PLAIN_LABELS: dict[str, str] = {
+    "genesis_commit": "yrs on GitHub",
+    "shipwright": "public builds",
+    "doc_architect": "documented repos",
+    "ci_guardian": "CI-gated repos",
+    "polyglot_stack": "core languages",
+    "club_500": "contributions",
+    "builder_1k": "contributions",
+    "week_sprint": "day streak",
+    "fortnight_streak": "day streak",
+    "first_merge": "merged PRs",
+    "os_ally": "external PRs",
+    "community_signal": "external stars",
+}

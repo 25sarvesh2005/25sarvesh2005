@@ -1,4 +1,4 @@
-"""Pure-SVG integer pixel-art sprite compiler with horizontal run-length merging."""
+"""Pure-SVG uniform-grid pixel-art sprite compiler with horizontal run-length merging."""
 
 from __future__ import annotations
 
@@ -17,45 +17,43 @@ class PixelRect:
 
 
 SPRITE_PALETTE: dict[str, str] = {
-    "K": "#141824",  # dark ink outline
-    "U": "#0B1120",  # deep obsidian shadow
+    "K": "#121622",  # ink outline
     "W": "#F8FAFC",  # crisp highlight white
     "S": "#94A3B8",  # steel / slate
-    "D": "#475569",  # dark steel / shadow
+    "D": "#475569",  # dark steel / stone
     "H": "#7DD3FC",  # plasma cyan highlight
-    "B": "#38BDF8",  # hero cyan / visor
-    "I": "#1D4ED8",  # deep cobalt armor/cloak
-    "N": "#1E293B",  # dark cloak body
-    "F": "#FDBA74",  # warm skin tone
-    "L": "#A7F3D0",  # mint lime glow
-    "G": "#34D399",  # emerald / green
+    "B": "#38BDF8",  # hero cyan
+    "I": "#1D4ED8",  # cobalt cloak
+    "N": "#1E293B",  # dark armor
+    "F": "#FDBA74",  # skin tone
+    "L": "#A7F3D0",  # mint lime highlight
+    "G": "#34D399",  # emerald
     "E": "#059669",  # deep emerald
-    "A": "#FEF08A",  # bright solar yellow
-    "Y": "#FBBF24",  # gold / amber
+    "A": "#FEF08A",  # solar flare yellow
+    "Y": "#FBBF24",  # amber gold
     "O": "#D97706",  # deep gold / wood
     "T": "#FDA4AF",  # bright rose highlight
-    "R": "#F43F5E",  # crimson / fire
-    "M": "#9F1239",  # dark crimson
+    "R": "#F43F5E",  # crimson fire
+    "M": "#9F1239",  # deep crimson
     "P": "#A78BFA",  # arcane purple
     "V": "#6D28D9",  # deep violet
-    "C": "#FFFFFF",  # crisp cloud white
+    "C": "#FFFFFF",  # cloud white
 }
 
-# 6x10 Wall Torch (scenery)
+# 5x9 Wall Torch (uniform 4px world scale -> 20x36)
 WALL_TORCH: tuple[str, ...] = (
-    "..AA..",
-    ".AYYA.",
-    ".RYYR.",
-    ".MRRM.",
-    ".KKKK.",
-    ".KODK.",
-    "..KK..",
-    "..KK..",
-    "..KK..",
-    "......",
+    "..A..",
+    ".AYY.",
+    ".RYY.",
+    ".MRM.",
+    "KKKKK",
+    ".KOD.",
+    "..K..",
+    "..K..",
+    "..K..",
 )
 
-# 8x8 Crescent Moon (dark sky) & Sun / Cloud (light sky)
+# 8x8 Sky Celestials & Cloud
 PIXEL_MOON: tuple[str, ...] = (
     "..AAAA..",
     ".AYYY...",
@@ -86,271 +84,144 @@ PIXEL_CLOUD: tuple[str, ...] = (
     ".SSSSSSSSSSSS.",
 )
 
-# 8x8 Cozy Coding Desk Mug
-COFFEE_MUG: tuple[str, ...] = (
-    "........",
-    "........",
-    ".WWWWWW.",
-    ".WOOOOOW",
-    ".WWWWWWW",
-    ".WWWWWW.",
-    ".WSSSSW.",
-    ".KKKKKK.",
-)
-
-# 7x7 Pixel Padlock (for locked badge corners)
-PIXEL_PADLOCK: tuple[str, ...] = (
-    "..SSS..",
-    ".S...S.",
-    ".S...S.",
-    "KKKKKKK",
-    "KSSSSSK",
-    "KSSKSSK",
-    "KKKKKKK",
-)
-
-# 12x10 Dual-Monitor Cyber Shrine & 8x12 Server Rack (Trainer Portrait Diorama)
-CYBER_TERMINAL: tuple[str, ...] = (
-    "KKKKKKKKKKKK",
-    "KUUUUUUUUUUK",
-    "KUHHHKBGGGGK",
-    "KUUUUUUUUUUK",
-    "KUBBBUHYYYYK",
-    "KUUUUUUUUUUK",
-    "KKKKKKKKKKKK",
-    "....KKKK....",
-    "..KKKKKKKK..",
-    "............",
-)
-
-SERVER_RACK: tuple[str, ...] = (
-    "KKKKKKKK",
-    "KDDDDDDK",
-    "KDGGGGDK",
-    "KDDDDDDK",
-    "KDBBBBDK",
-    "KDDDDDDK",
-    "KDYYYYDK",
-    "KDDDDDDK",
-    "KDGGGGDK",
-    "KDDDDDDK",
-    "KKKKKKKK",
-    "........",
-)
-
-# 8x8 Energy Clash Spark (high-contrast on both light & dark arenas)
-SWORD_CLASH: tuple[str, ...] = (
-    "...RR...",
-    ".R.AA.R.",
-    "..RYYR..",
-    "RYAWWAYR",
-    "..RYYR..",
-    ".R.AA.R.",
-    "...RR...",
-    "........",
-)
-
-# 18x18 Hooded Cyber-Architect wielding an energized cyan plasma blade
+# 20x16 Right-Facing Side-Profile Hooded Hero swinging an angled cyan plasma blade
 HERO_ARCHITECT: tuple[str, ...] = (
-    "......KKKKKK......",
-    ".....KIIIIIIK.....",
-    "....KIIHHHHIIK....",
-    "....KIKKKKKKIK....",
-    "....KIKHHHHKIK..W.",
-    "....KIKBBBBKIK..WH",
-    ".....KKFFFFKK..WHB",
-    "....KNNNNNNNK..HB.",
-    "...KNNIIIIINNK.HB.",
-    "..KNNYIIIIINYKBW..",
-    "..KNKIIIIIIKNKY...",
-    "..KKNIIIIIIKNNK...",
-    "...KNNNNNNNNNK....",
-    "....KNNNNNNNK.....",
-    "....KNNK.KNNK.....",
-    "....KNNK.KNNK.....",
-    "....KKK...KKK.....",
-    "..................",
+    ".....KKKKKK.........",
+    "....KIIIIIIKK.......",
+    "...KIIIIHHHHIK......",
+    "..KIIIIIKKKKKK......",
+    "..KIIIIKHHHHBK....W.",
+    "..KIIIIKKKKKK....WH.",
+    "...KKIIKFFKK....WHB.",
+    "..KKIIIIINNNK..WHB..",
+    ".KIIIIIINNNNNKWHB...",
+    "KIIIINNNNNNNNYKB....",
+    "KIIKNNNNNNNNKYK.....",
+    ".KK.KNNNNNNNK.......",
+    "....KNNNNKNNK.......",
+    "....KNNK..KNNK......",
+    "...KNNK....KNNK.....",
+    "...KKKK....KKKK.....",
 )
 
-# 10x10 Cute Terminal Spark Companion
+# 9x9 Side-Facing Emerald Spark Familiar (facing right)
 COMPANION_SPARK: tuple[str, ...] = (
-    "...KKKK...",
-    "..KLLLLK..",
-    ".KGGGGGGK.",
-    "KGGWGGWGGK",
-    "KGGKGGKGGK",
-    "KGGGGGGGGK",
-    "KGGEEEEGGK",
-    ".KKEEEEKK.",
-    "..KKKKKK..",
-    "..........",
+    "...KKKK..",
+    "..KLLLLK.",
+    ".KGGGGGGK",
+    "KGGGGGWGK",
+    "KGGGGGGGK",
+    "KGGEEEEGK",
+    ".KKEEEEK.",
+    "..KKKKKK.",
+    ".........",
 )
 
-# 16x16 Boss Sprites
+# 8x5 Arcing Pixel Blade Wave (rightward) & Boss Ember Blast (leftward)
+HERO_WAVE: tuple[str, ...] = (
+    "..KKK...",
+    ".BHHWK..",
+    "BBHHWWK.",
+    ".BHHWK..",
+    "..KKK...",
+)
+
+BOSS_WAVE: tuple[str, ...] = (
+    "...KKK..",
+    "..KYYRR.",
+    ".KAAYYRM",
+    "..KYYRR.",
+    "...KKK..",
+)
+
+# 7x7 Pixel Impact Spark
+SWORD_CLASH: tuple[str, ...] = (
+    "...R...",
+    ".R.A.R.",
+    "..RYR..",
+    "RAYWYAR",
+    "..RYR..",
+    ".R.A.R.",
+    "...R...",
+)
+
+# 22x16 Left-Facing Side-Profile Boss Sprites (tail/wings right, jaws/weapon left)
 BOSS_SPRITES: dict[str, tuple[str, ...]] = {
     "nullpointer_wyrm": (
-        "..KK........KK..",
-        ".KRRK......KRRK.",
-        ".KRYRK....KRYRK.",
-        "..KRRKKKKKKRRK..",
-        "..KTRRRRRRRRTK..",
-        ".KRRRRRYYRRRRRK.",
-        ".KRRKWWKKWWKRRK.",
-        ".KRRRRRRRRRRRRK.",
-        "..KRRMMMMMMRRK..",
-        "...KMMMMMMMMK...",
-        "..KMRRRAARRRMK..",
-        ".KMRRYYRRYYRRMK.",
-        ".KMRRRRRRRRRRMK.",
-        "..KKMRRKKRRMKK..",
-        "...KKK....KKK...",
-        "................",
+        "......KK...KK...KK....",
+        ".....KRRK.KRYKKMMMK...",
+        "....KRRRRKKRYYMMMMMK..",
+        "..KKRWWYRRRRRMMMMMMMM.",
+        ".KRRRRRRRRRRRMMMMKMMMK",
+        "KRRRRMMMMRRRRMMMM.KMK.",
+        "KWWK.KRRRRYYYMMMM.....",
+        ".KK...KRRRYYYYMMK.....",
+        "......KRRRYYYYRRK.....",
+        ".....KMRRRYYYYRRK.....",
+        "....KMRRRRRRRRRRRK....",
+        "...KMMK.KRRRRRKMRRK...",
+        "...KKK..KMRK.KKRMMMK..",
+        "........KMK....KMRRK..",
+        ".......KMMK.....KKKK..",
+        ".......KKKK...........",
     ),
     "merge_golem": (
-        "....KKKKKKKK....",
-        "...KSSSSSSSSK...",
-        "..KSSDDDDDDSSK..",
-        "..KSDYYYYYYDSK..",
-        "..KSDYKAAKYDSK..",
-        "..KSDDDDDDDDSK..",
-        ".KKSSDDDDDDSSKK.",
-        "KSSSDDDDDDDDSSSK",
-        "KSDDSSAAAASSDDKK",
-        "KSDDSSSSSSSSDDKK",
-        "KKDDSSDDDDSSDDKK",
-        ".KK.KSDDDDSK.KK.",
-        "....KSDKKDSK....",
-        "...KSSK..KSSK...",
-        "...KKK....KKK...",
-        "................",
+        ".....KKKKKKKK.........",
+        "....KSSSSSSSSKK.......",
+        "...KSDDDDDDDDSSK......",
+        "...KSDAAKAAKDDDSK.....",
+        "..KKSDDDDDDDDDSSKK....",
+        ".KSSSDDDYYYYDDDSSSK...",
+        "KSSSKSDDYAAYDDSSDDDK..",
+        "KDDKKSDDYYYYDDSSDDDK..",
+        "KKKK.KSDDDDDDDSSDDK...",
+        "......KSSSSSSSSSSK....",
+        ".....KSSDDDDDDSSSK....",
+        ".....KSDDK..KDDDSK....",
+        "....KSSDK....KDDSSK...",
+        "....KSSK......KSSSK...",
+        "...KKKKK......KKKKK...",
+        "......................",
     ),
     "hallucination_phantom": (
-        ".....KKKKKK.....",
-        "...KKPPPPPPKK...",
-        "..KPPPVVVVPPPK..",
-        ".KPPVPPPPPPVPPK.",
-        ".KPVPKWWKKWKVPK.",
-        ".KPVPKHHKKHKVPK.",
-        ".KPPPPPPPPPPPPK.",
-        ".KPPVVPPPPVVPPK.",
-        "..KPVVVVVVVVPK..",
-        "..KPPVPPPPVPPK..",
-        ".KPPK.KPPK.KPPK.",
-        ".KPK..KPPK..KPK.",
-        "..K...KVK....K..",
-        ".......K........",
-        "................",
-        "................",
+        ".....KKKKKKK..........",
+        "...KKPPPPPPPKK........",
+        "..KPPPVVVVVPPPK.......",
+        ".KPPVPKWWPKVPPPK......",
+        ".KPPPKKHHKKVPPPK......",
+        ".KPPPPPPPPPVPPPK......",
+        "KPPVK.KPPPPVVPPPK.....",
+        "KHHK...KPPPVVVPPPK....",
+        ".KK....KPPPPVVVPPPK...",
+        ".......KPPPVVVVVPPPK..",
+        "......KPPPKVPPPKKPPPK.",
+        "......KPPK.KPPK..KPK..",
+        ".....KPPK..KVK....K...",
+        ".....KPK...KK.........",
+        "......K...............",
+        "......................",
     ),
     "legacy_monolith": (
-        ".KK.KK.KK.KK.KK.",
-        ".KKKKKKKKKKKKKK.",
-        ".KDDDDDDDDDDDDK.",
-        ".KDDADDDDDDADDK.",
-        ".KDDDDDDDDDDDDK.",
-        ".KDDKRRRRRRKDDK.",
-        ".KDDKRWWWWKRDDK.",
-        ".KDDKRWKKWRKDDK.",
-        ".KDDKRRRRRRKDDK.",
-        ".KDDDDDDDDDDDDK.",
-        ".KDDSSSSSSSSDDK.",
-        ".KDDSSSSSSSSDDK.",
-        ".KDDSSKKKKSSDDK.",
-        ".KDDSSK..KSSDDK.",
-        ".KKKKKKKKKKKKKK.",
-        "................",
+        "...KK.KK.KK.KK........",
+        "..KKKKKKKKKKKKK.......",
+        "..KDDDDDDDDDDDK.......",
+        "..KDDADDDDDADDK.......",
+        "..KDDDDDDDDDDDK.......",
+        ".KDDKRRRRRRRKDDK......",
+        ".KDDKRWWWWWRKDDK......",
+        ".KDDKRWKKKWRKDDK......",
+        ".KDDKRRRRRRRKDDK......",
+        "..KDDDDGGDDDDDK.......",
+        "..KDDGGGGGGGGDK.......",
+        "..KDDSSSSSSSSDK.......",
+        ".KDDSSKKKKKKSSDK......",
+        ".KDDSSK....KSSDK......",
+        ".KKKKKKKKKKKKKKK......",
+        "......................",
     ),
 }
 
-# 12x12 Project Quest Cartridge Icons
-CARTRIDGE_ICONS: dict[str, tuple[str, ...]] = {
-    "shield_core": (
-        "..KKKKKKKK..",
-        ".KBBBBBBBBK.",
-        "KBHHHHHHHHBK",
-        "KBHGGGGGGHBK",
-        "KBHGWGGWGHBK",
-        "KBHGGGGGGHBK",
-        ".KBHHHHHHBK.",
-        ".KBBBBBBBBK.",
-        "..KBBBBBBK..",
-        "...KBBBBK...",
-        "....KKKK....",
-        "............",
-    ),
-    "crate_ledger": (
-        "....KKKK....",
-        "..KKGGGGKK..",
-        ".KGGGGGGGGK.",
-        "KGGLLLLLLGGK",
-        "KOOOOOOOKGGK",
-        "KOYOOOOOKGGK",
-        "KOOOOOOOKGGK",
-        "KOYOOOOOKEEK",
-        ".KOOOOOOEEK.",
-        "..KKKKKKKK..",
-        "............",
-        "............",
-    ),
-    "chart_core": (
-        ".KKKKKKKKKK.",
-        "KUUUUUUUUUUK",
-        "KUUUUUUUYYYK",
-        "KUUUUUUYYYUK",
-        "KUUUBBBYYYUK",
-        "KUUUBBBYYYUK",
-        "KUGGBBBYYYUK",
-        "KUGGBBBYYYUK",
-        "KUGGBBBYYYUK",
-        "KKKKKKKKKKKK",
-        "............",
-        "............",
-    ),
-    "prism_rag": (
-        ".....KK.....",
-        "....KPPK....",
-        "...KPPPPK...",
-        "..KPWWWWPK..",
-        ".KPPWHHWPBK.",
-        "KPPPWHHWPBBK",
-        ".KPPWWWWPBK.",
-        "..KPPGGPPK..",
-        "...KPPPPK...",
-        "....KKKK....",
-        "............",
-        "............",
-    ),
-    "clinic_core": (
-        "..KKKKKKKK..",
-        ".KTTTTTTTTK.",
-        "KTWWWRRWWWTK",
-        "KTWWWRRWWWTK",
-        "KTRRRRRRRRTK",
-        "KTRRRRRRRRTK",
-        "KTWWWRRWWWTK",
-        "KTWWWRRWWWTK",
-        ".KTTTTTTTTK.",
-        "..KKKKKKKK..",
-        "............",
-        "............",
-    ),
-    "wave_array": (
-        ".KK......KK.",
-        "KHHK....KHHK",
-        "KH.K.KK.K.HK",
-        "K..KHBBHK..K",
-        "K..KBBBBK..K",
-        "...KBBBBK...",
-        "....KBBK....",
-        "....KBBK....",
-        "...KDDDDK...",
-        "..KKKKKKKK..",
-        "............",
-        "............",
-    ),
-}
-
-# 10x10 Unique Achievement Pixel Badge Sprites (1 per quest key)
+# 10x10 Achievement Badge Sprites (rendered cleanly at 3x = 30x30)
 QUEST_SPRITES: dict[str, tuple[str, ...]] = {
     "genesis_commit": (
         "....KK....",
@@ -502,7 +373,7 @@ QUEST_SPRITES: dict[str, tuple[str, ...]] = {
 def compile_pixel_grid(
     grid: tuple[str, ...],
     *,
-    scale: int = 3,
+    scale: int = 4,
     ox: int = 0,
     oy: int = 0,
     locked_color: str | None = None,

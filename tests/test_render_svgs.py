@@ -1,4 +1,4 @@
-"""Tests for pure-SVG Pixel RPG rendering, XML validation, and XSS safety."""
+"""Tests for pure-SVG Pixel RPG rendering, milestone filtering, and XSS safety."""
 
 from __future__ import annotations
 
@@ -8,9 +8,8 @@ from pathlib import Path
 import pytest
 
 from scripts.compute_gamification import evaluate_metrics
-from scripts.config import FEATURED_CARTRIDGES
 from scripts.game_engine import apply_visitor_move, init_game_state
-from scripts.render_svgs import render_all_svgs, validate_svg_xml
+from scripts.render_svgs import _select_display_quests, render_all_svgs, validate_svg_xml
 from tests.test_compute_gamification import _sample_raw_metrics
 
 
@@ -31,27 +30,26 @@ def test_render_all_svgs_outputs_valid_pure_svgs(tmp_path: Path) -> None:
 
     paths = render_all_svgs(report, tmp_path, game_state=game_state, raw_metrics=raw)
     names = sorted(p.name for p in paths)
-    expected = sorted(
-        [
-            "hero-dark.svg",
-            "hero-light.svg",
-            "battle-dark.svg",
-            "battle-light.svg",
-            "trainer-dark.svg",
-            "trainer-light.svg",
-            "armory-dark.svg",
-            "armory-light.svg",
-            "snake-banner-dark.svg",
-            "snake-banner-light.svg",
-            *[f"quest-{c.slug}-{mode}.svg" for c in FEATURED_CARTRIDGES for mode in ("dark", "light")],
-        ]
-    )
-    assert names == expected
+    assert names == [
+        "battle-dark.svg",
+        "battle-light.svg",
+        "trainer-dark.svg",
+        "trainer-light.svg",
+    ]
     for p in paths:
         content = p.read_text(encoding="utf-8")
         validate_svg_xml(content)
         assert "<foreignObject" not in content
         assert "<script" not in content
+
+
+def test_select_display_quests_dedupes_superseded_tiers() -> None:
+    raw = _sample_raw_metrics()
+    raw["contributions"]["daily"]["2026-11-24"] = 950  # crosses both 500 Club & 1K Builder
+    report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
+    keys = {q.key for q in _select_display_quests(report)}
+    assert "builder_1k" in keys
+    assert "club_500" not in keys
 
 
 def test_static_action_buttons_are_valid_pure_svgs() -> None:
