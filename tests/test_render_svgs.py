@@ -33,6 +33,8 @@ def test_render_all_svgs_outputs_valid_pure_svgs(tmp_path: Path) -> None:
     assert names == [
         "battle-dark.svg",
         "battle-light.svg",
+        "skill_tree-dark.svg",
+        "skill_tree-light.svg",
         "trainer-dark.svg",
         "trainer-light.svg",
     ]

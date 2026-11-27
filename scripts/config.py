@@ -251,3 +251,181 @@ QUEST_PLAIN_LABELS: dict[str, str] = {
     "os_ally": "external PRs",
     "community_signal": "external stars",
 }
+
+GRADE_THRESHOLDS: tuple[tuple[int, str], ...] = (
+    (94, "S+"),
+    (86, "S"),
+    (74, "A"),
+    (60, "B"),
+    (0, "C"),
+)
+
+RARITY_COLOR_KEYS: dict[str, str] = {
+    "LEGENDARY": "accent_amber",
+    "EPIC": "accent_arcane",
+    "RARE": "accent_primary",
+    "UNCOMMON": "accent_signal",
+}
+
+
+@dataclass(frozen=True)
+class SkillSpec:
+    """Definition of a verifiable node in the GBA RPG Skill Tree."""
+
+    key: str
+    name: str
+    branch: str
+    branch_title: str
+    rarity: str
+    match_languages: tuple[str, ...] = ()
+    match_packages: tuple[str, ...] = ()
+    require_ci: bool = False
+    require_docker: bool = False
+    require_tests: bool = False
+
+
+SKILL_SPECS: tuple[SkillSpec, ...] = (
+    # Branch 1: Backend & Data
+    SkillSpec(
+        key="python",
+        name="Python",
+        branch="backend",
+        branch_title="BACKEND & DATA",
+        rarity="LEGENDARY",
+        match_languages=("Python",),
+    ),
+    SkillSpec(
+        key="fastapi",
+        name="FastAPI / Pydantic",
+        branch="backend",
+        branch_title="BACKEND & DATA",
+        rarity="LEGENDARY",
+        match_packages=("fastapi", "pydantic", "uvicorn"),
+    ),
+    SkillSpec(
+        key="postgres",
+        name="PostgreSQL / SQL",
+        branch="backend",
+        branch_title="BACKEND & DATA",
+        rarity="EPIC",
+        match_packages=("psycopg", "asyncpg", "sqlalchemy", "alembic"),
+    ),
+    SkillSpec(
+        key="nosql_cache",
+        name="MongoDB / Redis",
+        branch="backend",
+        branch_title="BACKEND & DATA",
+        rarity="RARE",
+        match_packages=("redis", "motor", "pymongo", "odmantic"),
+    ),
+    # Branch 2: Applied AI & Agents
+    SkillSpec(
+        key="gemini",
+        name="Gemini GenAI",
+        branch="ai",
+        branch_title="AI & AGENTS",
+        rarity="EPIC",
+        match_packages=("google-genai", "google-generativeai", "langchain-google-genai"),
+    ),
+    SkillSpec(
+        key="rag",
+        name="Hybrid RAG / Chroma",
+        branch="ai",
+        branch_title="AI & AGENTS",
+        rarity="EPIC",
+        match_packages=("chromadb", "rank-bm25", "sentence-transformers", "langchain"),
+    ),
+    SkillSpec(
+        key="fastmcp",
+        name="FastMCP Tools",
+        branch="ai",
+        branch_title="AI & AGENTS",
+        rarity="RARE",
+        match_packages=("fastmcp", "mcp"),
+    ),
+    SkillSpec(
+        key="pytorch",
+        name="PyTorch / SciPy ML",
+        branch="ai",
+        branch_title="AI & AGENTS",
+        rarity="RARE",
+        match_packages=("torch", "scikit-learn", "scipy", "numpy"),
+    ),
+    # Branch 3: Frontend & Apps
+    SkillSpec(
+        key="typescript",
+        name="TypeScript",
+        branch="frontend",
+        branch_title="FRONTEND & APPS",
+        rarity="LEGENDARY",
+        match_languages=("TypeScript",),
+        match_packages=("typescript",),
+    ),
+    SkillSpec(
+        key="react_next",
+        name="React / Next.js",
+        branch="frontend",
+        branch_title="FRONTEND & APPS",
+        rarity="EPIC",
+        match_packages=("react", "next", "@tanstack/"),
+    ),
+    SkillSpec(
+        key="electron",
+        name="Electron Desktop",
+        branch="frontend",
+        branch_title="FRONTEND & APPS",
+        rarity="RARE",
+        match_packages=("electron",),
+    ),
+    SkillSpec(
+        key="kotlin",
+        name="Kotlin / Compose",
+        branch="frontend",
+        branch_title="FRONTEND & APPS",
+        rarity="UNCOMMON",
+        match_languages=("Kotlin",),
+        match_packages=("androidx.compose", "org.jetbrains.kotlin"),
+    ),
+    # Branch 4: Verification & Ops
+    SkillSpec(
+        key="pytest_qa",
+        name="Pytest / Ruff QA",
+        branch="infra",
+        branch_title="TESTING & OPS",
+        rarity="LEGENDARY",
+        match_packages=("pytest", "ruff", "mypy", "eslint"),
+        require_tests=True,
+    ),
+    SkillSpec(
+        key="gh_actions",
+        name="GitHub Actions CI",
+        branch="infra",
+        branch_title="TESTING & OPS",
+        rarity="EPIC",
+        require_ci=True,
+    ),
+    SkillSpec(
+        key="docker",
+        name="Docker Sandbox",
+        branch="infra",
+        branch_title="TESTING & OPS",
+        rarity="EPIC",
+        match_packages=("docker",),
+        require_docker=True,
+    ),
+    SkillSpec(
+        key="playwright",
+        name="Playwright E2E",
+        branch="infra",
+        branch_title="TESTING & OPS",
+        rarity="UNCOMMON",
+        match_packages=("playwright",),
+    ),
+)
+
+BRANCH_META: tuple[tuple[str, str, str], ...] = (
+    ("backend", "BACKEND & DATA", "accent_primary"),
+    ("ai", "AI & AGENTS", "accent_arcane"),
+    ("frontend", "FRONTEND & APPS", "accent_signal"),
+    ("infra", "TESTING & OPS", "accent_amber"),
+)

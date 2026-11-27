@@ -8,10 +8,12 @@ HTML fallback for local testing without secrets.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
 import time
+import tomllib
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -250,9 +252,152 @@ def _fetch_repo_signals(
         "external_stars": external_stars,
         "has_readme": has_readme,
         "has_ci": has_ci,
+        "has_docker": False,
+        "test_file_count": 0,
+        "packages": [],
         "languages": languages,
         "pushed_at": repo.get("pushed_at"),
         "created_at": repo.get("created_at"),
+    }
+
+
+def _normalize_pkg_name(raw_name: str) -> str:
+    """Normalize package identifier cleanly for deterministic skill matching."""
+    cleaned = raw_name.strip().lower().replace("_", "-")
+    return re.sub(r"[^a-z0-9@./-]+", "", cleaned)
+
+
+def _extract_manifest_packages(filename: str, content: str) -> set[str]:
+    """Parse normalized package names from Python, JS/TS, or Kotlin Gradle manifests."""
+    pkgs: set[str] = set()
+    lower = filename.lower()
+
+    if lower.endswith(".txt"):
+        for line in content.splitlines():
+            clean = line.split("#", 1)[0].strip()
+            if not clean or clean.startswith(("-", "--")):
+                continue
+            name = re.split(r"[\s\[=<>!~;@]", clean, maxsplit=1)[0]
+            norm = _normalize_pkg_name(name)
+            if norm:
+                pkgs.add(norm)
+    elif lower.endswith("pyproject.toml"):
+        try:
+            data = tomllib.loads(content)
+        except tomllib.TOMLDecodeError:
+            return pkgs
+        project = data.get("project") or {}
+        deps = list(project.get("dependencies") or [])
+        for extra in (project.get("optional-dependencies") or {}).values():
+            if isinstance(extra, list):
+                deps.extend(extra)
+        for dep in deps:
+            if isinstance(dep, str):
+                name = re.split(r"[\s\[=<>!~;@]", dep.strip(), maxsplit=1)[0]
+                norm = _normalize_pkg_name(name)
+                if norm:
+                    pkgs.add(norm)
+        tools = data.get("tool") or {}
+        for tool_name in ("pytest", "ruff", "mypy"):
+            if tool_name in tools:
+                pkgs.add(tool_name)
+    elif lower.endswith("package.json"):
+        try:
+            data = json.loads(content)
+        except json.JSONDecodeError:
+            return pkgs
+        for section in ("dependencies", "devDependencies", "peerDependencies"):
+            block = data.get(section) or {}
+            if isinstance(block, dict):
+                for pkg_name in block:
+                    norm = _normalize_pkg_name(str(pkg_name))
+                    if norm:
+                        pkgs.add(norm)
+    elif lower.endswith("libs.versions.toml"):
+        try:
+            data = tomllib.loads(content)
+        except tomllib.TOMLDecodeError:
+            return pkgs
+        for lib in (data.get("libraries") or {}).values():
+            if isinstance(lib, dict) and lib.get("group"):
+                norm = _normalize_pkg_name(str(lib["group"]))
+                if norm:
+                    pkgs.add(norm)
+        for plugin in (data.get("plugins") or {}).values():
+            if isinstance(plugin, dict) and plugin.get("id"):
+                norm = _normalize_pkg_name(str(plugin["id"]))
+                if norm:
+                    pkgs.add(norm)
+
+    return pkgs
+
+
+def _fetch_repo_manifest_signals(
+    client: httpx.Client,
+    repo: dict[str, Any],
+    headers: dict[str, str],
+) -> dict[str, Any]:
+    """Inspect repo git tree and manifests for test files, Docker setup, and packages."""
+    if repo.get("size", 0) == 0:
+        return {"has_docker": False, "test_file_count": 0, "packages": []}
+
+    full_name = repo["full_name"]
+    branch = repo.get("default_branch") or "HEAD"
+    tree_resp = _request_with_retry(
+        client,
+        "GET",
+        f"{API_BASE}/repos/{full_name}/git/trees/{branch}?recursive=1",
+        headers=headers,
+    )
+    if tree_resp.status_code in {404, 409}:
+        return {"has_docker": False, "test_file_count": 0, "packages": []}
+    tree_resp.raise_for_status()
+
+    tree_items = tree_resp.json().get("tree") or []
+    paths = [str(item.get("path") or "") for item in tree_items if item.get("type") == "blob"]
+
+    has_docker = any(
+        Path(p).name.lower() == "dockerfile"
+        or Path(p).name.lower().startswith("docker-compose")
+        for p in paths
+    )
+    test_file_count = sum(
+        1
+        for p in paths
+        if "node_modules" not in p
+        and "test" in p.lower()
+        and p.lower().endswith((".py", ".ts", ".tsx", ".js", ".jsx", ".kt"))
+    )
+
+    manifest_paths = [
+        p
+        for p in paths
+        if "node_modules" not in p
+        and (
+            Path(p).name.lower() in {"requirements.txt", "pyproject.toml", "package.json", "libs.versions.toml"}
+        )
+    ][:6]
+
+    packages: set[str] = set()
+    for mp in manifest_paths:
+        resp = _request_with_retry(
+            client,
+            "GET",
+            f"{API_BASE}/repos/{full_name}/contents/{mp}",
+            headers=headers,
+        )
+        if resp.status_code == 200:
+            raw_content = resp.json().get("content") or ""
+            if raw_content:
+                decoded = base64.b64decode(raw_content).decode("utf-8", errors="ignore")
+                packages.update(_extract_manifest_packages(mp, decoded))
+        elif resp.status_code not in {404, 403}:
+            resp.raise_for_status()
+
+    return {
+        "has_docker": has_docker,
+        "test_file_count": test_file_count,
+        "packages": sorted(packages),
     }
 
 
@@ -396,10 +541,11 @@ def collect_github_metrics(username: str = GITHUB_USERNAME, token: str | None = 
 
         repos = _fetch_owned_repos(client, username, headers)
         user_starred = _fetch_user_starred_set(client, username, headers)
-        repo_signals = [
-            _fetch_repo_signals(client, username, repo, headers, user_starred=user_starred)
-            for repo in repos
-        ]
+        repo_signals = []
+        for repo in repos:
+            sig = _fetch_repo_signals(client, username, repo, headers, user_starred=user_starred)
+            sig.update(_fetch_repo_manifest_signals(client, repo, headers))
+            repo_signals.append(sig)
 
         if token:
             try:

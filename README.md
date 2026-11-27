@@ -59,35 +59,34 @@ Additional shipped projects: [**telephony_ai**](https://github.com/25sarvesh2005
 
 ---
 
-### Core Stack
-
-| Area | Tools & Frameworks |
-| :--- | :--- |
-| **Backend & Storage** | `Python` · `FastAPI` · `Pydantic v2` · `SQLAlchemy` · `Alembic` · `PostgreSQL` · `MongoDB` · `Redis` |
-| **AI & Retrieval** | `Google Gemini` · `PyTorch` · `SentenceTransformers` · `BM25` · `ChromaDB` · `FastMCP` · `Playwright` |
-| **Frontend & Desktop** | `TypeScript` · `React 18/19` · `Next.js` · `TanStack` · `Vite` · `Tailwind CSS` · `Electron` |
-| **Testing & Delivery** | `Docker` · `GitHub Actions` · `Pytest` · `Ruff` · `Mypy` · `ESLint` |
-
----
-
-### Pokédex · GitHub Telemetry & Milestones
+### Pokédex · Player Stats, Grade & Language Matrix
 
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" />
-    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" width="100%" alt="Pokédex Developer Registry & Milestones for @25sarvesh2005" />
+    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/trainer-light.svg" width="100%" alt="Pokédex Player Stats, Grade & Language Matrix for @25sarvesh2005" />
+  </picture>
+</div>
+
+### GBA Skill Tree · Rarity & Mastery Status
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/skill_tree-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/skill_tree-light.svg" />
+    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/skill_tree-light.svg" width="100%" alt="GBA RPG Skill Tree, Rarity & Mastery Status for @25sarvesh2005" />
   </picture>
 </div>
 
 <details>
-<summary>Telemetry formula &amp; 20-minute sync details</summary>
+<summary>Grade rubric, skill mastery rules &amp; 20-minute sync details</summary>
 
-[`scripts/fetch_github_data.py`](scripts/fetch_github_data.py) and [`scripts/compute_gamification.py`](scripts/compute_gamification.py) aggregate only repositories owned by `@25sarvesh2005` (excluding forks, external collaborator repos, and self-stars) every 20 minutes via [`.github/workflows/refresh-profile.yml`](.github/workflows/refresh-profile.yml).
+[`scripts/fetch_github_data.py`](scripts/fetch_github_data.py) and [`scripts/compute_gamification.py`](scripts/compute_gamification.py) aggregate only public repositories owned by `@25sarvesh2005` (excluding forks, external collaborator repos, and self-stars) every 20 minutes via [`.github/workflows/refresh-profile.yml`](.github/workflows/refresh-profile.yml), reading real git trees, test files, CI workflows, and dependency manifests (`requirements.txt`, `pyproject.toml`, `package.json`, `libs.versions.toml`).
 
-- **XP formula:** `(Contributions × 2) + (Active Days × 5) + (Merged PRs × 35) + (Documented Repos × 40) + (CI Repos × 60) + (External Stars × 25) + (Languages ≥1% × 50)`
-- **Level curve:** `floor(sqrt(XP / 20)) + 1`
-- **Star & Commit Combat:** Starring `25sarvesh2005/25sarvesh2005` triggers an instant **1-Hit KO** via GitHub Actions `watch`; new portfolio stars on other owned repos trigger KOs on the 20-minute sync, and new commits deal `delta × 3 DMG`.
+- **Grade (`0–100`):** `Output & Consistency (25)` + `CI, Testing & Docs (30)` + `Codebase Depth & Languages (20)` + `Skill Breadth (15)` + `PRs & External Stars (10)` → `S+ ≥ 94`, `S ≥ 86`, `A ≥ 74`, `B ≥ 60`, `C < 60`.
+- **Skill Mastery:** `MASTERED` (`4+` repos & `2+` CI/tested) · `PROFICIENT` (`2–3` verified repos) · `ACTIVE` (`1` tested/shipped repo) · `EXPLORING` (manifest only).
+- **XP & Raid Combat:** `(Contributions × 2) + (Active Days × 5) + (Merged PRs × 35) + (Documented Repos × 40) + (CI Repos × 60) + (External Stars × 25) + (Languages ≥1% × 50)`. Starring `25sarvesh2005/25sarvesh2005` triggers an instant **1-Hit KO** via GitHub Actions `watch`; new portfolio stars also trigger KOs during syncs, and new commits deal `delta × 3 DMG`.
 
 </details>
 

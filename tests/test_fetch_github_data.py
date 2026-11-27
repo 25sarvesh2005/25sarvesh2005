@@ -112,3 +112,25 @@ def test_fetch_user_starred_set_retries_without_auth_on_403(
     assert starred == {"25sarvesh2005/verirag"}
     assert len(calls) == 2
     assert "Authorization" not in calls[1]
+
+
+def test_extract_manifest_packages_parses_python_js_and_gradle() -> None:
+    req = "# comment\nfastapi==0.115.0\ngoogle_genai>=2.0.0\npydantic[email]>=2.9\n"
+    assert {"fastapi", "google-genai", "pydantic"} <= fetch_github_data._extract_manifest_packages(
+        "requirements.txt", req
+    )
+
+    pyp = '[project]\ndependencies = ["httpx>=0.27", "pytest>=8.0"]\n[tool.ruff]\nline-length = 100\n'
+    assert {"httpx", "pytest", "ruff"} <= fetch_github_data._extract_manifest_packages(
+        "pyproject.toml", pyp
+    )
+
+    pkg_json = '{"dependencies": {"react": "^19.0.0", "electron": "^32.0.0"}, "devDependencies": {"typescript": "^5.6.0"}}'
+    assert {"react", "electron", "typescript"} == fetch_github_data._extract_manifest_packages(
+        "package.json", pkg_json
+    )
+
+    gradle = '[libraries]\ncompose = { group = "androidx.compose.ui", name = "ui" }\n'
+    assert "androidx.compose.ui" in fetch_github_data._extract_manifest_packages(
+        "gradle/libs.versions.toml", gradle
+    )

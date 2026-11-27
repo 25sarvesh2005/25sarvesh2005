@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 416" width="840" height="416" role="img" aria-labelledby="skilltree-title-{{ mode }} skilltree-desc-{{ mode }}">
+  <title id="skilltree-title-{{ mode }}">GBA Skill Tree &amp; Tech Mastery Matrix — @{{ report.username }}</title>
+  <desc id="skilltree-desc-{{ mode }}">Verified skill tree across 4 branches showing repository counts, rarity tiers, mastery status, and Grade {{ report.grade }}.</desc>
+  <defs>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Outer GBA Matrix Cartridge Frame -->
+  <rect x="2" y="2" width="836" height="412" rx="6" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
+  <rect x="4" y="4" width="832" height="29" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="4" y1="33" x2="836" y2="33" stroke="{{ theme.border }}" stroke-width="1.2"/>
+  <g shape-rendering="crispEdges">
+    {% for r in header_ball %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+  </g>
+  <text x="32" y="23" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.text_primary }}">GBA Skill Tree &amp; Tech Mastery Matrix · @{{ report.username }}</text>
+  <text x="822" y="23" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="{{ grade_color }}">Rank {{ report.grade }} ({{ report.grade_score }}/100) · {{ mastered_count }} Mastered · {{ active_skill_count }}/16 Verified</text>
+
+  <!-- Root Core Hub Node -->
+  <rect x="242" y="44" width="356" height="46" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ grade_color }}" stroke-width="1.8"/>
+  <rect x="252" y="52" width="36" height="30" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.4"/>
+  <text x="270" y="73" text-anchor="middle" class="sans" font-size="17" font-weight="800" fill="{{ grade_color }}">{{ report.grade }}</text>
+  <text x="298" y="64" class="mono" font-size="10.5" font-weight="700" fill="{{ theme.text_primary }}">CORE SYSTEMS ARCHITECTURE</text>
+  <text x="298" y="79" class="mono" font-size="9" fill="{{ theme.text_muted }}">{{ report.non_empty_owned_repos }} Repos · {{ report.total_test_files }} Test Files · {{ report.ci_repos }} CI · {{ report.documented_repos }} Docs</text>
+
+  <!-- Orthogonal Skill Tree Circuit Connectors -->
+  <g fill="none" stroke="{{ theme.border_hi }}" stroke-width="2" stroke-linecap="square">
+    <path d="M420,90 L420,101"/>
+    <path d="M114,101 L726,101"/>
+    {% for col in columns %}
+    <path d="M{{ col.center_x }},101 L{{ col.center_x }},113"/>
+    <line x1="{{ col.center_x }}" y1="133" x2="{{ col.center_x }}" y2="336" stroke="{{ col.accent }}" stroke-width="2" opacity="0.45"/>
+    {% endfor %}
+  </g>
+
+  <!-- 4 Specialization Columns x 4 Skill Nodes -->
+  {% for col in columns %}
+  <rect x="{{ col.x }}" y="113" width="192" height="20" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ col.accent }}" stroke-width="1.2"/>
+  <text x="{{ col.center_x }}" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="{{ col.accent }}">{{ col.title }}</text>
+
+  {% for node in col.nodes %}
+  <rect x="{{ node.x }}" y="{{ node.y }}" width="{{ node.w }}" height="{{ node.h }}" rx="3.5" fill="{{ theme.bg_hud }}" stroke="{{ node.rarity_color if node.pips > 0 else theme.border }}" stroke-width="{{ 1.3 if node.pips > 0 else 1 }}"/>
+  <rect x="{{ node.x + 1 }}" y="{{ node.y + 4 }}" width="4" height="{{ node.h - 8 }}" rx="1.5" fill="{{ node.rarity_color }}"/>
+
+  <!-- Node Line 1: Skill Name & Rarity Pill -->
+  <text x="{{ node.x + 12 }}" y="{{ node.y + 18 }}" class="sans" font-size="10.5" font-weight="700" fill="{{ theme.text_primary if node.pips > 0 else theme.text_subtle }}">{{ node.name }}</text>
+  <rect x="{{ node.x + 140 }}" y="{{ node.y + 7 }}" width="44" height="14" rx="2" fill="{{ theme.bg_panel }}" stroke="{{ node.rarity_color }}" stroke-width="1"/>
+  <text x="{{ node.x + 162 }}" y="{{ node.y + 17 }}" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="{{ node.rarity_color }}">{{ node.rarity }}</text>
+
+  <!-- Node Line 2: 4-Pip GBA Mastery Meter, Status & Repo Evidence -->
+  <g shape-rendering="crispEdges">
+    {% for pip in range(4) %}
+    <rect x="{{ node.x + 12 + pip * 10 }}" y="{{ node.y + 30 }}" width="8" height="5" fill="{{ node.mastery_color if pip < node.pips else theme.bg_track }}"/>
+    {% endfor %}
+  </g>
+  <text x="{{ node.x + 56 }}" y="{{ node.y + 36 }}" class="mono" font-size="8" font-weight="700" fill="{{ node.mastery_color }}">{{ node.mastery }}</text>
+  <text x="{{ node.x + 184 }}" y="{{ node.y + 36 }}" text-anchor="end" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">{{ node.repo_label }}</text>
+  {% endfor %}
+  {% endfor %}
+
+  <!-- Footer Rarity & Mastery Legend -->
+  <rect x="18" y="368" width="804" height="34" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1"/>
+  <g shape-rendering="crispEdges">
+    <rect x="28" y="377" width="6" height="6" fill="{{ theme.accent_amber }}"/>
+    <rect x="116" y="377" width="6" height="6" fill="{{ theme.accent_arcane }}"/>
+    <rect x="172" y="377" width="6" height="6" fill="{{ theme.accent_primary }}"/>
+    <rect x="228" y="377" width="6" height="6" fill="{{ theme.accent_signal }}"/>
+  </g>
+  <text x="38" y="383" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_amber }}">LEGENDARY</text>
+  <text x="126" y="383" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_arcane }}">EPIC</text>
+  <text x="182" y="383" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_primary }}">RARE</text>
+  <text x="238" y="383" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_signal }}">UNCOMMON</text>
+  <text x="812" y="383" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ grade_color }}">OVERALL GRADE {{ report.grade }} ({{ report.grade_score }}/100 · {{ report.next_grade_hint }})</text>
+  <text x="28" y="396" class="mono" font-size="8" fill="{{ theme.text_subtle }}">MASTERY: ■■■■ MASTERED (4+ repos, 2+ CI/tests) · ■■■□ PROFICIENT (2–3 repos) · ■■□□ ACTIVE (1 tested/shipped repo) · All skills manifest-verified</text>
+</svg>

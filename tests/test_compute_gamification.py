@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, timedelta
 
 from scripts.compute_gamification import compute_level, compute_streaks, evaluate_metrics
 
@@ -135,3 +135,43 @@ def test_evaluate_metrics_counts_and_quests() -> None:
     assert by_key["club_500"].unlocked is False
     assert by_key["os_ally"].unlocked is False
     assert by_key["community_signal"].current == 2
+    assert report.grade in {"B", "C", "A", "S", "S+"}
+    assert 0 <= report.grade_score <= 100
+    assert len(report.skill_nodes) == 16
+
+
+def test_grade_and_skill_tree_mastery_progression() -> None:
+    raw = _sample_raw_metrics()
+    for idx in range(5):
+        raw["owned_repositories"].append(
+            {
+                "name": f"service-{idx}",
+                "full_name": f"25sarvesh2005/service-{idx}",
+                "is_empty": False,
+                "stargazers_count": 2,
+                "external_stars": 2,
+                "has_readme": True,
+                "has_ci": True,
+                "has_docker": idx < 3,
+                "test_file_count": 6,
+                "packages": ["fastapi", "pydantic", "psycopg", "pytest", "google-genai", "chromadb", "react"],
+                "languages": {"Python": 200000, "TypeScript": 100000},
+            }
+        )
+    report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
+    skills = {s.key: s for s in report.skill_nodes}
+    assert skills["python"].mastery == "MASTERED"
+    assert skills["fastapi"].mastery == "MASTERED"
+    assert skills["docker"].mastery == "PROFICIENT"
+    assert skills["docker"].rarity == "EPIC"
+    assert report.docker_repos == 3
+    assert report.tested_repos == 5
+    assert report.grade == "B"  # Low active days (11) & 92 contribs keeps score honest
+    assert len(report.grade_pillars) == 5
+
+    # High activity + 150 active days raises score to A/S
+    start = date(2026, 6, 1)
+    for d in range(150):
+        raw["contributions"]["daily"][(start + timedelta(days=d)).isoformat()] = 8
+    high_report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
+    assert high_report.grade in {"A", "S", "S+"}
