@@ -121,6 +121,7 @@ def test_constellation_skill_tree_geometry_has_no_pill_overlaps(tmp_path: Path) 
     render_all_svgs(report, out_dir, game_state=init_game_state(report.total_contributions), raw_metrics=raw)
     tree_svg = (out_dir / "skill_tree-dark.svg").read_text(encoding="utf-8")
     assert "TALENT TREE" in tree_svg
-    assert "HERO ATTRIBUTES" in tree_svg
-    assert "PLAYER STATISTICS" in tree_svg
-    assert "STACK WEIGHTS" in tree_svg
+    assert "ARCHITECTURE PROOF" in tree_svg
+    assert "SECTOR ALLOCATION" in tree_svg
+    assert "CAPSTONES" in tree_svg
+    assert "COMBAT" not in tree_svg  # No fake combat filler on skill tree

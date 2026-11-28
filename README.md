@@ -20,23 +20,23 @@ I build backend engines, BI compilers, and applied AI tools in **Python**, **Typ
 
 <p align="center">
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cstrike&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-strike.svg" width="156" alt="Strike! (16-28 DMG)" />
+    <img src="./assets/static/btn-strike.svg" width="148" alt="Strike! (16-28 DMG)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Coverclock&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-overclock.svg" width="156" alt="Overclock! (26-44 CRIT)" />
+    <img src="./assets/static/btn-overclock.svg" width="148" alt="Overclock! (26-44 CRIT)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cbuff&body=Optional+battle+cry+(max+58+chars):+">
-    <img src="./assets/static/btn-buff.svg" width="156" alt="Power Up (+10 Next DMG)" />
+    <img src="./assets/static/btn-buff.svg" width="148" alt="Power Up (+10 Next DMG)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Ctavern&body=Leave+a+short+hello+for+the+profile+log:+">
-    <img src="./assets/static/btn-tavern.svg" width="156" alt="Say Hi! (Guestbook)" />
+    <img src="./assets/static/btn-tavern.svg" width="148" alt="Say Hi! (Guestbook)" />
   </a>
   &nbsp;
   <a href="https://github.com/25sarvesh2005/25sarvesh2005">
-    <img src="./assets/static/btn-star.svg" width="156" alt="Star Repo for Instant 1-Hit Boss K.O." />
+    <img src="./assets/static/btn-star.svg" width="148" alt="Star Repo for Instant 1-Hit Boss K.O." />
   </a>
 </p>
 

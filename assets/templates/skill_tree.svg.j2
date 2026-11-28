@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" width="840" height="500" role="img" aria-labelledby="skilltree-title-{{ mode }} skilltree-desc-{{ mode }}">
-  <title id="skilltree-title-{{ mode }}">Talent Constellation &amp; Hero Attributes — @{{ report.username }}</title>
-  <desc id="skilltree-desc-{{ mode }}">Radial RPG talent tree with {{ total_skill_count }} verified skills across 6 sectors, socket mastery pips, Rank {{ report.grade }} ({{ report.grade_score }}/100), and live attribute sheet.</desc>
+  <title id="skilltree-title-{{ mode }}">Talent Tree &amp; Architecture — @{{ report.username }}</title>
+  <desc id="skilltree-desc-{{ mode }}">Asymmetric 6-sector RPG talent constellation across {{ total_skill_count }} verified technologies with sector mastery, capstone keystones, and verification summary.</desc>
   <defs>
     <clipPath id="constellation-clip-{{ mode }}">
       <rect x="14" y="46" width="530" height="442" rx="4"/>
     </clipPath>
     <radialGradient id="hub-aura-{{ mode }}" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="{{ grade_color }}" stop-opacity="0.32"/>
-      <stop offset="70%" stop-color="{{ theme.accent_arcane }}" stop-opacity="0.08"/>
+      <stop offset="0%" stop-color="{{ grade_color }}" stop-opacity="0.28"/>
+      <stop offset="65%" stop-color="{{ theme.accent_arcane }}" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="{{ theme.bg_card }}" stop-opacity="0"/>
     </radialGradient>
     {% for w in wedges %}
     <radialGradient id="wedge-glow-{{ w.key }}-{{ mode }}" cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="245" gradientUnits="userSpaceOnUse">
-      <stop offset="12%" stop-color="{{ w.accent }}" stop-opacity="{{ w.beam_alpha }}"/>
-      <stop offset="56%" stop-color="{{ w.accent }}" stop-opacity="{{ w.beam_mid }}"/>
-      <stop offset="96%" stop-color="{{ w.accent }}" stop-opacity="0"/>
+      <stop offset="10%" stop-color="{{ w.accent }}" stop-opacity="{{ w.beam_alpha }}"/>
+      <stop offset="55%" stop-color="{{ w.accent }}" stop-opacity="{{ w.beam_mid }}"/>
+      <stop offset="94%" stop-color="{{ w.accent }}" stop-opacity="0"/>
     </radialGradient>
     {% endfor %}
     <style>
@@ -23,226 +23,191 @@
     </style>
   </defs>
 
-  <!-- Outer Dark/Parchment RPG Talent Window Frame -->
+  <!-- Outer Frame & Clean Single-Line Header -->
   <rect x="2" y="2" width="836" height="496" rx="6" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
-  <rect x="4" y="4" width="832" height="34" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="4" y1="38" x2="836" y2="38" stroke="{{ theme.border }}" stroke-width="1.3"/>
+  <rect x="4" y="4" width="832" height="32" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="4" y1="36" x2="836" y2="36" stroke="{{ theme.border }}" stroke-width="1.2"/>
 
-  <!-- Top Header Telemetry Strip matching RPG Talent UI -->
   <g shape-rendering="crispEdges">
     {% for r in header_ball %}
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
-  <text x="32" y="19" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ "{:,}".format(report.xp) }} XP</text>
-  <text x="32" y="31.5" class="mono" font-size="8.5" font-weight="600" fill="{{ theme.text_muted }}">{{ earned_pips }}/{{ max_pips }} PIPS · {{ mastered_count }} MASTERED</text>
+  <text x="32" y="24" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ "{:,}".format(report.xp) }} XP · {{ report.non_empty_owned_repos }} Repos</text>
+  <text x="420" y="25" text-anchor="middle" class="sans" font-size="13" font-weight="800" letter-spacing="1.8" fill="{{ theme.text_primary }}">‹   TALENT TREE · @{{ report.username }}   ›</text>
+  <text x="822" y="24" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ grade_color }}">{{ earned_pips }}/{{ max_pips }} Pips · Rank {{ report.grade }}</text>
 
-  <text x="420" y="25.5" text-anchor="middle" class="sans" font-size="13.5" font-weight="800" letter-spacing="1.8" fill="{{ theme.text_primary }}">‹   TALENT TREE · @{{ report.username }}   ›</text>
-
-  <text x="822" y="19" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ grade_color }}">RANK {{ report.grade }} · {{ report.grade_score }}/100</text>
-  <text x="822" y="31.5" text-anchor="end" class="mono" font-size="8.5" font-weight="600" fill="{{ theme.text_muted }}">{{ report.non_empty_owned_repos }} REPOS · {{ active_skill_count }}/{{ total_skill_count }} NODES</text>
-
-  <!-- LEFT PANEL: Radial 6-Sector Skill Constellation -->
+  <!-- LEFT PANEL: Clean Organic 6-Sector Star Constellation -->
   <rect x="14" y="46" width="530" height="442" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
 
   <g clip-path="url(#constellation-clip-{{ mode }})">
-    <!-- Smooth Radial Sector Glows -->
+    <!-- Sector Glow Beams -->
     {% for w in wedges %}
     <polygon points="{{ w.points }}" fill="url(#wedge-glow-{{ w.key }}-{{ mode }})"/>
     {% endfor %}
 
-    <!-- Faint Orbit Guide Rings -->
-    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="78" fill="none" stroke="{{ theme.border }}" stroke-width="0.8" stroke-dasharray="2,4" opacity="0.5"/>
-    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="134" fill="none" stroke="{{ theme.border }}" stroke-width="0.8" stroke-dasharray="2,4" opacity="0.4"/>
-    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="188" fill="none" stroke="{{ theme.border }}" stroke-width="0.7" stroke-dasharray="2,5" opacity="0.3"/>
+    {% if mode == "dark" %}
+    <g fill="{{ theme.text_subtle }}" opacity="0.35">
+      <circle cx="92" cy="142" r="1.1"/><circle cx="468" cy="126" r="1.2"/>
+      <circle cx="486" cy="348" r="1.1"/><circle cx="88" cy="404" r="1.2"/>
+      <circle cx="348" cy="64" r="1.1"/><circle cx="294" cy="456" r="1.1"/>
+      <circle cx="64" cy="338" r="1"/><circle cx="452" cy="414" r="1.1"/>
+    </g>
+    {% endif %}
 
-    <!-- Radial Divider Rays -->
+    <!-- Faint Orbital Guide Rings -->
+    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="82" fill="none" stroke="{{ theme.border }}" stroke-width="0.7" stroke-dasharray="2,5" opacity="0.38"/>
+    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="142" fill="none" stroke="{{ theme.border }}" stroke-width="0.7" stroke-dasharray="2,6" opacity="0.28"/>
+
+    <!-- Subtle Radial Sector Dividers -->
     {% for ray in divider_rays %}
-    <line x1="{{ ray.x1 }}" y1="{{ ray.y1 }}" x2="{{ ray.x2 }}" y2="{{ ray.y2 }}" stroke="{{ theme.border }}" stroke-width="1" opacity="0.7"/>
+    <line x1="{{ ray.x1 }}" y1="{{ ray.y1 }}" x2="{{ ray.x2 }}" y2="{{ ray.y2 }}" stroke="{{ theme.border }}" stroke-width="0.9" opacity="0.5"/>
     {% endfor %}
 
-    <!-- Ambient Core Aura -->
-    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="70" fill="url(#hub-aura-{{ mode }})"/>
+    <!-- Center Glow -->
+    <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="66" fill="url(#hub-aura-{{ mode }})"/>
 
-    <!-- Inter-Branch Cross Synergy Bridges -->
+    <!-- Faint Inter-Branch Links -->
     {% for br in bridges %}
-    <line x1="{{ br.x1 }}" y1="{{ br.y1 }}" x2="{{ br.x2 }}" y2="{{ br.y2 }}" stroke="{{ br.stroke }}" stroke-width="1" stroke-dasharray="3,4" opacity="{{ 0.48 if br.active else 0.22 }}"/>
+    <line x1="{{ br.x1 }}" y1="{{ br.y1 }}" x2="{{ br.x2 }}" y2="{{ br.y2 }}" stroke="{{ br.stroke }}" stroke-width="0.9" stroke-dasharray="3,4" opacity="{{ 0.36 if br.active else 0.16 }}"/>
     {% endfor %}
 
-    <!-- Branching Skill Connectors & Glowing Glow Layer -->
+    <!-- Organic Skill Constellation Paths -->
     {% for edge in edges %}
     {% if edge.active and not edge.synergy %}
-    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="4.5" opacity="0.18"/>
+    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="4.2" opacity="0.16"/>
     {% endif %}
-    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="{{ 1.3 if edge.synergy else 2.0 }}" stroke-dasharray="{{ '3,3' if edge.synergy else 'none' }}" opacity="{{ 0.85 if edge.active else 0.35 }}"/>
+    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="{{ 1.2 if edge.synergy else 1.9 }}" stroke-dasharray="{{ '3,3' if edge.synergy else 'none' }}" opacity="{{ 0.88 if edge.active else 0.32 }}"/>
     {% endfor %}
 
-    <!-- Small Constellation Travel Dots along Connectors -->
+    <!-- Delicate Pathway Star Joints -->
     {% for dot in joint_dots %}
-    <circle cx="{{ dot.cx }}" cy="{{ dot.cy }}" r="2.6" fill="{{ dot.fill }}" stroke="{{ theme.bg_hud }}" stroke-width="0.8" opacity="{{ 0.9 if dot.active else 0.45 }}"/>
+    <circle cx="{{ dot.cx }}" cy="{{ dot.cy }}" r="2.1" fill="{{ dot.fill }}" opacity="{{ 0.85 if dot.active else 0.35 }}"/>
     {% endfor %}
 
-    <!-- Sector Perimeter Labels -->
+    <!-- Clean Corner Sector Titles -->
     {% for w in wedges %}
-    <text x="{{ w.tag_x }}" y="{{ w.tag_y }}" text-anchor="{{ w.anchor }}" class="mono" font-size="8" font-weight="700" fill="{{ w.accent }}">{{ w.title }}</text>
+    <text x="{{ w.tag_x }}" y="{{ w.tag_y }}" text-anchor="{{ w.anchor }}" class="mono" font-size="7.8" font-weight="700" letter-spacing="0.6" fill="{{ w.accent }}" opacity="0.88">{{ w.title }}</text>
     {% endfor %}
   </g>
 
-  <!-- Top-Left RPG Point Allocation Overlay Box (matching Reference UI) -->
-  <rect x="22" y="54" width="134" height="50" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border_hi }}" stroke-width="1.2" opacity="0.95"/>
-  <text x="29" y="67" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_amber }}">Pips Lit: {{ earned_pips }}/{{ max_pips }}</text>
-  <text x="29" y="78" class="mono" font-size="8" font-weight="600" fill="{{ theme.text_muted }}">Mastered: {{ mastered_count }}/{{ total_skill_count }}</text>
-  <rect x="29" y="83" width="120" height="15" rx="2" fill="{{ theme.bg_hud_inner }}" stroke="{{ grade_color }}" stroke-width="1"/>
-  <text x="89" y="93.5" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.next_grade_hint }}</text>
+  <!-- Minimal Top-Left Talent Counter (Quiet, Zero Clutter) -->
+  <text x="24" y="64" class="mono" font-size="8" font-weight="700" fill="{{ theme.text_muted }}">Active Nodes: <tspan fill="{{ theme.text_primary }}">{{ active_skill_count }}/{{ total_skill_count }}</tspan></text>
+  <text x="24" y="77" class="mono" font-size="8" font-weight="700" fill="{{ theme.text_muted }}">Mastered: <tspan fill="{{ theme.accent_amber }}">{{ mastered_count }}/{{ total_skill_count }}</tspan></text>
 
-  <!-- Top-Right Mini Key Pill -->
-  <rect x="424" y="54" width="112" height="32" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1" opacity="0.92"/>
-  <text x="480" y="67" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.text_primary }}">◇ CAPSTONE · ○ SKILL</text>
-  <text x="480" y="79" text-anchor="middle" class="mono" font-size="7.2" fill="{{ theme.accent_amber }}">●●●● ARCH = MASTERY</text>
-
-  <!-- Central Sacred Arcane Seal Core -->
-  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="36" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="2"/>
+  <!-- Central Sacred 6-Point Astrolabe Core -->
+  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="36" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.9"/>
   {% for tk in hub_ticks %}
-  <line x1="{{ tk.x1 }}" y1="{{ tk.y1 }}" x2="{{ tk.x2 }}" y2="{{ tk.y2 }}" stroke="{{ theme.accent_amber }}" stroke-width="1.4" opacity="0.8"/>
+  <line x1="{{ tk.x1 }}" y1="{{ tk.y1 }}" x2="{{ tk.x2 }}" y2="{{ tk.y2 }}" stroke="{{ theme.accent_amber }}" stroke-width="1.3" opacity="0.78"/>
   {% endfor %}
-  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="28" fill="{{ theme.bg_hud }}" stroke="{{ theme.accent_amber }}" stroke-width="1.2" opacity="0.9"/>
-  <polygon points="{{ hub_tri_pts }}" fill="none" stroke="{{ theme.accent_amber }}" stroke-width="1.1" opacity="0.65"/>
-  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="16" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.2"/>
-  <text x="{{ hub_cx }}" y="{{ hub_cy + 4.5 }}" text-anchor="middle" class="sans" font-size="14" font-weight="800" fill="{{ grade_color }}">{{ report.grade }}</text>
-  <text x="{{ hub_cx }}" y="{{ hub_cy + 13 }}" text-anchor="middle" class="mono" font-size="6.5" font-weight="700" fill="{{ theme.text_muted }}">Lv{{ report.level }}</text>
+  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="28" fill="{{ theme.bg_hud }}" stroke="{{ theme.accent_amber }}" stroke-width="1.1" opacity="0.85"/>
+  <polygon points="{{ hub_tri_pts }}" fill="none" stroke="{{ theme.accent_amber }}" stroke-width="1" opacity="0.55"/>
+  <polygon points="{{ hub_tri_inv_pts }}" fill="none" stroke="{{ grade_color }}" stroke-width="1" opacity="0.5"/>
+  <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="15.5" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.2"/>
+  <text x="{{ hub_cx }}" y="{{ hub_cy + 4 }}" text-anchor="middle" class="sans" font-size="13.5" font-weight="800" fill="{{ grade_color }}">{{ report.grade }}</text>
+  <text x="{{ hub_cx }}" y="{{ hub_cy + 12.5 }}" text-anchor="middle" class="mono" font-size="6.5" font-weight="700" fill="{{ theme.text_muted }}">Lv{{ report.level }}</text>
 
-  <!-- 24 Constellation Skill Nodes (Circles + Capstone Octagons + Rim Pips + Vector Glyphs + Label Pills) -->
+  <!-- 24 Constellation Skill Nodes (Clean Orbs, Outer Octagons, Top Socket Pips, Halo-Text Labels) -->
   {% for node in nodes %}
     {% if node.is_capstone %}
       {% if node.active %}
       <polygon points="{{ node.octagon_pts }}" fill="none" stroke="{{ node.glow_color }}" stroke-width="4.5" opacity="0.22"/>
       {% endif %}
-      <polygon points="{{ node.octagon_pts }}" fill="{{ theme.bg_panel }}" stroke="{{ node.ring_color }}" stroke-width="{{ 2.0 if node.active else 1.2 }}"/>
-      <polygon points="{{ node.octagon_inner_pts }}" fill="{{ theme.bg_hud }}" stroke="{{ node.glow_color }}" stroke-width="0.9" opacity="0.7"/>
+      <polygon points="{{ node.octagon_pts }}" fill="{{ theme.bg_panel }}" stroke="{{ node.ring_color }}" stroke-width="{{ 2.0 if node.active else 1.1 }}"/>
+      <polygon points="{{ node.octagon_inner_pts }}" fill="{{ theme.bg_hud }}" stroke="{{ node.glow_color }}" stroke-width="0.9" opacity="0.68"/>
     {% else %}
       {% if node.active %}
-      <circle cx="{{ node.x }}" cy="{{ node.y }}" r="{{ node.r + 3 }}" fill="none" stroke="{{ node.glow_color }}" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="{{ node.x }}" cy="{{ node.y }}" r="{{ node.r + 3 }}" fill="none" stroke="{{ node.glow_color }}" stroke-width="3.6" opacity="0.2"/>
       {% endif %}
       <circle cx="{{ node.x }}" cy="{{ node.y }}" r="{{ node.r }}" fill="{{ theme.bg_panel }}" stroke="{{ node.ring_color }}" stroke-width="{{ 1.8 if node.active else 1.1 }}"/>
-      <circle cx="{{ node.x }}" cy="{{ node.y }}" r="{{ node.r - 2.5 }}" fill="{{ theme.bg_hud }}" stroke="{{ node.glow_color }}" stroke-width="0.7" opacity="0.6"/>
+      <circle cx="{{ node.x }}" cy="{{ node.y }}" r="{{ node.r - 2.5 }}" fill="{{ theme.bg_hud }}" stroke="{{ node.glow_color }}" stroke-width="0.7" opacity="0.58"/>
     {% endif %}
 
-    <!-- Curved Mastery Socket Pips along Top Rim -->
     {% for pip in node.pips %}
-    <circle cx="{{ pip.cx }}" cy="{{ pip.cy }}" r="2.1" fill="{{ pip.fill }}" stroke="{{ pip.stroke }}" stroke-width="0.8"/>
+    <circle cx="{{ pip.cx }}" cy="{{ pip.cy }}" r="2.0" fill="{{ pip.fill }}" stroke="{{ pip.stroke }}" stroke-width="0.75"/>
     {% endfor %}
 
-    <!-- Crisp Vector Glyph Inside Orb -->
     <path d="{{ node.icon_path }}" fill="none" stroke="{{ node.icon_color }}" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-    <!-- Non-Overlapping Crisp Skill Label Pill -->
-    <rect x="{{ node.pill_x }}" y="{{ node.pill_y }}" width="{{ node.pill_w }}" height="12" rx="2.5" fill="{{ theme.bg_panel }}" stroke="{{ node.ring_color if node.active else theme.border }}" stroke-width="0.8" opacity="0.95"/>
-    <text x="{{ node.x }}" y="{{ node.pill_y + 8.7 }}" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="{{ node.label_color }}">{{ node.pill_text }}</text>
+    <!-- Borderless Halo-Stroked Skill Name (Zero Box Clutter) -->
+    <text x="{{ node.x }}" y="{{ node.label_y }}" text-anchor="middle" class="sans" font-size="8.2" font-weight="700" fill="{{ theme.bg_hud }}" stroke="{{ theme.bg_hud }}" stroke-width="3.4" stroke-linejoin="round" opacity="0.92">{{ node.label_text }}</text>
+    <text x="{{ node.x }}" y="{{ node.label_y }}" text-anchor="middle" class="sans" font-size="8.2" font-weight="700" fill="{{ node.label_color }}">{{ node.label_text }}</text>
   {% endfor %}
 
-  <!-- RIGHT PANEL: RPG Character Sheet & Verified Attributes -->
-  <!-- Box 1: HERO ATTRIBUTES -->
-  <rect x="552" y="46" width="274" height="118" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <rect x="552" y="46" width="274" height="20" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="552" y1="66" x2="826" y2="66" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="562" y="59.5" class="sans" font-size="10" font-weight="800" letter-spacing="0.9" fill="{{ theme.text_primary }}">HERO ATTRIBUTES</text>
-  <text x="816" y="59.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ grade_color }}">{{ report.level_title.upper() }}</text>
+  <!-- RIGHT PANEL: Focused, Non-Redundant Talent & Architecture Sheet -->
+  <!-- Card 1: BUILD VERIFICATION -->
+  <rect x="554" y="46" width="272" height="114" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect x="554" y="46" width="272" height="22" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="554" y1="68" x2="826" y2="68" stroke="{{ theme.border }}" stroke-width="1"/>
+  <text x="564" y="61" class="sans" font-size="10" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">ARCHITECTURE PROOF</text>
+  <text x="816" y="61" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ grade_color }}">RANK {{ report.grade }} ({{ report.grade_score }}/100)</text>
 
-  {% for p in sheet_pillars %}
-  {% set ry = 80 + loop.index0 * 16.5 %}
-  <text x="562" y="{{ ry }}" class="mono" font-size="8.2" font-weight="700" fill="{{ theme.accent_amber }}">{{ p.label }}</text>
-  <rect x="642" y="{{ ry - 6 }}" width="48" height="5" rx="1.5" fill="{{ theme.bg_track }}"/>
-  <rect x="642" y="{{ ry - 6 }}" width="{{ p.fill_w }}" height="5" rx="1.5" fill="{{ grade_color }}"/>
-  <text x="738" y="{{ ry }}" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="{{ theme.text_primary }}">{{ p.value }}</text>
+  <text x="564" y="86" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Specialty</text>
+  <text x="684" y="86" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">Systems &amp; AI</text>
+  <text x="698" y="86" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">CI Gates</text>
+  <text x="816" y="86" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.ci_repos }}/{{ report.non_empty_owned_repos }}</text>
+
+  <text x="564" y="105" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Public Repos</text>
+  <text x="684" y="105" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.non_empty_owned_repos }} Built</text>
+  <text x="698" y="105" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Docs Ready</text>
+  <text x="816" y="105" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.documented_repos }}/{{ report.non_empty_owned_repos }}</text>
+
+  <text x="564" y="124" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Test Suites</text>
+  <text x="684" y="124" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.total_test_files }} Files</text>
+  <text x="698" y="124" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Dockerized</text>
+  <text x="816" y="124" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_primary }}">{{ report.docker_repos }}/{{ report.non_empty_owned_repos }}</text>
+
+  <line x1="564" y1="134" x2="816" y2="134" stroke="{{ theme.border }}" stroke-width="0.9"/>
+  <text x="564" y="150" class="mono" font-size="8.5" fill="{{ theme.text_muted }}">Next Milestone</text>
+  <text x="816" y="150" text-anchor="end" class="mono" font-size="8.8" font-weight="700" fill="{{ theme.accent_amber }}">{{ report.next_grade_hint }}</text>
+
+  <!-- Card 2: SECTOR ALLOCATION (Direct Map to Left Radial Branches) -->
+  <rect x="554" y="168" width="272" height="162" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect x="554" y="168" width="272" height="22" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="554" y1="190" x2="826" y2="190" stroke="{{ theme.border }}" stroke-width="1"/>
+  <text x="564" y="183" class="sans" font-size="10" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">SECTOR ALLOCATION</text>
+  <text x="816" y="183" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ earned_pips }}/{{ max_pips }} Pips</text>
+
+  {% for sec in sector_rows %}
+  {% set sy = 210 + loop.index0 * 21 %}
+  <circle cx="568" cy="{{ sy - 3 }}" r="3.5" fill="{{ sec.accent }}"/>
+  <text x="578" y="{{ sy }}" class="sans" font-size="9" font-weight="700" fill="{{ theme.text_primary }}">{{ sec.title }}</text>
+  <rect x="708" y="{{ sy - 6 }}" width="58" height="5" rx="2" fill="{{ theme.bg_track }}"/>
+  <rect x="708" y="{{ sy - 6 }}" width="{{ sec.fill_w }}" height="5" rx="2" fill="{{ sec.accent }}"/>
+  <text x="816" y="{{ sy }}" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_muted }}">{{ sec.pips_label }}</text>
   {% endfor %}
 
-  <!-- Grade Stamp inside Hero Attributes Right Slot -->
-  <rect x="748" y="73" width="70" height="82" rx="3.5" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.4"/>
-  <text x="783" y="86" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.text_muted }}">RANK</text>
-  <text x="783" y="114" text-anchor="middle" class="sans" font-size="26" font-weight="800" fill="{{ grade_color }}">{{ report.grade }}</text>
-  <text x="783" y="130" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.grade_score }}/100</text>
-  <text x="783" y="146" text-anchor="middle" class="mono" font-size="6.8" font-weight="600" fill="{{ theme.accent_amber }}">{{ report.next_grade_hint }}</text>
+  <!-- Card 3 Bottom Left: 6 CAPSTONE OCTAGONS & REPO DEPTH -->
+  <rect x="554" y="338" width="144" height="150" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect x="554" y="338" width="144" height="20" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="554" y1="358" x2="698" y2="358" stroke="{{ theme.border }}" stroke-width="1"/>
+  <text x="564" y="351.5" class="sans" font-size="9.5" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">CAPSTONES ◇</text>
 
-  <!-- Box 2: PLAYER STATISTICS (2-Column RPG Stat Ledger) -->
-  <rect x="552" y="172" width="274" height="86" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <rect x="552" y="172" width="274" height="19" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="552" y1="191" x2="826" y2="191" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="562" y="185" class="sans" font-size="9.5" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">PLAYER STATISTICS</text>
-  <text x="816" y="185" text-anchor="end" class="mono" font-size="8" font-weight="600" fill="{{ theme.text_muted }}">LIVE REPOS</text>
-
-  <text x="562" y="206" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Commits:</text>
-  <text x="680" y="206" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.total_contributions }}</text>
-  <text x="696" y="206" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Test Files:</text>
-  <text x="816" y="206" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.total_test_files }}</text>
-
-  <text x="562" y="221" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Active Days:</text>
-  <text x="680" y="221" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.active_days }}</text>
-  <text x="696" y="221" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">CI Gates:</text>
-  <text x="816" y="221" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.ci_repos }}/{{ report.non_empty_owned_repos }}</text>
-
-  <text x="562" y="236" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Best Streak:</text>
-  <text x="680" y="236" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ report.longest_streak }}d</text>
-  <text x="696" y="236" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Docs Ready:</text>
-  <text x="816" y="236" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ report.documented_repos }}/{{ report.non_empty_owned_repos }}</text>
-
-  <text x="562" y="251" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Merged PRs:</text>
-  <text x="680" y="251" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.merged_prs }}</text>
-  <text x="696" y="251" class="mono" font-size="8.2" fill="{{ theme.text_muted }}">Dockerized:</text>
-  <text x="816" y="251" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_primary }}">{{ report.docker_repos }}/{{ report.non_empty_owned_repos }}</text>
-
-  <!-- Box 3 Left Top: COMBAT -->
-  <rect x="552" y="266" width="124" height="82" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <rect x="552" y="266" width="124" height="18" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="552" y1="284" x2="676" y2="284" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="560" y="278.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">COMBAT</text>
-
-  <text x="560" y="298" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Strike DMG:</text>
-  <text x="668" y="298" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_boss }}">16–28</text>
-  <text x="560" y="312" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Crit Hit:</text>
-  <text x="668" y="312" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_amber }}">26–44</text>
-  <text x="560" y="326" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Hero Level:</text>
-  <text x="668" y="326" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_primary }}">Lv {{ report.level }}</text>
-  <text x="560" y="340" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Ext Stars:</text>
-  <text x="668" y="340" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_amber }}">{{ report.external_stars }} ★</text>
-
-  <!-- Box 3 Left Bottom: NODE MASTERY -->
-  <rect x="552" y="355" width="124" height="82" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <rect x="552" y="355" width="124" height="18" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="552" y1="373" x2="676" y2="373" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="560" y="367.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">MASTERY</text>
-
-  <text x="560" y="387" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Mastered:</text>
-  <text x="668" y="387" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_amber }}">{{ mastered_count }}/{{ total_skill_count }}</text>
-  <text x="560" y="401" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Proficient:</text>
-  <text x="668" y="401" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_signal }}">{{ proficient_count }}/{{ total_skill_count }}</text>
-  <text x="560" y="415" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Capstones:</text>
-  <text x="668" y="415" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.accent_arcane }}">{{ capstone_active }}/6</text>
-  <text x="560" y="429" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">Total Pips:</text>
-  <text x="668" y="429" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="{{ theme.text_primary }}">{{ earned_pips }}/{{ max_pips }}</text>
-
-  <!-- Box 4 Right: LANGUAGES & RARITY MIX -->
-  <rect x="684" y="266" width="142" height="171" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
-  <rect x="684" y="266" width="142" height="18" rx="3" fill="{{ theme.bg_panel }}"/>
-  <line x1="684" y1="284" x2="826" y2="284" stroke="{{ theme.border }}" stroke-width="1"/>
-  <text x="692" y="278.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">STACK WEIGHTS</text>
-
-  {% for lg in sheet_langs %}
-  {% set ly = 298 + loop.index0 * 14.5 %}
-  <rect x="692" y="{{ ly - 6.5 }}" width="6" height="6" rx="1" fill="{{ lg.color }}"/>
-  <text x="702" y="{{ ly }}" class="sans" font-size="8" font-weight="600" fill="{{ theme.text_primary }}">{{ lg.name }}</text>
-  <text x="818" y="{{ ly }}" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="{{ theme.text_muted }}">{{ lg.pct }} ({{ lg.repos }})</text>
+  {% for cap in capstone_rows %}
+  {% set cy = 376 + loop.index0 * 19.5 %}
+  <text x="564" y="{{ cy }}" class="sans" font-size="8.8" font-weight="600" fill="{{ theme.text_primary }}">{{ cap.name }}</text>
+  <text x="688" y="{{ cy }}" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ cap.color }}">{{ cap.repos }}</text>
   {% endfor %}
 
-  <line x1="692" y1="384" x2="818" y2="384" stroke="{{ theme.border }}" stroke-width="0.9"/>
-  <text x="692" y="396" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.text_muted }}">RARITY TIERS</text>
-  <text x="692" y="410" class="mono" font-size="7.8" font-weight="700" fill="{{ theme.accent_amber }}">Legend: {{ rarity_counts["LEGEND"] }}</text>
-  <text x="818" y="410" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="{{ theme.accent_arcane }}">Epic: {{ rarity_counts["EPIC"] }}</text>
-  <text x="692" y="424" class="mono" font-size="7.8" font-weight="700" fill="{{ theme.accent_primary }}">Rare: {{ rarity_counts["RARE"] }}</text>
-  <text x="818" y="424" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="{{ theme.accent_signal }}">Uncom: {{ rarity_counts["UNCOM"] }}</text>
+  <!-- Card 4 Bottom Right: MASTERY & RARITY BREAKDOWN -->
+  <rect x="706" y="338" width="120" height="150" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect x="706" y="338" width="120" height="20" rx="3" fill="{{ theme.bg_panel }}"/>
+  <line x1="706" y1="358" x2="826" y2="358" stroke="{{ theme.border }}" stroke-width="1"/>
+  <text x="716" y="351.5" class="sans" font-size="9.5" font-weight="800" letter-spacing="0.8" fill="{{ theme.text_primary }}">NODE TIERS</text>
 
-  <!-- Bottom Right Legend & Provenance Strip -->
-  <rect x="552" y="445" width="274" height="43" rx="4" fill="{{ theme.bg_panel }}" stroke="{{ theme.border }}" stroke-width="1.2"/>
-  <text x="562" y="458" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.text_primary }}">NODE RING = RARITY · ARCH PIPS = MASTERY (4 MAX)</text>
-  <text x="562" y="470" class="mono" font-size="7.2" fill="{{ theme.text_muted }}">Gold=Legend · Violet=Epic · Blue=Rare · Green=Uncom</text>
-  <text x="562" y="481.5" class="mono" font-size="7" fill="{{ theme.text_subtle }}">Auto-verified from live repo manifests · Synced {{ sync_date }}</text>
+  <text x="716" y="376" class="mono" font-size="8.3" fill="{{ theme.text_muted }}">Mastered</text>
+  <text x="816" y="376" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ mastered_count }}</text>
+  <text x="716" y="394" class="mono" font-size="8.3" fill="{{ theme.text_muted }}">Proficient</text>
+  <text x="816" y="394" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_signal }}">{{ proficient_count }}</text>
+  <text x="716" y="412" class="mono" font-size="8.3" fill="{{ theme.text_muted }}">Active</text>
+  <text x="816" y="412" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.accent_primary }}">{{ active_only_count }}</text>
+
+  <line x1="716" y1="422" x2="816" y2="422" stroke="{{ theme.border }}" stroke-width="0.9"/>
+
+  <text x="716" y="438" class="mono" font-size="8.3" fill="{{ theme.accent_amber }}">Legendary</text>
+  <text x="816" y="438" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ rarity_counts["LEGEND"] }}</text>
+  <text x="716" y="456" class="mono" font-size="8.3" fill="{{ theme.accent_arcane }}">Epic</text>
+  <text x="816" y="456" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ rarity_counts["EPIC"] }}</text>
+  <text x="716" y="474" class="mono" font-size="8.3" fill="{{ theme.accent_primary }}">Rare / Unc</text>
+  <text x="816" y="474" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">{{ rarity_counts["RARE_UNC"] }}</text>
 </svg>

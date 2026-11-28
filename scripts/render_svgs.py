@@ -195,38 +195,47 @@ def _build_language_tiles(report: GamificationReport, theme: dict[str, str]) -> 
 HUB_CX = 279
 HUB_CY = 267
 
-# (x, y, label_dx, label_dy) per skill key around HUB (279, 267) inside (14..544, 46..488)
+SECTOR_DISPLAY_NAMES: dict[str, str] = {
+    "backend": "Backend Engine",
+    "ai": "AI & Agents",
+    "data": "Data & BI",
+    "apps": "Apps & Build",
+    "frontend": "UI & Web",
+    "infra": "Ops & QA",
+}
+
+# Exact coordinates per key in 6 radial sectors around HUB (279, 267)
 CONSTELLATION_POS: dict[str, tuple[int, int]] = {
-    # Sector 1: Backend Engine (Top-Right)
-    "python": (332, 188),
-    "pydantic": (316, 126),
-    "fastapi": (396, 158),
-    "async_httpx": (372, 84),
-    # Sector 2: AI & Agents (Mid-Right)
-    "gemini": (360, 260),
-    "rag": (428, 220),
-    "fastmcp": (422, 316),
-    "pytorch": (494, 266),
-    # Sector 3: Data & BI (Bottom-Right)
-    "postgres": (328, 336),
-    "nosql_cache": (402, 374),
-    "alembic_etl": (318, 404),
-    "analytics": (388, 446),
-    # Sector 4: Apps & Build (Bottom-Left)
-    "ssr_jinja": (230, 336),
-    "electron": (156, 374),
-    "kotlin": (240, 404),
-    "playwright": (170, 446),
-    # Sector 5: UI & Web (Mid-Left)
-    "web_core": (196, 260),
-    "react_next": (130, 220),
-    "typescript": (138, 316),
-    "vite_tailwind": (64, 266),
-    # Sector 6: Ops & QA (Top-Left)
-    "pytest_qa": (226, 188),
-    "gh_actions": (242, 126),
-    "linters": (162, 158),
-    "docker": (192, 84),
+    # Sector 1: Backend Engine (Steep Ascending Spire)
+    "python": (324, 196),
+    "pydantic": (302, 128),
+    "fastapi": (392, 168),
+    "async_httpx": (388, 92),
+    # Sector 2: AI & Agents (Sweeping Forward Spear)
+    "gemini": (360, 264),
+    "rag": (416, 214),
+    "fastmcp": (434, 316),
+    "pytorch": (502, 258),
+    # Sector 3: Data & BI (Delta Cascade)
+    "postgres": (334, 338),
+    "alembic_etl": (306, 408),
+    "nosql_cache": (412, 368),
+    "analytics": (406, 444),
+    # Sector 4: Apps & Build (Sweeping Talon)
+    "ssr_jinja": (226, 336),
+    "electron": (146, 366),
+    "kotlin": (238, 412),
+    "playwright": (154, 444),
+    # Sector 5: UI & Web (Twin Wing Horizon)
+    "web_core": (196, 266),
+    "react_next": (140, 212),
+    "typescript": (122, 318),
+    "vite_tailwind": (58, 258),
+    # Sector 6: Ops & QA (Stepped Bastion)
+    "pytest_qa": (228, 194),
+    "gh_actions": (250, 124),
+    "linters": (158, 166),
+    "docker": (168, 90),
 }
 
 # Intra-sector edges (parent_key, child_key, is_synergy_chord)
@@ -357,18 +366,25 @@ def _build_constellation_tree(
         if n.branch in by_branch:
             by_branch[n.branch].append(n)
 
-    # Sector wedges, gradients, divider rays, and labels
+    # Sector wedges: illuminate primary active aura cleanly without loud flat rainbow slices
     wedges: list[dict[str, Any]] = []
     divider_rays: list[dict[str, float]] = []
+    sector_rows: list[dict[str, Any]] = []
     ray_r = 380.0
+    is_dark = mode == "dark"
     for sec_key, deg_start, deg_end, tag_x, tag_y, anchor, short_title in SECTOR_WEDGES:
         sec_nodes = by_branch.get(sec_key, [])
         sec_pips = sum(n.pips for n in sec_nodes)
         max_sec_pips = max(1, len(sec_nodes) * 4)
         glow_ratio = sec_pips / max_sec_pips
-        is_dark = mode == "dark"
-        beam_alpha = round((0.30 if is_dark else 0.16) if glow_ratio >= 0.70 else (0.14 if is_dark else 0.08), 2)
-        beam_mid = round(beam_alpha * 0.42, 2)
+        is_signature = sec_key in {"backend", "ai", "apps"}
+        if glow_ratio >= 0.90:
+            beam_alpha = 0.20 if is_dark else 0.11
+        elif is_signature and glow_ratio >= 0.50:
+            beam_alpha = 0.18 if is_dark else 0.09
+        else:
+            beam_alpha = 0.06 if is_dark else 0.03
+        beam_mid = round(beam_alpha * 0.40, 3)
 
         pts = [f"{HUB_CX},{HUB_CY}"]
         for deg in (deg_start, (deg_start + deg_end) / 2.0, deg_end):
@@ -385,7 +401,15 @@ def _build_constellation_tree(
                 "tag_x": tag_x,
                 "tag_y": tag_y,
                 "anchor": anchor,
-                "title": f"{short_title} {sec_pips}/{max_sec_pips}",
+                "title": short_title,
+            }
+        )
+        sector_rows.append(
+            {
+                "title": SECTOR_DISPLAY_NAMES.get(sec_key, sec_key.title()),
+                "accent": accent,
+                "pips_label": f"{sec_pips}/{max_sec_pips}",
+                "fill_w": round(glow_ratio * 58.0, 1),
             }
         )
         r_start = math.radians(deg_start)
@@ -470,8 +494,8 @@ def _build_constellation_tree(
                 }
             )
 
-        pill_text = f"{spec.name} · {spec.repo_count}r" if spec.repo_count > 0 else spec.name
-        pill_w = max(50, int(round(len(pill_text) * 4.5 + 8)))
+        label_text = spec.name
+        label_w = max(32, int(round(len(label_text) * 4.5 + 4)))
         nodes_ctx.append(
             {
                 "key": spec.key,
@@ -488,17 +512,22 @@ def _build_constellation_tree(
                 "icon_path": _node_icon_path(spec.icon, nx, ny),
                 "icon_color": branch_color if spec.pips > 0 else theme["text_subtle"],
                 "pips": pip_list,
-                "pill_text": pill_text,
-                "pill_w": pill_w,
-                "pill_x": round(nx - pill_w / 2.0, 1),
-                "pill_y": ny + r + 5,
+                "label_text": label_text,
+                "pill_w": label_w,
+                "pill_x": round(nx - label_w / 2.0, 1),
+                "pill_y": ny + r + 4,
+                "label_y": ny + r + 11.5,
                 "label_color": theme["text_primary"] if spec.pips > 0 else theme["text_subtle"],
             }
         )
 
-    # Central Alchemy Hub sacred triangle points around (HUB_CX, HUB_CY)
+    # Central Astrolabe Hub dual sacred triangles pointing cleanly toward all 6 sectors
     hub_tri_pts = " ".join(
-        f"{round(HUB_CX + 23 * math.cos(math.radians(-90 + i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(-90 + i * 120)), 1)}"
+        f"{round(HUB_CX + 23 * math.cos(math.radians(-60 + i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(-60 + i * 120)), 1)}"
+        for i in range(3)
+    )
+    hub_tri_inv_pts = " ".join(
+        f"{round(HUB_CX + 23 * math.cos(math.radians(i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(i * 120)), 1)}"
         for i in range(3)
     )
     hub_ticks: list[dict[str, float]] = []
@@ -513,43 +542,32 @@ def _build_constellation_tree(
             }
         )
 
-    # Right RPG Character Sheet telemetry
     mastered_count = sum(1 for n in report.skill_nodes if n.mastery == "MASTERED")
     proficient_count = sum(1 for n in report.skill_nodes if n.mastery == "PROFICIENT")
     active_count = sum(1 for n in report.skill_nodes if n.pips > 0)
-    capstone_active = sum(1 for n in report.skill_nodes if n.is_capstone and n.pips >= 3)
+    capstone_rows = [
+        {
+            "name": n.name,
+            "repos": f"{n.repo_count}r",
+            "color": mastery_colors.get(n.mastery, theme["text_muted"]),
+        }
+        for n in report.skill_nodes
+        if n.is_capstone
+    ]
     earned_pips = sum(n.pips for n in report.skill_nodes)
     max_pips = len(report.skill_nodes) * 4
 
     rarity_counts = {
         "LEGEND": sum(1 for n in report.skill_nodes if n.rarity == "LEGENDARY" and n.pips > 0),
         "EPIC": sum(1 for n in report.skill_nodes if n.rarity == "EPIC" and n.pips > 0),
-        "RARE": sum(1 for n in report.skill_nodes if n.rarity == "RARE" and n.pips > 0),
-        "UNCOM": sum(1 for n in report.skill_nodes if n.rarity == "UNCOMMON" and n.pips > 0),
+        "RARE_UNC": sum(1 for n in report.skill_nodes if n.rarity in {"RARE", "UNCOMMON"} and n.pips > 0),
     }
-
-    sheet_pillars = [
-        {
-            "label": p.label.upper(),
-            "value": f"{p.score:g}/{int(p.max_score)}",
-            "fill_w": round(min(1.0, p.score / max(1.0, p.max_score)) * 48.0, 1),
-        }
-        for p in report.grade_pillars
-    ]
-    sheet_langs = [
-        {
-            "name": lang.name,
-            "pct": f"{lang.percentage}%",
-            "color": lang.color,
-            "repos": f"{lang.repo_count}r",
-        }
-        for lang in report.top_languages[:6]
-    ]
 
     return {
         "hub_cx": HUB_CX,
         "hub_cy": HUB_CY,
         "hub_tri_pts": hub_tri_pts,
+        "hub_tri_inv_pts": hub_tri_inv_pts,
         "hub_ticks": hub_ticks,
         "wedges": wedges,
         "divider_rays": divider_rays,
@@ -557,16 +575,16 @@ def _build_constellation_tree(
         "bridges": bridges,
         "joint_dots": joint_dots,
         "nodes": nodes_ctx,
+        "sector_rows": sector_rows,
+        "capstone_rows": capstone_rows,
         "mastered_count": mastered_count,
         "proficient_count": proficient_count,
+        "active_only_count": max(0, active_count - mastered_count - proficient_count),
         "active_skill_count": active_count,
         "total_skill_count": len(report.skill_nodes),
-        "capstone_active": capstone_active,
         "earned_pips": earned_pips,
         "max_pips": max_pips,
         "rarity_counts": rarity_counts,
-        "sheet_pillars": sheet_pillars,
-        "sheet_langs": sheet_langs,
     }
 
 
@@ -663,7 +681,15 @@ def render_all_svgs(
     else:
         tavern_text = "Sign Guestbook"
 
-    event_line1, event_line2 = _wrap_dialog(str(state.get("last_event") or ""))
+    last_event_raw = str(state.get("last_event") or "")
+    event_line1, event_line2 = _wrap_dialog(last_event_raw)
+    if "signed Tavern:" in last_event_raw:
+        battle_subline = f"Squad: {raiders_text} · Tip: ★ Star repo for instant 1-Hit KO!"
+    else:
+        battle_subline = f"Squad: {raiders_text} · Log: {tavern_text}"
+
+    primary_lang_tag = report.top_languages[0].name.upper()[:12] if report.top_languages else "PYTHON"
+    secondary_tag = report.top_languages[1].name.upper()[:12] if len(report.top_languages) > 1 else "SYSTEMS"
 
     exp_bar_width = round((report.level_progress_pct / 100.0) * 140.0, 2)
     sync_date = report.generated_at_utc[:10]
@@ -704,8 +730,7 @@ def render_all_svgs(
                 hero_rects=hero_rects,
                 pet_rects=pet_rects,
                 boss_rects=boss_rects,
-                raiders_text=raiders_text,
-                tavern_text=tavern_text,
+                battle_subline=battle_subline,
             ),
         )
 
@@ -724,6 +749,8 @@ def render_all_svgs(
                 badge_tiles=badge_tiles,
                 next_label=next_label,
                 sync_date=sync_date,
+                primary_lang_tag=primary_lang_tag,
+                secondary_tag=secondary_tag,
             ),
         )
 

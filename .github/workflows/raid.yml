@@ -104,7 +104,7 @@ jobs:
           fi
 
       - name: Post RPG combat log comment & close issue
-        if: github.event_name == 'issues'
+        if: github.event_name == 'issues' && env.RAID_INVALID != 'true'
         working-directory: repo-main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
