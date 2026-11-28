@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "boss_index": 1,
-  "boss_hp": 317,
-  "bosses_slain": 1,
-  "total_raids": 1,
+  "boss_index": 2,
+  "boss_hp": 400,
+  "bosses_slain": 2,
+  "total_raids": 2,
   "hero_buff_charges": 0,
   "last_synced_contributions": 1018,
-  "last_event": "@25sarvesh2005 signed Tavern: \"Raid Guestbook live!\"",
+  "last_event": "\u2605 @25sarvesh2005 starred! 1-HIT KO on Merge Conflict Golem! Next: Hallucination Phantom!",
   "recent_raiders": [
     "25sarvesh2005"
   ],
@@ -17,5 +17,8 @@
       "issue": 1
     }
   ],
-  "last_synced_external_stars": 2
+  "last_synced_external_stars": 2,
+  "star_finishers": [
+    "25sarvesh2005"
+  ]
 }
