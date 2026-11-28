@@ -200,8 +200,8 @@ def _build_language_tiles(report: GamificationReport, theme: dict[str, str]) -> 
     return tiles
 
 
-HUB_CX = 279
-HUB_CY = 267
+HUB_CX = 420
+HUB_CY = 293
 
 SECTOR_DISPLAY_NAMES: dict[str, str] = {
     "backend": "Backend Engine",
@@ -212,38 +212,38 @@ SECTOR_DISPLAY_NAMES: dict[str, str] = {
     "infra": "Ops & QA",
 }
 
-# Exact coordinates per key in 6 radial sectors around HUB (279, 267)
+# Spacious 812x490 Constellation Layout around HUB (420, 293) inside (14..826, 48..538)
 CONSTELLATION_POS: dict[str, tuple[int, int]] = {
-    # Sector 1: Backend Engine (Steep Ascending Spire)
-    "python": (324, 196),
-    "pydantic": (302, 128),
-    "fastapi": (392, 168),
-    "async_httpx": (388, 92),
-    # Sector 2: AI & Agents (Sweeping Forward Spear)
-    "gemini": (360, 264),
-    "rag": (416, 214),
-    "fastmcp": (434, 316),
-    "pytorch": (502, 258),
-    # Sector 3: Data & BI (Delta Cascade)
-    "postgres": (334, 338),
-    "alembic_etl": (306, 408),
-    "nosql_cache": (412, 368),
-    "analytics": (406, 444),
-    # Sector 4: Apps & Build (Sweeping Talon)
-    "ssr_jinja": (226, 336),
-    "electron": (146, 366),
-    "kotlin": (238, 412),
-    "playwright": (154, 444),
-    # Sector 5: UI & Web (Twin Wing Horizon)
-    "web_core": (196, 266),
-    "react_next": (140, 212),
-    "typescript": (122, 318),
-    "vite_tailwind": (58, 258),
-    # Sector 6: Ops & QA (Stepped Bastion)
-    "pytest_qa": (228, 194),
-    "gh_actions": (250, 124),
-    "linters": (158, 166),
-    "docker": (168, 90),
+    # Sector 1: Backend Engine (Top-Right Spire)
+    "python": (488, 200),
+    "pydantic": (472, 118),
+    "fastapi": (612, 164),
+    "async_httpx": (568, 82),
+    # Sector 2: AI & Agents (Sweeping East Spear)
+    "gemini": (548, 286),
+    "rag": (664, 246),
+    "fastmcp": (654, 340),
+    "pytorch": (768, 292),
+    # Sector 3: Data & BI (Wide SE Cascade)
+    "postgres": (496, 384),
+    "alembic_etl": (486, 472),
+    "nosql_cache": (604, 414),
+    "analytics": (694, 464),
+    # Sector 4: Apps & Build (Wide SW Talon)
+    "ssr_jinja": (344, 384),
+    "kotlin": (354, 472),
+    "electron": (228, 416),
+    "playwright": (144, 464),
+    # Sector 5: UI & Web (Sweeping West Horizon)
+    "web_core": (292, 286),
+    "react_next": (176, 246),
+    "typescript": (184, 336),
+    "vite_tailwind": (72, 292),
+    # Sector 6: Ops & QA (Top-Left Bastion)
+    "pytest_qa": (352, 200),
+    "gh_actions": (368, 118),
+    "linters": (228, 166),
+    "docker": (268, 82),
 }
 
 # Intra-sector edges (parent_key, child_key, is_synergy_chord)
@@ -302,47 +302,46 @@ INTER_BRANCH_BRIDGES: tuple[tuple[str, str], ...] = (
     ("react_next", "linters"),
 )
 
-# Wedge polygons clipped to left panel (sector_key, start_deg, end_deg, tag_x, tag_y, anchor, short_title)
+# Wedge polygons clipped to wide 812x490 panel
 SECTOR_WEDGES: tuple[tuple[str, int, int, int, int, str, str], ...] = (
-    ("backend", -90, -30, 290, 62, "start", "BACKEND"),
-    ("ai", -30, 30, 534, 192, "end", "AI & AGENTS"),
-    ("data", 30, 90, 534, 479, "end", "DATA & BI"),
-    ("apps", 90, 150, 24, 479, "start", "APPS & BUILD"),
-    ("frontend", 150, 210, 24, 192, "start", "UI & WEB"),
-    ("infra", 210, 270, 268, 62, "end", "OPS & QA"),
+    ("backend", -90, -28, 434, 66, "start", "BACKEND ENGINE"),
+    ("ai", -28, 28, 814, 200, "end", "AI & AGENTS"),
+    ("data", 28, 90, 814, 526, "end", "DATA & BI"),
+    ("apps", 90, 152, 26, 526, "start", "APPS & BUILD"),
+    ("frontend", 152, 208, 26, 200, "start", "UI & WEB"),
+    ("infra", 208, 270, 406, 66, "end", "OPS & QA"),
 )
 
 
 def _node_icon_path(icon: str, cx: int, cy: int) -> str:
-    """Return crisp hairline SVG vector path data centered at (cx, cy)."""
+    """Return crisp larger SVG vector path data centered at (cx, cy)."""
     if icon == "code":
-        return f"M{cx - 2},{cy - 3} L{cx - 4.5},{cy} L{cx - 2},{cy + 3} M{cx + 2},{cy - 3} L{cx + 4.5},{cy} L{cx + 2},{cy + 3}"
+        return f"M{cx - 2.6},{cy - 4} L{cx - 6},{cy} L{cx - 2.6},{cy + 4} M{cx + 2.6},{cy - 4} L{cx + 6},{cy} L{cx + 2.6},{cy + 4}"
     if icon == "bolt":
-        return f"M{cx + 1},{cy - 4.5} L{cx - 2.5},{cy + 0.2} L{cx + 0.5},{cy + 0.2} L{cx - 1},{cy + 4.5} L{cx + 3},{cy - 0.3} L{cx - 0.2},{cy - 0.3} Z"
+        return f"M{cx + 1.4},{cy - 6} L{cx - 3.4},{cy + 0.3} L{cx + 0.6},{cy + 0.3} L{cx - 1.4},{cy + 6} L{cx + 4},{cy - 0.5} L{cx - 0.3},{cy - 0.5} Z"
     if icon == "shield":
-        return f"M{cx},{cy - 4.5} L{cx + 4},{cy - 2.4} V{cy + 0.5} Q{cx + 4},{cy + 3.4} {cx},{cy + 4.6} Q{cx - 4},{cy + 3.4} {cx - 4},{cy + 0.5} V{cy - 2.4} Z"
+        return f"M{cx},{cy - 6} L{cx + 5.2},{cy - 3.2} V{cy + 0.6} Q{cx + 5.2},{cy + 4.6} {cx},{cy + 6.2} Q{cx - 5.2},{cy + 4.6} {cx - 5.2},{cy + 0.6} V{cy - 3.2} Z"
     if icon == "network":
-        return f"M{cx},{cy - 4} L{cx - 3.6},{cy + 2.8} M{cx},{cy - 4} L{cx + 3.6},{cy + 2.8} M{cx - 3.6},{cy + 2.8} H{cx + 3.6}"
+        return f"M{cx},{cy - 5.4} L{cx - 4.8},{cy + 3.8} M{cx},{cy - 5.4} L{cx + 4.8},{cy + 3.8} M{cx - 4.8},{cy + 3.8} H{cx + 4.8}"
     if icon == "layers":
-        return f"M{cx},{cy - 4.4} L{cx + 4.2},{cy - 1.8} L{cx},{cy + 0.6} L{cx - 4.2},{cy - 1.8} Z M{cx - 4.2},{cy + 1} L{cx},{cy + 3.2} L{cx + 4.2},{cy + 1} M{cx - 3.4},{cy + 3.2} L{cx},{cy + 4.8} L{cx + 3.4},{cy + 3.2}"
+        return f"M{cx},{cy - 5.8} L{cx + 5.6},{cy - 2.4} L{cx},{cy + 0.8} L{cx - 5.6},{cy - 2.4} Z M{cx - 5.6},{cy + 1.4} L{cx},{cy + 4.2} L{cx + 5.6},{cy + 1.4} M{cx - 4.4},{cy + 4.2} L{cx},{cy + 6.4} L{cx + 4.4},{cy + 4.2}"
     if icon == "terminal":
-        return f"M{cx - 3.8},{cy - 2.4} L{cx - 0.8},{cy} L{cx - 3.8},{cy + 2.4} M{cx + 0.2},{cy + 2.6} H{cx + 4}"
+        return f"M{cx - 5},{cy - 3.2} L{cx - 1},{cy} L{cx - 5},{cy + 3.2} M{cx + 0.4},{cy + 3.4} H{cx + 5.4}"
     if icon == "neural":
-        return f"M{cx},{cy - 4.2} L{cx + 4},{cy + 3} H{cx - 4} Z M{cx - 1.4},{cy + 0.6} H{cx + 1.4}"
+        return f"M{cx},{cy - 5.6} L{cx + 5.4},{cy + 4} H{cx - 5.4} Z M{cx - 2},{cy + 0.8} H{cx + 2}"
     if icon == "db":
-        return f"M{cx - 3.8},{cy - 2.4} Q{cx},{cy - 4.2} {cx + 3.8},{cy - 2.4} Q{cx},{cy - 0.6} {cx - 3.8},{cy - 2.4} M{cx - 3.8},{cy - 2.4} V{cy + 2.4} Q{cx},{cy + 4.2} {cx + 3.8},{cy + 2.4} V{cy - 2.4} M{cx - 3.8},{cy} Q{cx},{cy + 1.8} {cx + 3.8},{cy}"
+        return f"M{cx - 5},{cy - 3.2} Q{cx},{cy - 5.6} {cx + 5},{cy - 3.2} Q{cx},{cy - 0.8} {cx - 5},{cy - 3.2} M{cx - 5},{cy - 3.2} V{cy + 3.2} Q{cx},{cy + 5.6} {cx + 5},{cy + 3.2} V{cy - 3.2} M{cx - 5},{cy} Q{cx},{cy + 2.4} {cx + 5},{cy}"
     if icon == "chart":
-        return f"M{cx - 4},{cy + 3.4} H{cx + 4} M{cx - 2.6},{cy + 3.4} V{cy + 0.6} M{cx},{cy + 3.4} V{cy - 1.8} M{cx + 2.6},{cy + 3.4} V{cy - 3.8}"
+        return f"M{cx - 5.2},{cy + 4.6} H{cx + 5.2} M{cx - 3.5},{cy + 4.6} V{cy + 0.8} M{cx},{cy + 4.6} V{cy - 2.4} M{cx + 3.5},{cy + 4.6} V{cy - 5}"
     if icon == "screen":
-        return f"M{cx - 4.4},{cy - 3.4} H{cx + 4.4} V{cy + 1.8} H{cx - 4.4} Z M{cx - 2},{cy + 3.8} H{cx + 2} M{cx},{cy + 1.8} V{cy + 3.8}"
+        return f"M{cx - 5.8},{cy - 4.5} H{cx + 5.8} V{cy + 2.4} H{cx - 5.8} Z M{cx - 2.8},{cy + 5} H{cx + 2.8} M{cx},{cy + 2.4} V{cy + 5}"
     if icon == "mobile":
-        return f"M{cx - 2.5},{cy - 4.2} H{cx + 2.5} V{cy + 4.2} H{cx - 2.5} Z M{cx - 0.8},{cy + 2.6} H{cx + 0.8}"
+        return f"M{cx - 3.4},{cy - 5.6} H{cx + 3.4} V{cy + 5.6} H{cx - 3.4} Z M{cx - 1.1},{cy + 3.4} H{cx + 1.1}"
     if icon == "check":
-        return f"M{cx - 3.5},{cy + 0.2} L{cx - 1},{cy + 2.8} L{cx + 3.8},{cy - 2.8}"
+        return f"M{cx - 4.6},{cy + 0.3} L{cx - 1.2},{cy + 3.8} L{cx + 5},{cy - 3.8}"
     if icon == "cube":
-        return f"M{cx},{cy - 4.5} L{cx + 4},{cy - 2.2} V{cy + 2.2} L{cx},{cy + 4.5} L{cx - 4},{cy + 2.2} V{cy - 2.2} Z M{cx},{cy - 4.5} V{cy + 4.5} M{cx - 4},{cy - 2.2} L{cx},{cy} L{cx + 4},{cy - 2.2}"
-    # Default astral spark
-    return f"M{cx},{cy - 4.8} L{cx + 1.2},{cy - 1.2} L{cx + 4.8},{cy} L{cx + 1.2},{cy + 1.2} L{cx},{cy + 4.8} L{cx - 1.2},{cy + 1.2} L{cx - 4.8},{cy} L{cx - 1.2},{cy - 1.2} Z"
+        return f"M{cx},{cy - 6} L{cx + 5.4},{cy - 3} V{cy + 3} L{cx},{cy + 6} L{cx - 5.4},{cy + 3} V{cy - 3} Z M{cx},{cy - 6} V{cy + 6} M{cx - 5.4},{cy - 3} L{cx},{cy} L{cx + 5.4},{cy - 3}"
+    return f"M{cx},{cy - 6.2} L{cx + 1.6},{cy - 1.6} L{cx + 6.2},{cy} L{cx + 1.6},{cy + 1.6} L{cx},{cy + 6.2} L{cx - 1.6},{cy + 1.6} L{cx - 6.2},{cy} L{cx - 1.6},{cy - 1.6} Z"
 
 
 def _octagon_points(cx: int, cy: int, r: int) -> str:
@@ -378,7 +377,7 @@ def _build_constellation_tree(
     wedges: list[dict[str, Any]] = []
     divider_rays: list[dict[str, float]] = []
     sector_rows: list[dict[str, Any]] = []
-    ray_r = 380.0
+    ray_r = 490.0
     is_dark = mode == "dark"
     for sec_key, deg_start, deg_end, tag_x, tag_y, anchor, short_title in SECTOR_WEDGES:
         sec_nodes = by_branch.get(sec_key, [])
@@ -417,14 +416,14 @@ def _build_constellation_tree(
                 "title": SECTOR_DISPLAY_NAMES.get(sec_key, sec_key.title()),
                 "accent": accent,
                 "pips_label": f"{sec_pips}/{max_sec_pips}",
-                "fill_w": round(glow_ratio * 58.0, 1),
+                "fill_w": round(glow_ratio * 72.0, 1),
             }
         )
         r_start = math.radians(deg_start)
         divider_rays.append(
             {
-                "x1": round(HUB_CX + 38.0 * math.cos(r_start), 1),
-                "y1": round(HUB_CY + 38.0 * math.sin(r_start), 1),
+                "x1": round(HUB_CX + 48.0 * math.cos(r_start), 1),
+                "y1": round(HUB_CY + 48.0 * math.sin(r_start), 1),
                 "x2": round(HUB_CX + ray_r * math.cos(r_start), 1),
                 "y2": round(HUB_CY + ray_r * math.sin(r_start), 1),
             }
@@ -487,19 +486,19 @@ def _build_constellation_tree(
             }
         )
 
-    # Nodes with top-arch rim socket pips, inner vector emblem, and crisp bottom pill label
+    # Nodes with larger orbs (16/21), crisp top-arch jewel pips, and larger clear labels
     pip_angles = (-138.0, -113.0, -67.0, -42.0)
     nodes_ctx: list[dict[str, Any]] = []
     for spec in report.skill_nodes:
         nx, ny = CONSTELLATION_POS[spec.key]
-        r = 14 if spec.is_capstone else 11
+        r = 20 if spec.is_capstone else 15
         branch_color = branch_accents[spec.branch]
         rarity_color = theme[spec.rarity_color_key]
         ring_color = rarity_color if spec.pips > 0 else theme["border"]
         m_color = mastery_colors.get(spec.mastery, theme["text_muted"])
 
         pip_list: list[dict[str, Any]] = []
-        pip_r = r + 3.2
+        pip_r = r + 4.2
         for idx, ang_deg in enumerate(pip_angles):
             ang = math.radians(ang_deg)
             lit = idx < spec.pips
@@ -513,7 +512,8 @@ def _build_constellation_tree(
             )
 
         label_text = spec.name
-        label_w = max(32, int(round(len(label_text) * 4.5 + 4)))
+        sub_text = f"{spec.repo_count} repo" if spec.repo_count == 1 else f"{spec.repo_count} repos"
+        label_w = max(46, int(round(len(label_text) * 5.6 + 6)))
         nodes_ctx.append(
             {
                 "key": spec.key,
@@ -522,7 +522,7 @@ def _build_constellation_tree(
                 "r": r,
                 "is_capstone": spec.is_capstone,
                 "octagon_pts": _octagon_points(nx, ny, r) if spec.is_capstone else "",
-                "octagon_inner_pts": _octagon_points(nx, ny, r - 3) if spec.is_capstone else "",
+                "octagon_inner_pts": _octagon_points(nx, ny, r - 4) if spec.is_capstone else "",
                 "ring_color": ring_color,
                 "glow_color": branch_color if spec.pips > 0 else theme["border"],
                 "active": spec.pips > 0,
@@ -531,32 +531,26 @@ def _build_constellation_tree(
                 "icon_color": branch_color if spec.pips > 0 else theme["text_subtle"],
                 "pips": pip_list,
                 "label_text": label_text,
+                "sub_text": sub_text if spec.repo_count > 0 else "0 repos",
                 "pill_w": label_w,
                 "pill_x": round(nx - label_w / 2.0, 1),
-                "pill_y": ny + r + 4,
-                "label_y": ny + r + 11.5,
+                "pill_y": ny + r + 3,
+                "label_y": ny + r + 13,
+                "sub_y": ny + r + 23.5,
                 "label_color": theme["text_primary"] if spec.pips > 0 else theme["text_subtle"],
+                "sub_color": m_color if spec.pips > 0 else theme["text_subtle"],
             }
         )
 
-    # Central Astrolabe Hub dual sacred triangles pointing cleanly toward all 6 sectors
-    hub_tri_pts = " ".join(
-        f"{round(HUB_CX + 23 * math.cos(math.radians(-60 + i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(-60 + i * 120)), 1)}"
-        for i in range(3)
-    )
-    hub_tri_inv_pts = " ".join(
-        f"{round(HUB_CX + 23 * math.cos(math.radians(i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(i * 120)), 1)}"
-        for i in range(3)
-    )
     hub_ticks: list[dict[str, float]] = []
-    for i in range(16):
-        ang = math.radians(i * 22.5)
+    for i in range(20):
+        ang = math.radians(i * 18.0)
         hub_ticks.append(
             {
-                "x1": round(HUB_CX + 30 * math.cos(ang), 1),
-                "y1": round(HUB_CY + 30 * math.sin(ang), 1),
-                "x2": round(HUB_CX + 34.5 * math.cos(ang), 1),
-                "y2": round(HUB_CY + 34.5 * math.sin(ang), 1),
+                "x1": round(HUB_CX + 38 * math.cos(ang), 1),
+                "y1": round(HUB_CY + 38 * math.sin(ang), 1),
+                "x2": round(HUB_CX + 44 * math.cos(ang), 1),
+                "y2": round(HUB_CY + 44 * math.sin(ang), 1),
             }
         )
 
@@ -584,8 +578,6 @@ def _build_constellation_tree(
     return {
         "hub_cx": HUB_CX,
         "hub_cy": HUB_CY,
-        "hub_tri_pts": hub_tri_pts,
-        "hub_tri_inv_pts": hub_tri_inv_pts,
         "hub_ticks": hub_ticks,
         "wedges": wedges,
         "divider_rays": divider_rays,

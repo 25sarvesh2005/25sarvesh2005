@@ -103,14 +103,14 @@ def test_constellation_skill_tree_geometry_has_no_pill_overlaps(tmp_path: Path) 
     assert len(nodes) == 24
     assert len(ctx["wedges"]) == 6
 
-    # Verify zero bounding-box collisions among the 24 label pills inside Left Panel (14..544, 46..488)
+    # Verify zero bounding-box collisions among the 24 2-line labels inside 812x490 Constellation (14..826, 48..538)
     boxes = [
-        (n["pill_x"], n["pill_y"], n["pill_x"] + n["pill_w"], n["pill_y"] + 12)
+        (n["pill_x"], n["pill_y"], n["pill_x"] + n["pill_w"], n["pill_y"] + 22)
         for n in nodes
     ]
     for x1, y1, x2, y2 in boxes:
-        assert x1 >= 16 and x2 <= 542
-        assert y1 >= 48 and y2 <= 486
+        assert x1 >= 16 and x2 <= 824
+        assert y1 >= 50 and y2 <= 536
     for i, (ax1, ay1, ax2, ay2) in enumerate(boxes):
         for j in range(i + 1, len(boxes)):
             bx1, by1, bx2, by2 = boxes[j]
