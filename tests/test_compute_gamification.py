@@ -137,7 +137,8 @@ def test_evaluate_metrics_counts_and_quests() -> None:
     assert by_key["community_signal"].current == 2
     assert report.grade in {"B", "C", "A", "S", "S+"}
     assert 0 <= report.grade_score <= 100
-    assert len(report.skill_nodes) == 16
+    assert len(report.skill_nodes) == 24
+    assert sum(1 for n in report.skill_nodes if n.is_capstone) == 6
 
 
 def test_grade_and_skill_tree_mastery_progression() -> None:

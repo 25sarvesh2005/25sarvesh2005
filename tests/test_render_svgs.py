@@ -90,3 +90,37 @@ def test_render_battle_boss_quips_and_long_star_ko_text(tmp_path: Path) -> None:
     assert "409 CONFLICT!" in battle_svg
     assert "1-HIT KO" in battle_svg
     assert "SHARES &amp; REPOS" in trainer_svg or "SHARE &amp; REPOS" in trainer_svg
+
+
+def test_constellation_skill_tree_geometry_has_no_pill_overlaps(tmp_path: Path) -> None:
+    from scripts.config import THEMES
+    from scripts.render_svgs import _build_constellation_tree
+
+    raw = _sample_raw_metrics()
+    report = evaluate_metrics(raw, reference_date=date(2026, 11, 26))
+    ctx = _build_constellation_tree(report, THEMES["dark"], "dark")
+    nodes = ctx["nodes"]
+    assert len(nodes) == 24
+    assert len(ctx["wedges"]) == 6
+
+    # Verify zero bounding-box collisions among the 24 label pills inside Left Panel (14..544, 46..488)
+    boxes = [
+        (n["pill_x"], n["pill_y"], n["pill_x"] + n["pill_w"], n["pill_y"] + 12)
+        for n in nodes
+    ]
+    for x1, y1, x2, y2 in boxes:
+        assert x1 >= 16 and x2 <= 542
+        assert y1 >= 48 and y2 <= 486
+    for i, (ax1, ay1, ax2, ay2) in enumerate(boxes):
+        for j in range(i + 1, len(boxes)):
+            bx1, by1, bx2, by2 = boxes[j]
+            overlap = (ax1 < bx2) and (ax2 > bx1) and (ay1 < by2) and (ay2 > by1)
+            assert not overlap, f"Label overlap between {nodes[i]['key']} and {nodes[j]['key']}"
+
+    out_dir = tmp_path / "constellation"
+    render_all_svgs(report, out_dir, game_state=init_game_state(report.total_contributions), raw_metrics=raw)
+    tree_svg = (out_dir / "skill_tree-dark.svg").read_text(encoding="utf-8")
+    assert "TALENT TREE" in tree_svg
+    assert "HERO ATTRIBUTES" in tree_svg
+    assert "PLAYER STATISTICS" in tree_svg
+    assert "STACK WEIGHTS" in tree_svg

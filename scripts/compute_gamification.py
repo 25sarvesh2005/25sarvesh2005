@@ -58,6 +58,8 @@ class SkillNodeEval:
     pips: int
     repo_count: int
     verified_repo_count: int
+    icon: str = "spark"
+    is_capstone: bool = False
 
 
 @dataclass(frozen=True)
@@ -239,6 +241,8 @@ def _evaluate_skill_nodes(repos: list[dict[str, Any]]) -> list[SkillNodeEval]:
                 pips=pips,
                 repo_count=repo_cnt,
                 verified_repo_count=verified_cnt,
+                icon=spec.icon,
+                is_capstone=spec.is_capstone,
             )
         )
     return nodes
@@ -279,7 +283,7 @@ def _compute_grade(
         1,
     )
     strong_skills = sum(1 for s in skill_nodes if s.pips >= 3)
-    breadth_pts = round(min(15.0, (strong_skills / 11.0) * 15.0), 1)
+    breadth_pts = round(min(15.0, (strong_skills / 12.0) * 15.0), 1)
     collab_pts = round(
         min(5.0, (merged_prs / 10.0) * 5.0)
         + min(5.0, (external_stars / 10.0) * 5.0),

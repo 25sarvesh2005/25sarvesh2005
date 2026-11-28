@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import textwrap
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -191,60 +192,382 @@ def _build_language_tiles(report: GamificationReport, theme: dict[str, str]) -> 
     return tiles
 
 
-def _build_skill_tree_columns(
+HUB_CX = 279
+HUB_CY = 267
+
+# (x, y, label_dx, label_dy) per skill key around HUB (279, 267) inside (14..544, 46..488)
+CONSTELLATION_POS: dict[str, tuple[int, int]] = {
+    # Sector 1: Backend Engine (Top-Right)
+    "python": (332, 188),
+    "pydantic": (316, 126),
+    "fastapi": (396, 158),
+    "async_httpx": (372, 84),
+    # Sector 2: AI & Agents (Mid-Right)
+    "gemini": (360, 260),
+    "rag": (428, 220),
+    "fastmcp": (422, 316),
+    "pytorch": (494, 266),
+    # Sector 3: Data & BI (Bottom-Right)
+    "postgres": (328, 336),
+    "nosql_cache": (402, 374),
+    "alembic_etl": (318, 404),
+    "analytics": (388, 446),
+    # Sector 4: Apps & Build (Bottom-Left)
+    "ssr_jinja": (230, 336),
+    "electron": (156, 374),
+    "kotlin": (240, 404),
+    "playwright": (170, 446),
+    # Sector 5: UI & Web (Mid-Left)
+    "web_core": (196, 260),
+    "react_next": (130, 220),
+    "typescript": (138, 316),
+    "vite_tailwind": (64, 266),
+    # Sector 6: Ops & QA (Top-Left)
+    "pytest_qa": (226, 188),
+    "gh_actions": (242, 126),
+    "linters": (162, 158),
+    "docker": (192, 84),
+}
+
+# Intra-sector edges (parent_key, child_key, is_synergy_chord)
+CONSTELLATION_EDGES: tuple[tuple[str, str, bool], ...] = (
+    # Backend Engine
+    ("__hub__", "python", False),
+    ("python", "pydantic", False),
+    ("python", "fastapi", False),
+    ("pydantic", "fastapi", True),
+    ("pydantic", "async_httpx", False),
+    ("fastapi", "async_httpx", False),
+    # AI & Agents
+    ("__hub__", "gemini", False),
+    ("gemini", "rag", False),
+    ("gemini", "fastmcp", False),
+    ("rag", "fastmcp", True),
+    ("rag", "pytorch", False),
+    ("fastmcp", "pytorch", False),
+    # Data & BI
+    ("__hub__", "postgres", False),
+    ("postgres", "nosql_cache", False),
+    ("postgres", "alembic_etl", False),
+    ("nosql_cache", "alembic_etl", True),
+    ("nosql_cache", "analytics", False),
+    ("alembic_etl", "analytics", False),
+    # Apps & Build
+    ("__hub__", "ssr_jinja", False),
+    ("ssr_jinja", "electron", False),
+    ("ssr_jinja", "kotlin", False),
+    ("electron", "kotlin", True),
+    ("electron", "playwright", False),
+    ("kotlin", "playwright", False),
+    # UI & Web
+    ("__hub__", "web_core", False),
+    ("web_core", "react_next", False),
+    ("web_core", "typescript", False),
+    ("react_next", "typescript", True),
+    ("react_next", "vite_tailwind", False),
+    ("typescript", "vite_tailwind", False),
+    # Ops & QA
+    ("__hub__", "pytest_qa", False),
+    ("pytest_qa", "gh_actions", False),
+    ("pytest_qa", "linters", False),
+    ("gh_actions", "linters", True),
+    ("gh_actions", "docker", False),
+    ("linters", "docker", False),
+)
+
+# Subtle outer ring cross-sector bridges
+INTER_BRANCH_BRIDGES: tuple[tuple[str, str], ...] = (
+    ("gh_actions", "pydantic"),
+    ("fastapi", "rag"),
+    ("fastmcp", "nosql_cache"),
+    ("alembic_etl", "kotlin"),
+    ("electron", "typescript"),
+    ("react_next", "linters"),
+)
+
+# Wedge polygons clipped to left panel (sector_key, start_deg, end_deg, tag_x, tag_y, anchor, short_title)
+SECTOR_WEDGES: tuple[tuple[str, int, int, int, int, str, str], ...] = (
+    ("backend", -90, -30, 290, 62, "start", "BACKEND"),
+    ("ai", -30, 30, 534, 192, "end", "AI & AGENTS"),
+    ("data", 30, 90, 534, 479, "end", "DATA & BI"),
+    ("apps", 90, 150, 24, 479, "start", "APPS & BUILD"),
+    ("frontend", 150, 210, 24, 192, "start", "UI & WEB"),
+    ("infra", 210, 270, 268, 62, "end", "OPS & QA"),
+)
+
+
+def _node_icon_path(icon: str, cx: int, cy: int) -> str:
+    """Return crisp hairline SVG vector path data centered at (cx, cy)."""
+    if icon == "code":
+        return f"M{cx - 2},{cy - 3} L{cx - 4.5},{cy} L{cx - 2},{cy + 3} M{cx + 2},{cy - 3} L{cx + 4.5},{cy} L{cx + 2},{cy + 3}"
+    if icon == "bolt":
+        return f"M{cx + 1},{cy - 4.5} L{cx - 2.5},{cy + 0.2} L{cx + 0.5},{cy + 0.2} L{cx - 1},{cy + 4.5} L{cx + 3},{cy - 0.3} L{cx - 0.2},{cy - 0.3} Z"
+    if icon == "shield":
+        return f"M{cx},{cy - 4.5} L{cx + 4},{cy - 2.4} V{cy + 0.5} Q{cx + 4},{cy + 3.4} {cx},{cy + 4.6} Q{cx - 4},{cy + 3.4} {cx - 4},{cy + 0.5} V{cy - 2.4} Z"
+    if icon == "network":
+        return f"M{cx},{cy - 4} L{cx - 3.6},{cy + 2.8} M{cx},{cy - 4} L{cx + 3.6},{cy + 2.8} M{cx - 3.6},{cy + 2.8} H{cx + 3.6}"
+    if icon == "layers":
+        return f"M{cx},{cy - 4.4} L{cx + 4.2},{cy - 1.8} L{cx},{cy + 0.6} L{cx - 4.2},{cy - 1.8} Z M{cx - 4.2},{cy + 1} L{cx},{cy + 3.2} L{cx + 4.2},{cy + 1} M{cx - 3.4},{cy + 3.2} L{cx},{cy + 4.8} L{cx + 3.4},{cy + 3.2}"
+    if icon == "terminal":
+        return f"M{cx - 3.8},{cy - 2.4} L{cx - 0.8},{cy} L{cx - 3.8},{cy + 2.4} M{cx + 0.2},{cy + 2.6} H{cx + 4}"
+    if icon == "neural":
+        return f"M{cx},{cy - 4.2} L{cx + 4},{cy + 3} H{cx - 4} Z M{cx - 1.4},{cy + 0.6} H{cx + 1.4}"
+    if icon == "db":
+        return f"M{cx - 3.8},{cy - 2.4} Q{cx},{cy - 4.2} {cx + 3.8},{cy - 2.4} Q{cx},{cy - 0.6} {cx - 3.8},{cy - 2.4} M{cx - 3.8},{cy - 2.4} V{cy + 2.4} Q{cx},{cy + 4.2} {cx + 3.8},{cy + 2.4} V{cy - 2.4} M{cx - 3.8},{cy} Q{cx},{cy + 1.8} {cx + 3.8},{cy}"
+    if icon == "chart":
+        return f"M{cx - 4},{cy + 3.4} H{cx + 4} M{cx - 2.6},{cy + 3.4} V{cy + 0.6} M{cx},{cy + 3.4} V{cy - 1.8} M{cx + 2.6},{cy + 3.4} V{cy - 3.8}"
+    if icon == "screen":
+        return f"M{cx - 4.4},{cy - 3.4} H{cx + 4.4} V{cy + 1.8} H{cx - 4.4} Z M{cx - 2},{cy + 3.8} H{cx + 2} M{cx},{cy + 1.8} V{cy + 3.8}"
+    if icon == "mobile":
+        return f"M{cx - 2.5},{cy - 4.2} H{cx + 2.5} V{cy + 4.2} H{cx - 2.5} Z M{cx - 0.8},{cy + 2.6} H{cx + 0.8}"
+    if icon == "check":
+        return f"M{cx - 3.5},{cy + 0.2} L{cx - 1},{cy + 2.8} L{cx + 3.8},{cy - 2.8}"
+    if icon == "cube":
+        return f"M{cx},{cy - 4.5} L{cx + 4},{cy - 2.2} V{cy + 2.2} L{cx},{cy + 4.5} L{cx - 4},{cy + 2.2} V{cy - 2.2} Z M{cx},{cy - 4.5} V{cy + 4.5} M{cx - 4},{cy - 2.2} L{cx},{cy} L{cx + 4},{cy - 2.2}"
+    # Default astral spark
+    return f"M{cx},{cy - 4.8} L{cx + 1.2},{cy - 1.2} L{cx + 4.8},{cy} L{cx + 1.2},{cy + 1.2} L{cx},{cy + 4.8} L{cx - 1.2},{cy + 1.2} L{cx - 4.8},{cy} L{cx - 1.2},{cy - 1.2} Z"
+
+
+def _octagon_points(cx: int, cy: int, r: int) -> str:
+    """Return regular octagon vertex coordinates centered at (cx, cy)."""
+    pts: list[str] = []
+    for i in range(8):
+        ang = math.radians(22.5 + i * 45.0)
+        pts.append(f"{round(cx + r * math.cos(ang), 1)},{round(cy + r * math.sin(ang), 1)}")
+    return " ".join(pts)
+
+
+def _build_constellation_tree(
     report: GamificationReport,
     theme: dict[str, str],
-) -> tuple[list[dict[str, object]], int, int]:
-    """Lay out 4 specialization columns x 4 verified Skill Nodes with rarity & mastery pips."""
-    mastery_text_colors = {
+    mode: str,
+) -> dict[str, Any]:
+    """Build radial constellation wedges, branching edges, socketed nodes & RPG character sheet."""
+    branch_accents = {b_key: theme[acc_key] for b_key, _, acc_key in BRANCH_META}
+    mastery_colors = {
         "MASTERED": theme["accent_amber"],
         "PROFICIENT": theme["accent_signal"],
         "ACTIVE": theme["accent_primary"],
         "EXPLORING": theme["text_muted"],
         "LOCKED": theme["text_subtle"],
     }
+    by_key = {n.key: n for n in report.skill_nodes}
     by_branch: dict[str, list[Any]] = {b_key: [] for b_key, _, _ in BRANCH_META}
-    for node in report.skill_nodes:
-        if node.branch in by_branch:
-            by_branch[node.branch].append(node)
+    for n in report.skill_nodes:
+        if n.branch in by_branch:
+            by_branch[n.branch].append(n)
 
-    columns: list[dict[str, object]] = []
-    mastered_count = sum(1 for n in report.skill_nodes if n.mastery == "MASTERED")
-    active_count = sum(1 for n in report.skill_nodes if n.pips > 0)
+    # Sector wedges, gradients, divider rays, and labels
+    wedges: list[dict[str, Any]] = []
+    divider_rays: list[dict[str, float]] = []
+    ray_r = 380.0
+    for sec_key, deg_start, deg_end, tag_x, tag_y, anchor, short_title in SECTOR_WEDGES:
+        sec_nodes = by_branch.get(sec_key, [])
+        sec_pips = sum(n.pips for n in sec_nodes)
+        max_sec_pips = max(1, len(sec_nodes) * 4)
+        glow_ratio = sec_pips / max_sec_pips
+        is_dark = mode == "dark"
+        beam_alpha = round((0.30 if is_dark else 0.16) if glow_ratio >= 0.70 else (0.14 if is_dark else 0.08), 2)
+        beam_mid = round(beam_alpha * 0.42, 2)
 
-    for col_idx, (b_key, b_title, accent_key) in enumerate(BRANCH_META):
-        cx = 18 + col_idx * 204
-        nodes_ctx: list[dict[str, object]] = []
-        for row_idx, node in enumerate(by_branch[b_key][:4]):
-            ny = 139 + row_idx * 57
-            rarity_color = theme[node.rarity_color_key]
-            m_color = mastery_text_colors.get(node.mastery, theme["text_muted"])
-            repo_label = f"{node.repo_count} repo" if node.repo_count == 1 else f"{node.repo_count} repos"
-            nodes_ctx.append(
-                {
-                    "x": cx,
-                    "y": ny,
-                    "w": 192,
-                    "h": 48,
-                    "name": node.name,
-                    "rarity": RARITY_SHORT.get(node.rarity, node.rarity[:5]),
-                    "rarity_color": rarity_color if node.pips > 0 else theme["border"],
-                    "mastery": node.mastery,
-                    "mastery_color": m_color,
-                    "pips": node.pips,
-                    "repo_label": repo_label,
-                }
-            )
-        columns.append(
+        pts = [f"{HUB_CX},{HUB_CY}"]
+        for deg in (deg_start, (deg_start + deg_end) / 2.0, deg_end):
+            rad = math.radians(deg)
+            pts.append(f"{round(HUB_CX + ray_r * math.cos(rad), 1)},{round(HUB_CY + ray_r * math.sin(rad), 1)}")
+        accent = branch_accents[sec_key]
+        wedges.append(
             {
-                "x": cx,
-                "center_x": cx + 96,
-                "title": b_title,
-                "accent": theme[accent_key],
-                "nodes": nodes_ctx,
+                "key": sec_key,
+                "points": " ".join(pts),
+                "accent": accent,
+                "beam_alpha": beam_alpha,
+                "beam_mid": beam_mid,
+                "tag_x": tag_x,
+                "tag_y": tag_y,
+                "anchor": anchor,
+                "title": f"{short_title} {sec_pips}/{max_sec_pips}",
             }
         )
-    return columns, mastered_count, active_count
+        r_start = math.radians(deg_start)
+        divider_rays.append(
+            {
+                "x1": round(HUB_CX + 38.0 * math.cos(r_start), 1),
+                "y1": round(HUB_CY + 38.0 * math.sin(r_start), 1),
+                "x2": round(HUB_CX + ray_r * math.cos(r_start), 1),
+                "y2": round(HUB_CY + ray_r * math.sin(r_start), 1),
+            }
+        )
+
+    # Constellation edges + subtle inter-sector synergy bridges + relay joint dots
+    edges: list[dict[str, Any]] = []
+    joint_dots: list[dict[str, Any]] = []
+    for src_key, dst_key, is_synergy in CONSTELLATION_EDGES:
+        sx, sy = (HUB_CX, HUB_CY) if src_key == "__hub__" else CONSTELLATION_POS[src_key]
+        dx, dy = CONSTELLATION_POS[dst_key]
+        dst_node = by_key[dst_key]
+        src_pips = 4 if src_key == "__hub__" else by_key[src_key].pips
+        active = dst_node.pips > 0 and src_pips > 0
+        stroke = branch_accents[dst_node.branch] if active else theme["border"]
+        edges.append(
+            {
+                "x1": sx,
+                "y1": sy,
+                "x2": dx,
+                "y2": dy,
+                "stroke": stroke,
+                "active": active,
+                "synergy": is_synergy,
+            }
+        )
+        if not is_synergy and src_key != "__hub__":
+            joint_dots.append(
+                {
+                    "cx": round((sx + dx) / 2.0, 1),
+                    "cy": round((sy + dy) / 2.0, 1),
+                    "fill": stroke if active else theme["bg_track"],
+                    "active": active,
+                }
+            )
+
+    bridges: list[dict[str, Any]] = []
+    for a_key, b_key in INTER_BRANCH_BRIDGES:
+        ax, ay = CONSTELLATION_POS[a_key]
+        bx, by = CONSTELLATION_POS[b_key]
+        active = by_key[a_key].pips >= 2 and by_key[b_key].pips >= 2
+        bridges.append(
+            {
+                "x1": ax,
+                "y1": ay,
+                "x2": bx,
+                "y2": by,
+                "stroke": theme["border_hi"] if active else theme["border"],
+                "active": active,
+            }
+        )
+
+    # Nodes with top-arch rim socket pips, inner vector emblem, and crisp bottom pill label
+    pip_angles = (-138.0, -113.0, -67.0, -42.0)
+    nodes_ctx: list[dict[str, Any]] = []
+    for spec in report.skill_nodes:
+        nx, ny = CONSTELLATION_POS[spec.key]
+        r = 14 if spec.is_capstone else 11
+        branch_color = branch_accents[spec.branch]
+        rarity_color = theme[spec.rarity_color_key]
+        ring_color = rarity_color if spec.pips > 0 else theme["border"]
+        m_color = mastery_colors.get(spec.mastery, theme["text_muted"])
+
+        pip_list: list[dict[str, Any]] = []
+        pip_r = r + 3.2
+        for idx, ang_deg in enumerate(pip_angles):
+            ang = math.radians(ang_deg)
+            lit = idx < spec.pips
+            pip_list.append(
+                {
+                    "cx": round(nx + pip_r * math.cos(ang), 1),
+                    "cy": round(ny + pip_r * math.sin(ang), 1),
+                    "fill": m_color if lit else theme["bg_track"],
+                    "stroke": ring_color if lit else theme["border"],
+                }
+            )
+
+        pill_text = f"{spec.name} · {spec.repo_count}r" if spec.repo_count > 0 else spec.name
+        pill_w = max(50, int(round(len(pill_text) * 4.5 + 8)))
+        nodes_ctx.append(
+            {
+                "key": spec.key,
+                "x": nx,
+                "y": ny,
+                "r": r,
+                "is_capstone": spec.is_capstone,
+                "octagon_pts": _octagon_points(nx, ny, r) if spec.is_capstone else "",
+                "octagon_inner_pts": _octagon_points(nx, ny, r - 3) if spec.is_capstone else "",
+                "ring_color": ring_color,
+                "glow_color": branch_color if spec.pips > 0 else theme["border"],
+                "active": spec.pips > 0,
+                "mastered": spec.pips == 4,
+                "icon_path": _node_icon_path(spec.icon, nx, ny),
+                "icon_color": branch_color if spec.pips > 0 else theme["text_subtle"],
+                "pips": pip_list,
+                "pill_text": pill_text,
+                "pill_w": pill_w,
+                "pill_x": round(nx - pill_w / 2.0, 1),
+                "pill_y": ny + r + 5,
+                "label_color": theme["text_primary"] if spec.pips > 0 else theme["text_subtle"],
+            }
+        )
+
+    # Central Alchemy Hub sacred triangle points around (HUB_CX, HUB_CY)
+    hub_tri_pts = " ".join(
+        f"{round(HUB_CX + 23 * math.cos(math.radians(-90 + i * 120)), 1)},{round(HUB_CY + 23 * math.sin(math.radians(-90 + i * 120)), 1)}"
+        for i in range(3)
+    )
+    hub_ticks: list[dict[str, float]] = []
+    for i in range(16):
+        ang = math.radians(i * 22.5)
+        hub_ticks.append(
+            {
+                "x1": round(HUB_CX + 30 * math.cos(ang), 1),
+                "y1": round(HUB_CY + 30 * math.sin(ang), 1),
+                "x2": round(HUB_CX + 34.5 * math.cos(ang), 1),
+                "y2": round(HUB_CY + 34.5 * math.sin(ang), 1),
+            }
+        )
+
+    # Right RPG Character Sheet telemetry
+    mastered_count = sum(1 for n in report.skill_nodes if n.mastery == "MASTERED")
+    proficient_count = sum(1 for n in report.skill_nodes if n.mastery == "PROFICIENT")
+    active_count = sum(1 for n in report.skill_nodes if n.pips > 0)
+    capstone_active = sum(1 for n in report.skill_nodes if n.is_capstone and n.pips >= 3)
+    earned_pips = sum(n.pips for n in report.skill_nodes)
+    max_pips = len(report.skill_nodes) * 4
+
+    rarity_counts = {
+        "LEGEND": sum(1 for n in report.skill_nodes if n.rarity == "LEGENDARY" and n.pips > 0),
+        "EPIC": sum(1 for n in report.skill_nodes if n.rarity == "EPIC" and n.pips > 0),
+        "RARE": sum(1 for n in report.skill_nodes if n.rarity == "RARE" and n.pips > 0),
+        "UNCOM": sum(1 for n in report.skill_nodes if n.rarity == "UNCOMMON" and n.pips > 0),
+    }
+
+    sheet_pillars = [
+        {
+            "label": p.label.upper(),
+            "value": f"{p.score:g}/{int(p.max_score)}",
+            "fill_w": round(min(1.0, p.score / max(1.0, p.max_score)) * 48.0, 1),
+        }
+        for p in report.grade_pillars
+    ]
+    sheet_langs = [
+        {
+            "name": lang.name,
+            "pct": f"{lang.percentage}%",
+            "color": lang.color,
+            "repos": f"{lang.repo_count}r",
+        }
+        for lang in report.top_languages[:6]
+    ]
+
+    return {
+        "hub_cx": HUB_CX,
+        "hub_cy": HUB_CY,
+        "hub_tri_pts": hub_tri_pts,
+        "hub_ticks": hub_ticks,
+        "wedges": wedges,
+        "divider_rays": divider_rays,
+        "edges": edges,
+        "bridges": bridges,
+        "joint_dots": joint_dots,
+        "nodes": nodes_ctx,
+        "mastered_count": mastered_count,
+        "proficient_count": proficient_count,
+        "active_skill_count": active_count,
+        "total_skill_count": len(report.skill_nodes),
+        "capstone_active": capstone_active,
+        "earned_pips": earned_pips,
+        "max_pips": max_pips,
+        "rarity_counts": rarity_counts,
+        "sheet_pillars": sheet_pillars,
+        "sheet_langs": sheet_langs,
+    }
 
 
 def _grade_color(grade: str, theme: dict[str, str]) -> str:
@@ -404,7 +727,7 @@ def render_all_svgs(
             ),
         )
 
-        columns, mastered_count, active_skill_count = _build_skill_tree_columns(report, theme)
+        constellation = _build_constellation_tree(report, theme, mode)
         _emit(
             f"skill_tree-{mode}.svg",
             skill_tpl.render(
@@ -413,9 +736,8 @@ def render_all_svgs(
                 report=report,
                 grade_color=g_color,
                 header_ball=tree_ball,
-                columns=columns,
-                mastered_count=mastered_count,
-                active_skill_count=active_skill_count,
+                sync_date=sync_date,
+                **constellation,
             ),
         )
 
