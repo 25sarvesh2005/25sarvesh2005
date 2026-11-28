@@ -17,9 +17,12 @@
       .bob-enemy { animation: float-enemy 2.4s ease-in-out infinite; }
       .bob-ally { animation: float-ally 2.0s steps(2, end) infinite; }
       .cursor { animation: blink-cursor 1.1s steps(2, end) infinite; }
+      .hp-danger { animation: pulse-danger 0.9s ease-in-out infinite; }
+      .fx-pop { animation: float-enemy 1.8s ease-in-out infinite; }
       @keyframes float-enemy { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3px); } }
       @keyframes float-ally { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-2px); } }
       @keyframes blink-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      @keyframes pulse-danger { 0%, 100% { opacity: 1; } 50% { opacity: 0.48; } }
     </style>
   </defs>
 
@@ -57,7 +60,7 @@
     <rect x="18" y="21" width="6" height="1" fill="#182032"/>
   </g>
   <text x="32" y="22" class="sans" font-size="11.5" font-weight="700" fill="#23262E">Episode 3 · Hero @25sarvesh2005 vs Hallucination Phantom</text>
-  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="#535B6E">Boss 3/4 · 2 K.O.'d · 2 Moves</text>
+  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="#535B6E">Boss 3/6 · 2 K.O.'d · 2 Moves</text>
 
   <!-- Classic Diagonal GBA Battle Viewport -->
   <rect x="14" y="38" width="812" height="212" rx="4" fill="url(#gba-sky-light)" stroke="#4A5162" stroke-width="1.5"/>
@@ -66,6 +69,10 @@
     <path d="M14,158 Q135,124 275,152 T545,146 T826,154 L826,162 L14,162 Z" fill="#88C088" opacity="0.65"/>
     <path d="M14,162 Q195,138 380,156 T720,148 L826,158 L826,166 L14,166 Z" fill="#88C088" opacity="0.9"/>
 
+
+    <!-- Per-Boss Atmospheric Stage Details -->
+    <circle cx="636" cy="112" r="46" fill="#7C3AED" opacity="0.14"/>
+    <circle cx="636" cy="112" r="32" fill="none" stroke="#7C3AED" stroke-width="1" stroke-dasharray="3,4" opacity="0.4"/>
 
     <!-- Isometric Enemy Platform (Upper Right) -->
     <ellipse cx="636" cy="140" rx="88" ry="20" fill="#76A868"/>
@@ -83,12 +90,12 @@
   <path d="M30,48 L330,48 L330,104 L318,114 L30,114 Z" fill="#FAF7E8" stroke="#4A5162" stroke-width="2"/>
   <path d="M34,52 L326,52 L326,102 L316,110 L34,110 Z" fill="none" stroke="#788096" stroke-width="1" opacity="0.45"/>
   <text x="44" y="69" class="sans" font-size="12.5" font-weight="700" fill="#23262E">Hallucination Phantom</text>
-  <text x="316" y="69" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="#D97706">Lv18</text>
+  <text x="316" y="69" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#D97706">LLM · VOID · Lv18</text>
 
   <rect x="44" y="77" width="272" height="14" rx="4" fill="#1F2937" stroke="#4A5162" stroke-width="1"/>
   <text x="50" y="87" class="mono" font-size="9" font-weight="700" fill="#FBBF24">HP</text>
   <rect x="68" y="80" width="244" height="8" rx="2" fill="#374151"/>
-  <rect x="68" y="80" width="244.0" height="8" rx="2" fill="#22C55E"/>
+  <rect class="" x="68" y="80" width="244.0" height="8" rx="2" fill="#22C55E"/>
   <text x="45" y="104" class="mono" font-size="9" font-weight="700" fill="#D97706">★ STAR REPO = 1-HIT KO!</text>
   <text x="314" y="104" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="#23262E">400/400</text>
 
@@ -107,10 +114,10 @@
   <rect x="522" y="203" width="188" height="7" rx="2" fill="#22C55E"/>
   <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">POWER +0</text>
 
-  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">914/yr · 3,913 XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">915/yr · 3,915 XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="#DCD4B8"/>
-  <rect x="658" y="223" width="138.18" height="5" rx="1.5" fill="#1D4ED8"/>
+  <rect x="658" y="223" width="138.74" height="5" rx="1.5" fill="#1D4ED8"/>
 
   <!-- Natural Shaded 2px GBA Sprites -->
   <g class="bob-enemy" shape-rendering="crispEdges">
@@ -281,6 +288,13 @@
     <rect x="632" y="136" width="4" height="2" fill="#2E1065"/>
     <rect x="658" y="136" width="2" height="2" fill="#2E1065"/>
     <rect x="614" y="138" width="2" height="2" fill="#2E1065"/>
+  </g>
+  <!-- Dynamic Comic Impact SFX & Slash VFX -->
+  <g class="fx-pop">
+    <path d="M594,142 L674,84" stroke="#FEF08A" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+    <path d="M602,146 L682,88" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+    <polygon points="750,62 762,74 782,66 778,84 798,94 776,102 780,118 760,110 746,122 742,104 720,98 738,84 732,68" fill="#FEF08A" stroke="#D97706" stroke-width="1.6"/>
+    <text x="758" y="96" text-anchor="middle" class="mono" font-size="8.2" font-weight="800" fill="#78350F">1-HIT K.O.!</text>
   </g>
   <g class="bob-ally" shape-rendering="crispEdges">
     <rect x="152" y="167" width="16" height="2" fill="#182032"/>
