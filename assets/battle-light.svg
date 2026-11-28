@@ -107,10 +107,10 @@
   <rect x="522" y="203" width="188" height="7" rx="2" fill="#22C55E"/>
   <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">POWER +0</text>
 
-  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">912/yr · 3,909 XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">913/yr · 3,911 XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="#DCD4B8"/>
-  <rect x="658" y="223" width="137.2" height="5" rx="1.5" fill="#1D4ED8"/>
+  <rect x="658" y="223" width="137.62" height="5" rx="1.5" fill="#1D4ED8"/>
 
   <!-- Natural Shaded 2px GBA Sprites -->
   <g class="bob-enemy" shape-rendering="crispEdges">

@@ -318,7 +318,7 @@
 
   <!-- Identity + Class Type Pills -->
   <text x="306" y="74" text-anchor="end" class="sans" font-size="12.5" font-weight="700" fill="#EDF2FA">Sarvesh Sharma</text>
-  <text x="306" y="90" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#FBBF24">Lv14 · 3,909 XP</text>
+  <text x="306" y="90" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#FBBF24">Lv14 · 3,911 XP</text>
   <text x="306" y="104" text-anchor="end" class="mono" font-size="8" fill="#9AAAD0">10 PUBLIC QUESTS</text>
 
   <rect x="202" y="116" width="50" height="16" rx="3" fill="#2563EB"/>
@@ -330,7 +330,7 @@
   <text x="26" y="174" class="mono" font-size="9" font-weight="700" fill="#EDF2FA">OUTPUT</text>
   <rect x="74" y="167" width="106" height="7" rx="1.5" fill="#253048"/>
   <rect x="74" y="167" width="80.6" height="7" rx="1.5" fill="#34D399"/>
-  <text x="316" y="174" text-anchor="end" class="mono" font-size="8.5" font-weight="600" fill="#9AAAD0">912 / yr</text>
+  <text x="316" y="174" text-anchor="end" class="mono" font-size="8.5" font-weight="600" fill="#9AAAD0">913 / yr</text>
   <text x="26" y="194" class="mono" font-size="9" font-weight="700" fill="#EDF2FA">STREAK</text>
   <rect x="74" y="187" width="106" height="7" rx="1.5" fill="#253048"/>
   <rect x="74" y="187" width="68.9" height="7" rx="1.5" fill="#FBBF24"/>
@@ -388,7 +388,7 @@
   <!-- RIGHT SCREEN: Trophy Vault + Readable Rank Scorecard -->
   <rect x="344" y="46" width="480" height="282" rx="5" fill="#1A2234" stroke="#364666" stroke-width="1.8"/>
   <text x="356" y="64" class="mono" font-size="10.5" font-weight="700" fill="#EDF2FA">TROPHY VAULT (8/12)</text>
-  <text x="812" y="64" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="#9AAAD0">NEXT UP: 1K Builder (927/1000 contributions)</text>
+  <text x="812" y="64" text-anchor="end" class="mono" font-size="9" font-weight="600" fill="#9AAAD0">NEXT UP: 1K Builder (928/1000 contributions)</text>
 
   <rect x="354" y="74" width="224" height="44" rx="3" fill="#182032" stroke="#FBBF24" stroke-width="1.3"/>
   <rect x="359" y="82" width="26" height="26" rx="2" fill="#0F1D1A" stroke="#364666" stroke-width="0.8"/>
@@ -787,7 +787,7 @@
   </g>
   <text x="625" y="194" class="mono" font-size="8.5" font-weight="700" fill="#38BDF8">#006</text>
   <text x="651" y="194" class="sans" font-size="10" font-weight="700" fill="#EDF2FA">500 Club</text>
-  <text x="625" y="210" class="mono" font-size="8.5" fill="#34D399">927 contributions</text>
+  <text x="625" y="210" class="mono" font-size="8.5" fill="#34D399">928 contributions</text>
   <rect x="354" y="227" width="224" height="44" rx="3" fill="#182032" stroke="#FBBF24" stroke-width="1.3"/>
   <rect x="359" y="235" width="26" height="26" rx="2" fill="#0F1D1A" stroke="#364666" stroke-width="0.8"/>
   <circle cx="565" cy="239" r="6.5" fill="#1F2940"/>

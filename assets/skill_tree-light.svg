@@ -1,17 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 416" width="840" height="416" role="img" aria-labelledby="skilltree-title-light skilltree-desc-light">
-  <title id="skilltree-title-light">Hero Skill Tree &amp; Tech Loadout — @25sarvesh2005</title>
-  <desc id="skilltree-desc-light">Verified skill tree across 4 branches showing repository counts, rarity tiers, mastery status, and Rank A.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" width="840" height="500" role="img" aria-labelledby="skilltree-title-light skilltree-desc-light">
+  <title id="skilltree-title-light">Talent Constellation &amp; Hero Attributes — @25sarvesh2005</title>
+  <desc id="skilltree-desc-light">Radial RPG talent tree with 24 verified skills across 6 sectors, socket mastery pips, Rank A (85/100), and live attribute sheet.</desc>
   <defs>
+    <clipPath id="constellation-clip-light">
+      <rect x="14" y="46" width="530" height="442" rx="4"/>
+    </clipPath>
+    <radialGradient id="hub-aura-light" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.32"/>
+      <stop offset="70%" stop-color="#7C3AED" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#F5F1E3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-backend-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#1D4ED8" stop-opacity="0.16"/>
+      <stop offset="56%" stop-color="#1D4ED8" stop-opacity="0.07"/>
+      <stop offset="96%" stop-color="#1D4ED8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-ai-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#7C3AED" stop-opacity="0.08"/>
+      <stop offset="56%" stop-color="#7C3AED" stop-opacity="0.03"/>
+      <stop offset="96%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-data-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#0F766E" stop-opacity="0.16"/>
+      <stop offset="56%" stop-color="#0F766E" stop-opacity="0.07"/>
+      <stop offset="96%" stop-color="#0F766E" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-apps-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#D97706" stop-opacity="0.08"/>
+      <stop offset="56%" stop-color="#D97706" stop-opacity="0.03"/>
+      <stop offset="96%" stop-color="#D97706" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-frontend-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#16A34A" stop-opacity="0.16"/>
+      <stop offset="56%" stop-color="#16A34A" stop-opacity="0.07"/>
+      <stop offset="96%" stop-color="#16A34A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wedge-glow-infra-light" cx="279" cy="267" r="245" gradientUnits="userSpaceOnUse">
+      <stop offset="12%" stop-color="#DC2626" stop-opacity="0.16"/>
+      <stop offset="56%" stop-color="#DC2626" stop-opacity="0.07"/>
+      <stop offset="96%" stop-color="#DC2626" stop-opacity="0"/>
+    </radialGradient>
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
     </style>
   </defs>
 
-  <!-- Outer GBA Skill Sheet Frame -->
-  <rect x="2" y="2" width="836" height="412" rx="6" fill="#F5F1E3" stroke="#4A5162" stroke-width="1.8"/>
-  <rect x="4" y="4" width="832" height="29" rx="3" fill="#FAF7ED"/>
-  <line x1="4" y1="33" x2="836" y2="33" stroke="#4A5162" stroke-width="1.2"/>
+  <!-- Outer Dark/Parchment RPG Talent Window Frame -->
+  <rect x="2" y="2" width="836" height="496" rx="6" fill="#F5F1E3" stroke="#4A5162" stroke-width="1.8"/>
+  <rect x="4" y="4" width="832" height="34" rx="3" fill="#FAF7ED"/>
+  <line x1="4" y1="38" x2="836" y2="38" stroke="#4A5162" stroke-width="1.3"/>
+
+  <!-- Top Header Telemetry Strip matching RPG Talent UI -->
   <g shape-rendering="crispEdges">
     <rect x="19" y="14" width="4" height="1" fill="#182032"/>
     <rect x="17" y="15" width="2" height="1" fill="#182032"/>
@@ -41,296 +81,703 @@
     <rect x="24" y="21" width="1" height="1" fill="#182032"/>
     <rect x="18" y="22" width="6" height="1" fill="#182032"/>
   </g>
-  <text x="32" y="23" class="sans" font-size="11.5" font-weight="700" fill="#23262E">Hero Skill Tree &amp; Loadout · @25sarvesh2005</text>
-  <text x="822" y="23" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="#1D4ED8">Rank A (85/100) · 7 Mastered · 16/16 Active</text>
+  <text x="32" y="19" class="mono" font-size="9.5" font-weight="700" fill="#D97706">3,911 XP</text>
+  <text x="32" y="31.5" class="mono" font-size="8.5" font-weight="600" fill="#535B6E">83/96 PIPS · 13 MASTERED</text>
 
-  <!-- Root Story Hub Node -->
-  <rect x="232" y="44" width="376" height="46" rx="4" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.8"/>
-  <rect x="242" y="52" width="36" height="30" rx="3" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.4"/>
-  <text x="260" y="73" text-anchor="middle" class="sans" font-size="17" font-weight="800" fill="#1D4ED8">A</text>
-  <text x="288" y="64" class="mono" font-size="10.5" font-weight="700" fill="#23262E">ORIGIN CLASS: SYSTEMS &amp; AI ARCHITECT</text>
-  <text x="288" y="79" class="mono" font-size="9" fill="#535B6E">10 Repos · 150 Test Files · 8 CI Pipelines · 10 Docs</text>
+  <text x="420" y="25.5" text-anchor="middle" class="sans" font-size="13.5" font-weight="800" letter-spacing="1.8" fill="#23262E">‹   TALENT TREE · @25sarvesh2005   ›</text>
 
-  <!-- Orthogonal Skill Tree Circuit Connectors -->
-  <g fill="none" stroke="#788096" stroke-width="2" stroke-linecap="square">
-    <path d="M420,90 L420,101"/>
-    <path d="M114,101 L726,101"/>
-    <path d="M114,101 L114,113"/>
-    <line x1="114" y1="133" x2="114" y2="336" stroke="#1D4ED8" stroke-width="2" opacity="0.45"/>
-    <path d="M318,101 L318,113"/>
-    <line x1="318" y1="133" x2="318" y2="336" stroke="#7C3AED" stroke-width="2" opacity="0.45"/>
-    <path d="M522,101 L522,113"/>
-    <line x1="522" y1="133" x2="522" y2="336" stroke="#16A34A" stroke-width="2" opacity="0.45"/>
-    <path d="M726,101 L726,113"/>
-    <line x1="726" y1="133" x2="726" y2="336" stroke="#D97706" stroke-width="2" opacity="0.45"/>
+  <text x="822" y="19" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#1D4ED8">RANK A · 85/100</text>
+  <text x="822" y="31.5" text-anchor="end" class="mono" font-size="8.5" font-weight="600" fill="#535B6E">10 REPOS · 24/24 NODES</text>
+
+  <!-- LEFT PANEL: Radial 6-Sector Skill Constellation -->
+  <rect x="14" y="46" width="530" height="442" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+
+  <g clip-path="url(#constellation-clip-light)">
+    <!-- Smooth Radial Sector Glows -->
+    <polygon points="279,267 279.0,-113.0 469.0,-62.1 608.1,77.0" fill="url(#wedge-glow-backend-light)"/>
+    <polygon points="279,267 608.1,77.0 659.0,267.0 608.1,457.0" fill="url(#wedge-glow-ai-light)"/>
+    <polygon points="279,267 608.1,457.0 469.0,596.1 279.0,647.0" fill="url(#wedge-glow-data-light)"/>
+    <polygon points="279,267 279.0,647.0 89.0,596.1 -50.1,457.0" fill="url(#wedge-glow-apps-light)"/>
+    <polygon points="279,267 -50.1,457.0 -101.0,267.0 -50.1,77.0" fill="url(#wedge-glow-frontend-light)"/>
+    <polygon points="279,267 -50.1,77.0 89.0,-62.1 279.0,-113.0" fill="url(#wedge-glow-infra-light)"/>
+
+    <!-- Faint Orbit Guide Rings -->
+    <circle cx="279" cy="267" r="78" fill="none" stroke="#4A5162" stroke-width="0.8" stroke-dasharray="2,4" opacity="0.5"/>
+    <circle cx="279" cy="267" r="134" fill="none" stroke="#4A5162" stroke-width="0.8" stroke-dasharray="2,4" opacity="0.4"/>
+    <circle cx="279" cy="267" r="188" fill="none" stroke="#4A5162" stroke-width="0.7" stroke-dasharray="2,5" opacity="0.3"/>
+
+    <!-- Radial Divider Rays -->
+    <line x1="279.0" y1="229.0" x2="279.0" y2="-113.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+    <line x1="311.9" y1="248.0" x2="608.1" y2="77.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+    <line x1="311.9" y1="286.0" x2="608.1" y2="457.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+    <line x1="279.0" y1="305.0" x2="279.0" y2="647.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+    <line x1="246.1" y1="286.0" x2="-50.1" y2="457.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+    <line x1="246.1" y1="248.0" x2="-50.1" y2="77.0" stroke="#4A5162" stroke-width="1" opacity="0.7"/>
+
+    <!-- Ambient Core Aura -->
+    <circle cx="279" cy="267" r="70" fill="url(#hub-aura-light)"/>
+
+    <!-- Inter-Branch Cross Synergy Bridges -->
+    <line x1="242" y1="126" x2="316" y2="126" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+    <line x1="396" y1="158" x2="428" y2="220" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+    <line x1="422" y1="316" x2="402" y2="374" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+    <line x1="318" y1="404" x2="240" y2="404" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+    <line x1="156" y1="374" x2="138" y2="316" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+    <line x1="130" y1="220" x2="162" y2="158" stroke="#788096" stroke-width="1" stroke-dasharray="3,4" opacity="0.48"/>
+
+    <!-- Branching Skill Connectors & Glowing Glow Layer -->
+    <line x1="279" y1="267" x2="332" y2="188" stroke="#1D4ED8" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="332" y2="188" stroke="#1D4ED8" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="332" y1="188" x2="316" y2="126" stroke="#1D4ED8" stroke-width="4.5" opacity="0.18"/>
+    <line x1="332" y1="188" x2="316" y2="126" stroke="#1D4ED8" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="332" y1="188" x2="396" y2="158" stroke="#1D4ED8" stroke-width="4.5" opacity="0.18"/>
+    <line x1="332" y1="188" x2="396" y2="158" stroke="#1D4ED8" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="316" y1="126" x2="396" y2="158" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="316" y1="126" x2="372" y2="84" stroke="#1D4ED8" stroke-width="4.5" opacity="0.18"/>
+    <line x1="316" y1="126" x2="372" y2="84" stroke="#1D4ED8" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="396" y1="158" x2="372" y2="84" stroke="#1D4ED8" stroke-width="4.5" opacity="0.18"/>
+    <line x1="396" y1="158" x2="372" y2="84" stroke="#1D4ED8" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="279" y1="267" x2="360" y2="260" stroke="#7C3AED" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="360" y2="260" stroke="#7C3AED" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="360" y1="260" x2="428" y2="220" stroke="#7C3AED" stroke-width="4.5" opacity="0.18"/>
+    <line x1="360" y1="260" x2="428" y2="220" stroke="#7C3AED" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="360" y1="260" x2="422" y2="316" stroke="#7C3AED" stroke-width="4.5" opacity="0.18"/>
+    <line x1="360" y1="260" x2="422" y2="316" stroke="#7C3AED" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="428" y1="220" x2="422" y2="316" stroke="#7C3AED" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="428" y1="220" x2="494" y2="266" stroke="#7C3AED" stroke-width="4.5" opacity="0.18"/>
+    <line x1="428" y1="220" x2="494" y2="266" stroke="#7C3AED" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="422" y1="316" x2="494" y2="266" stroke="#7C3AED" stroke-width="4.5" opacity="0.18"/>
+    <line x1="422" y1="316" x2="494" y2="266" stroke="#7C3AED" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="279" y1="267" x2="328" y2="336" stroke="#0F766E" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="328" y2="336" stroke="#0F766E" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="328" y1="336" x2="402" y2="374" stroke="#0F766E" stroke-width="4.5" opacity="0.18"/>
+    <line x1="328" y1="336" x2="402" y2="374" stroke="#0F766E" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="328" y1="336" x2="318" y2="404" stroke="#0F766E" stroke-width="4.5" opacity="0.18"/>
+    <line x1="328" y1="336" x2="318" y2="404" stroke="#0F766E" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="402" y1="374" x2="318" y2="404" stroke="#0F766E" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="402" y1="374" x2="388" y2="446" stroke="#0F766E" stroke-width="4.5" opacity="0.18"/>
+    <line x1="402" y1="374" x2="388" y2="446" stroke="#0F766E" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="318" y1="404" x2="388" y2="446" stroke="#0F766E" stroke-width="4.5" opacity="0.18"/>
+    <line x1="318" y1="404" x2="388" y2="446" stroke="#0F766E" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="279" y1="267" x2="230" y2="336" stroke="#D97706" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="230" y2="336" stroke="#D97706" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="230" y1="336" x2="156" y2="374" stroke="#D97706" stroke-width="4.5" opacity="0.18"/>
+    <line x1="230" y1="336" x2="156" y2="374" stroke="#D97706" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="230" y1="336" x2="240" y2="404" stroke="#D97706" stroke-width="4.5" opacity="0.18"/>
+    <line x1="230" y1="336" x2="240" y2="404" stroke="#D97706" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="156" y1="374" x2="240" y2="404" stroke="#D97706" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="156" y1="374" x2="170" y2="446" stroke="#D97706" stroke-width="4.5" opacity="0.18"/>
+    <line x1="156" y1="374" x2="170" y2="446" stroke="#D97706" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="240" y1="404" x2="170" y2="446" stroke="#D97706" stroke-width="4.5" opacity="0.18"/>
+    <line x1="240" y1="404" x2="170" y2="446" stroke="#D97706" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="279" y1="267" x2="196" y2="260" stroke="#16A34A" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="196" y2="260" stroke="#16A34A" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="196" y1="260" x2="130" y2="220" stroke="#16A34A" stroke-width="4.5" opacity="0.18"/>
+    <line x1="196" y1="260" x2="130" y2="220" stroke="#16A34A" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="196" y1="260" x2="138" y2="316" stroke="#16A34A" stroke-width="4.5" opacity="0.18"/>
+    <line x1="196" y1="260" x2="138" y2="316" stroke="#16A34A" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="130" y1="220" x2="138" y2="316" stroke="#16A34A" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="130" y1="220" x2="64" y2="266" stroke="#16A34A" stroke-width="4.5" opacity="0.18"/>
+    <line x1="130" y1="220" x2="64" y2="266" stroke="#16A34A" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="138" y1="316" x2="64" y2="266" stroke="#16A34A" stroke-width="4.5" opacity="0.18"/>
+    <line x1="138" y1="316" x2="64" y2="266" stroke="#16A34A" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="279" y1="267" x2="226" y2="188" stroke="#DC2626" stroke-width="4.5" opacity="0.18"/>
+    <line x1="279" y1="267" x2="226" y2="188" stroke="#DC2626" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="226" y1="188" x2="242" y2="126" stroke="#DC2626" stroke-width="4.5" opacity="0.18"/>
+    <line x1="226" y1="188" x2="242" y2="126" stroke="#DC2626" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="226" y1="188" x2="162" y2="158" stroke="#DC2626" stroke-width="4.5" opacity="0.18"/>
+    <line x1="226" y1="188" x2="162" y2="158" stroke="#DC2626" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="242" y1="126" x2="162" y2="158" stroke="#DC2626" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.85"/>
+    <line x1="242" y1="126" x2="192" y2="84" stroke="#DC2626" stroke-width="4.5" opacity="0.18"/>
+    <line x1="242" y1="126" x2="192" y2="84" stroke="#DC2626" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+    <line x1="162" y1="158" x2="192" y2="84" stroke="#DC2626" stroke-width="4.5" opacity="0.18"/>
+    <line x1="162" y1="158" x2="192" y2="84" stroke="#DC2626" stroke-width="2.0" stroke-dasharray="none" opacity="0.85"/>
+
+    <!-- Small Constellation Travel Dots along Connectors -->
+    <circle cx="324.0" cy="157.0" r="2.6" fill="#1D4ED8" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="364.0" cy="173.0" r="2.6" fill="#1D4ED8" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="344.0" cy="105.0" r="2.6" fill="#1D4ED8" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="384.0" cy="121.0" r="2.6" fill="#1D4ED8" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="394.0" cy="240.0" r="2.6" fill="#7C3AED" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="391.0" cy="288.0" r="2.6" fill="#7C3AED" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="461.0" cy="243.0" r="2.6" fill="#7C3AED" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="458.0" cy="291.0" r="2.6" fill="#7C3AED" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="365.0" cy="355.0" r="2.6" fill="#0F766E" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="323.0" cy="370.0" r="2.6" fill="#0F766E" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="395.0" cy="410.0" r="2.6" fill="#0F766E" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="353.0" cy="425.0" r="2.6" fill="#0F766E" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="193.0" cy="355.0" r="2.6" fill="#D97706" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="235.0" cy="370.0" r="2.6" fill="#D97706" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="163.0" cy="410.0" r="2.6" fill="#D97706" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="205.0" cy="425.0" r="2.6" fill="#D97706" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="163.0" cy="240.0" r="2.6" fill="#16A34A" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="167.0" cy="288.0" r="2.6" fill="#16A34A" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="97.0" cy="243.0" r="2.6" fill="#16A34A" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="101.0" cy="291.0" r="2.6" fill="#16A34A" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="234.0" cy="157.0" r="2.6" fill="#DC2626" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="194.0" cy="173.0" r="2.6" fill="#DC2626" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="217.0" cy="105.0" r="2.6" fill="#DC2626" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+    <circle cx="177.0" cy="121.0" r="2.6" fill="#DC2626" stroke="#FAF7E8" stroke-width="0.8" opacity="0.9"/>
+
+    <!-- Sector Perimeter Labels -->
+    <text x="290" y="62" text-anchor="start" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">BACKEND 16/16</text>
+    <text x="534" y="192" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#7C3AED">AI &amp; AGENTS 11/16</text>
+    <text x="534" y="479" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#0F766E">DATA &amp; BI 14/16</text>
+    <text x="24" y="479" text-anchor="start" class="mono" font-size="8" font-weight="700" fill="#D97706">APPS &amp; BUILD 11/16</text>
+    <text x="24" y="192" text-anchor="start" class="mono" font-size="8" font-weight="700" fill="#16A34A">UI &amp; WEB 16/16</text>
+    <text x="268" y="62" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#DC2626">OPS &amp; QA 15/16</text>
   </g>
 
-  <!-- 4 Specialization Branches x 4 Skill Nodes -->
-  <rect x="18" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.2"/>
-  <text x="114" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#1D4ED8">BACKEND FORGE</text>
+  <!-- Top-Left RPG Point Allocation Overlay Box (matching Reference UI) -->
+  <rect x="22" y="54" width="134" height="50" rx="3" fill="#FAF7ED" stroke="#788096" stroke-width="1.2" opacity="0.95"/>
+  <text x="29" y="67" class="mono" font-size="8" font-weight="700" fill="#D97706">Pips Lit: 83/96</text>
+  <text x="29" y="78" class="mono" font-size="8" font-weight="600" fill="#535B6E">Mastered: 13/24</text>
+  <rect x="29" y="83" width="120" height="15" rx="2" fill="#EFE9D1" stroke="#1D4ED8" stroke-width="1"/>
+  <text x="89" y="93.5" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#23262E">+1 pt to Rank S</text>
 
-  <rect x="18" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
-  <rect x="19" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
+  <!-- Top-Right Mini Key Pill -->
+  <rect x="424" y="54" width="112" height="32" rx="3" fill="#FAF7ED" stroke="#4A5162" stroke-width="1" opacity="0.92"/>
+  <text x="480" y="67" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#23262E">◇ CAPSTONE · ○ SKILL</text>
+  <text x="480" y="79" text-anchor="middle" class="mono" font-size="7.2" fill="#D97706">●●●● ARCH = MASTERY</text>
 
-  <text x="30" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Python</text>
-  <rect x="158" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
-  <text x="180" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
+  <!-- Central Sacred Arcane Seal Core -->
+  <circle cx="279" cy="267" r="36" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="2"/>
+  <line x1="309.0" y1="267.0" x2="313.5" y2="267.0" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="306.7" y1="278.5" x2="310.9" y2="280.2" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="300.2" y1="288.2" x2="303.4" y2="291.4" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="290.5" y1="294.7" x2="292.2" y2="298.9" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="279.0" y1="297.0" x2="279.0" y2="301.5" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="267.5" y1="294.7" x2="265.8" y2="298.9" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="257.8" y1="288.2" x2="254.6" y2="291.4" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="251.3" y1="278.5" x2="247.1" y2="280.2" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="249.0" y1="267.0" x2="244.5" y2="267.0" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="251.3" y1="255.5" x2="247.1" y2="253.8" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="257.8" y1="245.8" x2="254.6" y2="242.6" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="267.5" y1="239.3" x2="265.8" y2="235.1" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="279.0" y1="237.0" x2="279.0" y2="232.5" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="290.5" y1="239.3" x2="292.2" y2="235.1" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="300.2" y1="245.8" x2="303.4" y2="242.6" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <line x1="306.7" y1="255.5" x2="310.9" y2="253.8" stroke="#D97706" stroke-width="1.4" opacity="0.8"/>
+  <circle cx="279" cy="267" r="28" fill="#FAF7E8" stroke="#D97706" stroke-width="1.2" opacity="0.9"/>
+  <polygon points="279.0,244.0 298.9,278.5 259.1,278.5" fill="none" stroke="#D97706" stroke-width="1.1" opacity="0.65"/>
+  <circle cx="279" cy="267" r="16" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.2"/>
+  <text x="279" y="271.5" text-anchor="middle" class="sans" font-size="14" font-weight="800" fill="#1D4ED8">A</text>
+  <text x="279" y="280" text-anchor="middle" class="mono" font-size="6.5" font-weight="700" fill="#535B6E">Lv14</text>
 
-  <g shape-rendering="crispEdges">
-    <rect x="30" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="40" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="50" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="60" y="169" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="74" y="175" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="202" y="175" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">9 repos</text>
-  <rect x="18" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
-  <rect x="19" y="200" width="4" height="40" rx="1.5" fill="#D97706"/>
+  <!-- 24 Constellation Skill Nodes (Circles + Capstone Octagons + Rim Pips + Vector Glyphs + Label Pills) -->
+      <circle cx="332" cy="188" r="14" fill="none" stroke="#1D4ED8" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="332" cy="188" r="11" fill="#FAF7ED" stroke="#D97706" stroke-width="1.8"/>
+      <circle cx="332" cy="188" r="8.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="0.7" opacity="0.6"/>
 
-  <text x="30" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">FastAPI / Pydantic</text>
-  <rect x="158" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
-  <text x="180" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="321.4" cy="178.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="326.5" cy="174.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="337.5" cy="174.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="342.6" cy="178.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="30" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="40" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="50" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="60" y="226" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="74" y="232" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="202" y="232" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">8 repos</text>
-  <rect x="18" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="19" y="257" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M330,185 L327.5,188 L330,191 M334,185 L336.5,188 L334,191" fill="none" stroke="#1D4ED8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <text x="30" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">PostgreSQL / SQL</text>
-  <rect x="158" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="180" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="303.0" y="204" width="58" height="12" rx="2.5" fill="#FAF7ED" stroke="#D97706" stroke-width="0.8" opacity="0.95"/>
+    <text x="332" y="212.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Python · 9r</text>
+      <circle cx="396" cy="158" r="14" fill="none" stroke="#1D4ED8" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="396" cy="158" r="11" fill="#FAF7ED" stroke="#D97706" stroke-width="1.8"/>
+      <circle cx="396" cy="158" r="8.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="0.7" opacity="0.6"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="30" y="283" width="8" height="5" fill="#D97706"/>
-    <rect x="40" y="283" width="8" height="5" fill="#D97706"/>
-    <rect x="50" y="283" width="8" height="5" fill="#D97706"/>
-    <rect x="60" y="283" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="74" y="289" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="202" y="289" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">4 repos</text>
-  <rect x="18" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
-  <rect x="19" y="314" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="385.4" cy="148.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="390.5" cy="144.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="401.5" cy="144.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="406.6" cy="148.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
 
-  <text x="30" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">MongoDB / Redis</text>
-  <rect x="158" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
-  <text x="180" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M397,153.5 L393.5,158.2 L396.5,158.2 L395,162.5 L399,157.7 L395.8,157.7 Z" fill="none" stroke="#1D4ED8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="30" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="40" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="50" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="60" y="340" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="74" y="346" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="202" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">3 repos</text>
-  <rect x="222" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.2"/>
-  <text x="318" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#7C3AED">AI &amp; AGENTS</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="365.0" y="174" width="62" height="12" rx="2.5" fill="#FAF7ED" stroke="#D97706" stroke-width="0.8" opacity="0.95"/>
+    <text x="396" y="182.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">FastAPI · 8r</text>
+      <circle cx="316" cy="126" r="14" fill="none" stroke="#1D4ED8" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="316" cy="126" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="316" cy="126" r="8.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="0.7" opacity="0.6"/>
 
-  <rect x="222" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="223" y="143" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="305.4" cy="116.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="310.5" cy="112.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="321.5" cy="112.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="326.6" cy="116.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
 
-  <text x="234" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Gemini GenAI</text>
-  <rect x="362" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="384" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M316,121.5 L320,123.6 V126.5 Q320,129.4 316,130.6 Q312,129.4 312,126.5 V123.6 Z" fill="none" stroke="#1D4ED8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="234" y="169" width="8" height="5" fill="#16A34A"/>
-    <rect x="244" y="169" width="8" height="5" fill="#16A34A"/>
-    <rect x="254" y="169" width="8" height="5" fill="#16A34A"/>
-    <rect x="264" y="169" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="278" y="175" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="406" y="175" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">3 repos</text>
-  <rect x="222" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="223" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="283.0" y="142" width="66" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="316" y="150.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Pydantic · 7r</text>
+      <polygon points="384.9,89.4 377.4,96.9 366.6,96.9 359.1,89.4 359.1,78.6 366.6,71.1 377.4,71.1 384.9,78.6" fill="none" stroke="#1D4ED8" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="384.9,89.4 377.4,96.9 366.6,96.9 359.1,89.4 359.1,78.6 366.6,71.1 377.4,71.1 384.9,78.6" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
+      <polygon points="382.2,88.2 376.2,94.2 367.8,94.2 361.8,88.2 361.8,79.8 367.8,73.8 376.2,73.8 382.2,79.8" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="0.9" opacity="0.7"/>
 
-  <text x="234" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Hybrid RAG / Chroma</text>
-  <rect x="362" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="384" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="359.2" cy="72.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="365.3" cy="68.2" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="378.7" cy="68.2" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="384.8" cy="72.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="234" y="226" width="8" height="5" fill="#16A34A"/>
-    <rect x="244" y="226" width="8" height="5" fill="#16A34A"/>
-    <rect x="254" y="226" width="8" height="5" fill="#16A34A"/>
-    <rect x="264" y="226" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="278" y="232" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="406" y="232" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">2 repos</text>
-  <rect x="222" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
-  <rect x="223" y="257" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M372,80 L368.4,86.8 M372,80 L375.6,86.8 M368.4,86.8 H375.6" fill="none" stroke="#1D4ED8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <text x="234" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">FastMCP Tools</text>
-  <rect x="362" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
-  <text x="384" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="332.0" y="103" width="80" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="372" y="111.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Async/HTTPX · 9r</text>
+      <circle cx="360" cy="260" r="14" fill="none" stroke="#7C3AED" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="360" cy="260" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="360" cy="260" r="8.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="0.7" opacity="0.6"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="234" y="283" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="244" y="283" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="254" y="283" width="8" height="5" fill="#DCD4B8"/>
-    <rect x="264" y="283" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="278" y="289" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">ACTIVE</text>
-  <text x="406" y="289" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">1 repo</text>
-  <rect x="222" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
-  <rect x="223" y="314" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="349.4" cy="250.5" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="354.5" cy="246.9" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="365.5" cy="246.9" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="370.6" cy="250.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
 
-  <text x="234" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">PyTorch / SciPy ML</text>
-  <rect x="362" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
-  <text x="384" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M360,255.2 L361.2,258.8 L364.8,260 L361.2,261.2 L360,264.8 L358.8,261.2 L355.2,260 L358.8,258.8 Z" fill="none" stroke="#7C3AED" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="234" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="244" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="254" y="340" width="8" height="5" fill="#16A34A"/>
-    <rect x="264" y="340" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="278" y="346" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="406" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">3 repos</text>
-  <rect x="426" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#16A34A" stroke-width="1.2"/>
-  <text x="522" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#16A34A">UI &amp; APPS</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="324.5" y="276" width="71" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="360" y="284.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Gemini AI · 3r</text>
+      <circle cx="428" cy="220" r="14" fill="none" stroke="#7C3AED" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="428" cy="220" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="428" cy="220" r="8.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="0.7" opacity="0.6"/>
 
-  <rect x="426" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
-  <rect x="427" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="417.4" cy="210.5" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="422.5" cy="206.9" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="433.5" cy="206.9" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="438.6" cy="210.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
 
-  <text x="438" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">TypeScript</text>
-  <rect x="566" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
-  <text x="588" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M428,215.6 L432.2,218.2 L428,220.6 L423.8,218.2 Z M423.8,221 L428,223.2 L432.2,221 M424.6,223.2 L428,224.8 L431.4,223.2" fill="none" stroke="#7C3AED" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="438" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="448" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="458" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="468" y="169" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="482" y="175" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="610" y="175" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">5 repos</text>
-  <rect x="426" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="427" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="390.0" y="236" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="428" y="244.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Hybrid RAG · 2r</text>
+      <circle cx="422" cy="316" r="14" fill="none" stroke="#7C3AED" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="422" cy="316" r="11" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.8"/>
+      <circle cx="422" cy="316" r="8.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="0.7" opacity="0.6"/>
 
-  <text x="438" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">React / Next.js</text>
-  <rect x="566" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="588" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="411.4" cy="306.5" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="416.5" cy="302.9" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="427.5" cy="302.9" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+    <circle cx="432.6" cy="306.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="438" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="448" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="458" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="468" y="226" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="482" y="232" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="610" y="232" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">4 repos</text>
-  <rect x="426" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#1D4ED8" stroke-width="1.3"/>
-  <rect x="427" y="257" width="4" height="40" rx="1.5" fill="#1D4ED8"/>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M418.2,313.6 L421.2,316 L418.2,318.4 M422.2,318.6 H426" fill="none" stroke="#7C3AED" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <text x="438" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Electron Desktop</text>
-  <rect x="566" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1"/>
-  <text x="588" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#1D4ED8">RARE</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="391.0" y="332" width="62" height="12" rx="2.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="0.8" opacity="0.95"/>
+    <text x="422" y="340.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">FastMCP · 1r</text>
+      <polygon points="506.9,271.4 499.4,278.9 488.6,278.9 481.1,271.4 481.1,260.6 488.6,253.1 499.4,253.1 506.9,260.6" fill="none" stroke="#7C3AED" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="506.9,271.4 499.4,278.9 488.6,278.9 481.1,271.4 481.1,260.6 488.6,253.1 499.4,253.1 506.9,260.6" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
+      <polygon points="504.2,270.2 498.2,276.2 489.8,276.2 483.8,270.2 483.8,261.8 489.8,255.8 498.2,255.8 504.2,261.8" fill="#FAF7E8" stroke="#7C3AED" stroke-width="0.9" opacity="0.7"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="438" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="448" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="458" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="468" y="283" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="482" y="289" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="610" y="289" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">2 repos</text>
-  <rect x="426" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="1.3"/>
-  <rect x="427" y="314" width="4" height="40" rx="1.5" fill="#16A34A"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="481.2" cy="254.5" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="487.3" cy="250.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="500.7" cy="250.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="506.8" cy="254.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
 
-  <text x="438" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Kotlin / Compose</text>
-  <rect x="566" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#16A34A" stroke-width="1"/>
-  <text x="588" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#16A34A">UNCOM</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M494,261.8 L498,269 H490 Z M492.6,266.6 H495.4" fill="none" stroke="#7C3AED" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="438" y="340" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="448" y="340" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="458" y="340" width="8" height="5" fill="#DCD4B8"/>
-    <rect x="468" y="340" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="482" y="346" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">ACTIVE</text>
-  <text x="610" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">1 repo</text>
-  <rect x="630" y="113" width="192" height="20" rx="3" fill="#FAF7ED" stroke="#D97706" stroke-width="1.2"/>
-  <text x="726" y="126.5" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#D97706">OPS &amp; ARMOR</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="456.0" y="285" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="494" y="293.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">PyTorch/ML · 3r</text>
+      <circle cx="328" cy="336" r="14" fill="none" stroke="#0F766E" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="328" cy="336" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="328" cy="336" r="8.5" fill="#FAF7E8" stroke="#0F766E" stroke-width="0.7" opacity="0.6"/>
 
-  <rect x="630" y="139" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#D97706" stroke-width="1.3"/>
-  <rect x="631" y="143" width="4" height="40" rx="1.5" fill="#D97706"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="317.4" cy="326.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="322.5" cy="322.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="333.5" cy="322.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="338.6" cy="326.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
 
-  <text x="642" y="157" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Pytest / Ruff QA</text>
-  <rect x="770" y="146" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#D97706" stroke-width="1"/>
-  <text x="792" y="156" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#D97706">LEGEND</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M324.2,333.6 Q328,331.8 331.8,333.6 Q328,335.4 324.2,333.6 M324.2,333.6 V338.4 Q328,340.2 331.8,338.4 V333.6 M324.2,336 Q328,337.8 331.8,336" fill="none" stroke="#0F766E" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="642" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="652" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="662" y="169" width="8" height="5" fill="#D97706"/>
-    <rect x="672" y="169" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="686" y="175" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="814" y="175" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">10 repos</text>
-  <rect x="630" y="196" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="631" y="200" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="290.0" y="352" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="328" y="360.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">PostgreSQL · 4r</text>
+      <circle cx="402" cy="374" r="14" fill="none" stroke="#0F766E" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="402" cy="374" r="11" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.8"/>
+      <circle cx="402" cy="374" r="8.5" fill="#FAF7E8" stroke="#0F766E" stroke-width="0.7" opacity="0.6"/>
 
-  <text x="642" y="214" class="sans" font-size="10.5" font-weight="700" fill="#23262E">GitHub Actions CI</text>
-  <rect x="770" y="203" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="792" y="213" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="391.4" cy="364.5" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="396.5" cy="360.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="407.5" cy="360.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="412.6" cy="364.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="642" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="652" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="662" y="226" width="8" height="5" fill="#D97706"/>
-    <rect x="672" y="226" width="8" height="5" fill="#D97706"/>
-  </g>
-  <text x="686" y="232" class="mono" font-size="8" font-weight="700" fill="#D97706">MASTERED</text>
-  <text x="814" y="232" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">8 repos</text>
-  <rect x="630" y="253" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#7C3AED" stroke-width="1.3"/>
-  <rect x="631" y="257" width="4" height="40" rx="1.5" fill="#7C3AED"/>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M403,369.5 L399.5,374.2 L402.5,374.2 L401,378.5 L405,373.7 L401.8,373.7 Z" fill="none" stroke="#0F766E" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <text x="642" y="271" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Docker Sandbox</text>
-  <rect x="770" y="260" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1"/>
-  <text x="792" y="270" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#7C3AED">EPIC</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="362.0" y="390" width="80" height="12" rx="2.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="0.8" opacity="0.95"/>
+    <text x="402" y="398.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Redis/Mongo · 3r</text>
+      <circle cx="318" cy="404" r="14" fill="none" stroke="#0F766E" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="318" cy="404" r="11" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.8"/>
+      <circle cx="318" cy="404" r="8.5" fill="#FAF7E8" stroke="#0F766E" stroke-width="0.7" opacity="0.6"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="642" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="652" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="662" y="283" width="8" height="5" fill="#16A34A"/>
-    <rect x="672" y="283" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="686" y="289" class="mono" font-size="8" font-weight="700" fill="#16A34A">PROFICIENT</text>
-  <text x="814" y="289" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">3 repos</text>
-  <rect x="630" y="310" width="192" height="48" rx="3.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="1.3"/>
-  <rect x="631" y="314" width="4" height="40" rx="1.5" fill="#16A34A"/>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="307.4" cy="394.5" r="2.1" fill="#D97706" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="312.5" cy="390.9" r="2.1" fill="#D97706" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="323.5" cy="390.9" r="2.1" fill="#D97706" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="328.6" cy="394.5" r="2.1" fill="#D97706" stroke="#1D4ED8" stroke-width="0.8"/>
 
-  <text x="642" y="328" class="sans" font-size="10.5" font-weight="700" fill="#23262E">Playwright E2E</text>
-  <rect x="770" y="317" width="44" height="14" rx="2" fill="#FAF7ED" stroke="#16A34A" stroke-width="1"/>
-  <text x="792" y="327" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#16A34A">UNCOM</text>
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M318,399.6 L322.2,402.2 L318,404.6 L313.8,402.2 Z M313.8,405 L318,407.2 L322.2,405 M314.6,407.2 L318,408.8 L321.4,407.2" fill="none" stroke="#0F766E" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <g shape-rendering="crispEdges">
-    <rect x="642" y="340" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="652" y="340" width="8" height="5" fill="#1D4ED8"/>
-    <rect x="662" y="340" width="8" height="5" fill="#DCD4B8"/>
-    <rect x="672" y="340" width="8" height="5" fill="#DCD4B8"/>
-  </g>
-  <text x="686" y="346" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">ACTIVE</text>
-  <text x="814" y="346" text-anchor="end" class="mono" font-size="8.5" fill="#535B6E">1 repo</text>
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="278.0" y="420" width="80" height="12" rx="2.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="0.8" opacity="0.95"/>
+    <text x="318" y="428.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Alembic/ETL · 4r</text>
+      <polygon points="400.9,451.4 393.4,458.9 382.6,458.9 375.1,451.4 375.1,440.6 382.6,433.1 393.4,433.1 400.9,440.6" fill="none" stroke="#0F766E" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="400.9,451.4 393.4,458.9 382.6,458.9 375.1,451.4 375.1,440.6 382.6,433.1 393.4,433.1 400.9,440.6" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
+      <polygon points="398.2,450.2 392.2,456.2 383.8,456.2 377.8,450.2 377.8,441.8 383.8,435.8 392.2,435.8 398.2,441.8" fill="#FAF7E8" stroke="#0F766E" stroke-width="0.9" opacity="0.7"/>
 
-  <!-- Clear Plain-English Rarity & Verification Legend -->
-  <rect x="18" y="368" width="804" height="34" rx="3" fill="#FAF7ED" stroke="#4A5162" stroke-width="1"/>
-  <g shape-rendering="crispEdges">
-    <rect x="28" y="377" width="6" height="6" fill="#D97706"/>
-    <rect x="116" y="377" width="6" height="6" fill="#7C3AED"/>
-    <rect x="172" y="377" width="6" height="6" fill="#1D4ED8"/>
-    <rect x="228" y="377" width="6" height="6" fill="#16A34A"/>
-  </g>
-  <text x="38" y="383" class="mono" font-size="8" font-weight="700" fill="#D97706">LEGENDARY</text>
-  <text x="126" y="383" class="mono" font-size="8" font-weight="700" fill="#7C3AED">EPIC</text>
-  <text x="182" y="383" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">RARE</text>
-  <text x="238" y="383" class="mono" font-size="8" font-weight="700" fill="#16A34A">UNCOMMON</text>
-  <text x="812" y="383" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">HERO RANK A (85/100 · +1 pt to Rank S)</text>
-  <text x="28" y="396" class="mono" font-size="8" fill="#727B91">MASTERY: ■■■■ MASTERED (4+ repos, 2+ CI/tests) · ■■■□ PROFICIENT (2–3 repos) · ■■□□ ACTIVE (1 tested repo) · Auto-scanned from live manifests</text>
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="375.2" cy="434.5" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="381.3" cy="430.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="394.7" cy="430.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="400.8" cy="434.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M384,449.4 H392 M385.4,449.4 V446.6 M388,449.4 V444.2 M390.6,449.4 V442.2" fill="none" stroke="#0F766E" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="352.5" y="465" width="71" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="388" y="473.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Pandas/BI · 3r</text>
+      <circle cx="230" cy="336" r="14" fill="none" stroke="#D97706" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="230" cy="336" r="11" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.8"/>
+      <circle cx="230" cy="336" r="8.5" fill="#FAF7E8" stroke="#D97706" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="219.4" cy="326.5" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="224.5" cy="322.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="235.5" cy="322.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="240.6" cy="326.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M228,333 L225.5,336 L228,339 M232,333 L234.5,336 L232,339" fill="none" stroke="#D97706" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="192.0" y="352" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="0.8" opacity="0.95"/>
+    <text x="230" y="360.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Jinja/Mako · 3r</text>
+      <circle cx="156" cy="374" r="14" fill="none" stroke="#D97706" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="156" cy="374" r="11" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.8"/>
+      <circle cx="156" cy="374" r="8.5" fill="#FAF7E8" stroke="#D97706" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="145.4" cy="364.5" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="150.5" cy="360.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="161.5" cy="360.9" r="2.1" fill="#16A34A" stroke="#1D4ED8" stroke-width="0.8"/>
+    <circle cx="166.6" cy="364.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M151.6,370.6 H160.4 V375.8 H151.6 Z M154,377.8 H158 M156,375.8 V377.8" fill="none" stroke="#D97706" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="123.0" y="390" width="66" height="12" rx="2.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="0.8" opacity="0.95"/>
+    <text x="156" y="398.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Electron · 2r</text>
+      <circle cx="240" cy="404" r="14" fill="none" stroke="#D97706" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="240" cy="404" r="11" fill="#FAF7ED" stroke="#16A34A" stroke-width="1.8"/>
+      <circle cx="240" cy="404" r="8.5" fill="#FAF7E8" stroke="#D97706" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="229.4" cy="394.5" r="2.1" fill="#1D4ED8" stroke="#16A34A" stroke-width="0.8"/>
+    <circle cx="234.5" cy="390.9" r="2.1" fill="#1D4ED8" stroke="#16A34A" stroke-width="0.8"/>
+    <circle cx="245.5" cy="390.9" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+    <circle cx="250.6" cy="394.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M237.5,399.8 H242.5 V408.2 H237.5 Z M239.2,406.6 H240.8" fill="none" stroke="#D97706" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="204.5" y="420" width="71" height="12" rx="2.5" fill="#FAF7ED" stroke="#16A34A" stroke-width="0.8" opacity="0.95"/>
+    <text x="240" y="428.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Kotlin UI · 1r</text>
+      <polygon points="182.9,451.4 175.4,458.9 164.6,458.9 157.1,451.4 157.1,440.6 164.6,433.1 175.4,433.1 182.9,440.6" fill="none" stroke="#D97706" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="182.9,451.4 175.4,458.9 164.6,458.9 157.1,451.4 157.1,440.6 164.6,433.1 175.4,433.1 182.9,440.6" fill="#FAF7ED" stroke="#16A34A" stroke-width="2.0"/>
+      <polygon points="180.2,450.2 174.2,456.2 165.8,456.2 159.8,450.2 159.8,441.8 165.8,435.8 174.2,435.8 180.2,441.8" fill="#FAF7E8" stroke="#D97706" stroke-width="0.9" opacity="0.7"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="157.2" cy="434.5" r="2.1" fill="#16A34A" stroke="#16A34A" stroke-width="0.8"/>
+    <circle cx="163.3" cy="430.2" r="2.1" fill="#16A34A" stroke="#16A34A" stroke-width="0.8"/>
+    <circle cx="176.7" cy="430.2" r="2.1" fill="#16A34A" stroke="#16A34A" stroke-width="0.8"/>
+    <circle cx="182.8" cy="434.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M166.5,446.2 L169,448.8 L173.8,443.2" fill="none" stroke="#D97706" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="132.0" y="465" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#16A34A" stroke-width="0.8" opacity="0.95"/>
+    <text x="170" y="473.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Playwright · 2r</text>
+      <circle cx="196" cy="260" r="14" fill="none" stroke="#16A34A" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="196" cy="260" r="11" fill="#FAF7ED" stroke="#D97706" stroke-width="1.8"/>
+      <circle cx="196" cy="260" r="8.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="185.4" cy="250.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="190.5" cy="246.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="201.5" cy="246.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="206.6" cy="250.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M194,257 L191.5,260 L194,263 M198,257 L200.5,260 L198,263" fill="none" stroke="#16A34A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="156.0" y="276" width="80" height="12" rx="2.5" fill="#FAF7ED" stroke="#D97706" stroke-width="0.8" opacity="0.95"/>
+    <text x="196" y="284.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">JS/HTML/CSS · 7r</text>
+      <circle cx="138" cy="316" r="14" fill="none" stroke="#16A34A" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="138" cy="316" r="11" fill="#FAF7ED" stroke="#D97706" stroke-width="1.8"/>
+      <circle cx="138" cy="316" r="8.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="127.4" cy="306.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="132.5" cy="302.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="143.5" cy="302.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="148.6" cy="306.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M134.2,313.6 L137.2,316 L134.2,318.4 M138.2,318.6 H142" fill="none" stroke="#16A34A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="100.0" y="332" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#D97706" stroke-width="0.8" opacity="0.95"/>
+    <text x="138" y="340.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">TypeScript · 5r</text>
+      <circle cx="130" cy="220" r="14" fill="none" stroke="#16A34A" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="130" cy="220" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="130" cy="220" r="8.5" fill="#FAF7E8" stroke="#16A34A" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="119.4" cy="210.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="124.5" cy="206.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="135.5" cy="206.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="140.6" cy="210.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M130,215.8 L134,223 H126 Z M128.6,220.6 H131.4" fill="none" stroke="#16A34A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="92.0" y="236" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="130" y="244.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">React/Next · 4r</text>
+      <polygon points="76.9,271.4 69.4,278.9 58.6,278.9 51.1,271.4 51.1,260.6 58.6,253.1 69.4,253.1 76.9,260.6" fill="none" stroke="#16A34A" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="76.9,271.4 69.4,278.9 58.6,278.9 51.1,271.4 51.1,260.6 58.6,253.1 69.4,253.1 76.9,260.6" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
+      <polygon points="74.2,270.2 68.2,276.2 59.8,276.2 53.8,270.2 53.8,261.8 59.8,255.8 68.2,255.8 74.2,261.8" fill="#FAF7E8" stroke="#16A34A" stroke-width="0.9" opacity="0.7"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="51.2" cy="254.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="57.3" cy="250.2" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="70.7" cy="250.2" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="76.8" cy="254.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M64,261.2 L65.2,264.8 L68.8,266 L65.2,267.2 L64,270.8 L62.8,267.2 L59.2,266 L62.8,264.8 Z" fill="none" stroke="#16A34A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="19.5" y="285" width="89" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="64" y="293.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Vite/Tailwind · 4r</text>
+      <circle cx="226" cy="188" r="14" fill="none" stroke="#DC2626" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="226" cy="188" r="11" fill="#FAF7ED" stroke="#D97706" stroke-width="1.8"/>
+      <circle cx="226" cy="188" r="8.5" fill="#FAF7E8" stroke="#DC2626" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="215.4" cy="178.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="220.5" cy="174.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="231.5" cy="174.9" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+    <circle cx="236.6" cy="178.5" r="2.1" fill="#D97706" stroke="#D97706" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M222.5,188.2 L225,190.8 L229.8,185.2" fill="none" stroke="#DC2626" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="188.0" y="204" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#D97706" stroke-width="0.8" opacity="0.95"/>
+    <text x="226" y="212.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Pytest QA · 10r</text>
+      <circle cx="242" cy="126" r="14" fill="none" stroke="#DC2626" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="242" cy="126" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="242" cy="126" r="8.5" fill="#FAF7E8" stroke="#DC2626" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="231.4" cy="116.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="236.5" cy="112.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="247.5" cy="112.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="252.6" cy="116.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M243,121.5 L239.5,126.2 L242.5,126.2 L241,130.5 L245,125.7 L241.8,125.7 Z" fill="none" stroke="#DC2626" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="204.0" y="142" width="76" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="242" y="150.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">GH Actions · 8r</text>
+      <circle cx="162" cy="158" r="14" fill="none" stroke="#DC2626" stroke-width="3.5" opacity="0.2"/>
+      <circle cx="162" cy="158" r="11" fill="#FAF7ED" stroke="#7C3AED" stroke-width="1.8"/>
+      <circle cx="162" cy="158" r="8.5" fill="#FAF7E8" stroke="#DC2626" stroke-width="0.7" opacity="0.6"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="151.4" cy="148.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="156.5" cy="144.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="167.5" cy="144.9" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="172.6" cy="148.5" r="2.1" fill="#D97706" stroke="#7C3AED" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M162,153.5 L166,155.6 V158.5 Q166,161.4 162,162.6 Q158,161.4 158,158.5 V155.6 Z" fill="none" stroke="#DC2626" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="122.0" y="174" width="80" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="162" y="182.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Ruff/ESLint · 5r</text>
+      <polygon points="204.9,89.4 197.4,96.9 186.6,96.9 179.1,89.4 179.1,78.6 186.6,71.1 197.4,71.1 204.9,78.6" fill="none" stroke="#DC2626" stroke-width="4.5" opacity="0.22"/>
+      <polygon points="204.9,89.4 197.4,96.9 186.6,96.9 179.1,89.4 179.1,78.6 186.6,71.1 197.4,71.1 204.9,78.6" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
+      <polygon points="202.2,88.2 196.2,94.2 187.8,94.2 181.8,88.2 181.8,79.8 187.8,73.8 196.2,73.8 202.2,79.8" fill="#FAF7E8" stroke="#DC2626" stroke-width="0.9" opacity="0.7"/>
+
+    <!-- Curved Mastery Socket Pips along Top Rim -->
+    <circle cx="179.2" cy="72.5" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="185.3" cy="68.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="198.7" cy="68.2" r="2.1" fill="#16A34A" stroke="#7C3AED" stroke-width="0.8"/>
+    <circle cx="204.8" cy="72.5" r="2.1" fill="#DCD4B8" stroke="#4A5162" stroke-width="0.8"/>
+
+    <!-- Crisp Vector Glyph Inside Orb -->
+    <path d="M192,79.5 L196,81.8 V86.2 L192,88.5 L188,86.2 V81.8 Z M192,79.5 V88.5 M188,81.8 L192,84 L196,81.8" fill="none" stroke="#DC2626" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Non-Overlapping Crisp Skill Label Pill -->
+    <rect x="163.0" y="103" width="58" height="12" rx="2.5" fill="#FAF7ED" stroke="#7C3AED" stroke-width="0.8" opacity="0.95"/>
+    <text x="192" y="111.7" text-anchor="middle" class="mono" font-size="7.2" font-weight="700" fill="#23262E">Docker · 3r</text>
+
+  <!-- RIGHT PANEL: RPG Character Sheet & Verified Attributes -->
+  <!-- Box 1: HERO ATTRIBUTES -->
+  <rect x="552" y="46" width="274" height="118" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+  <rect x="552" y="46" width="274" height="20" rx="3" fill="#FAF7ED"/>
+  <line x1="552" y1="66" x2="826" y2="66" stroke="#4A5162" stroke-width="1"/>
+  <text x="562" y="59.5" class="sans" font-size="10" font-weight="800" letter-spacing="0.9" fill="#23262E">HERO ATTRIBUTES</text>
+  <text x="816" y="59.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">SYSTEMS ARCHITECT</text>
+
+  <text x="562" y="80.0" class="mono" font-size="8.2" font-weight="700" fill="#D97706">COMMITS</text>
+  <rect x="642" y="74.0" width="48" height="5" rx="1.5" fill="#DCD4B8"/>
+  <rect x="642" y="74.0" width="35.5" height="5" rx="1.5" fill="#1D4ED8"/>
+  <text x="738" y="80.0" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="#23262E">18.5/25</text>
+  <text x="562" y="96.5" class="mono" font-size="8.2" font-weight="700" fill="#D97706">CI/TESTS</text>
+  <rect x="642" y="90.5" width="48" height="5" rx="1.5" fill="#DCD4B8"/>
+  <rect x="642" y="90.5" width="44.2" height="5" rx="1.5" fill="#1D4ED8"/>
+  <text x="738" y="96.5" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="#23262E">27.6/30</text>
+  <text x="562" y="113.0" class="mono" font-size="8.2" font-weight="700" fill="#D97706">REPOS</text>
+  <rect x="642" y="107.0" width="48" height="5" rx="1.5" fill="#DCD4B8"/>
+  <rect x="642" y="107.0" width="48.0" height="5" rx="1.5" fill="#1D4ED8"/>
+  <text x="738" y="113.0" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="#23262E">20/20</text>
+  <text x="562" y="129.5" class="mono" font-size="8.2" font-weight="700" fill="#D97706">DOMAINS</text>
+  <rect x="642" y="123.5" width="48" height="5" rx="1.5" fill="#DCD4B8"/>
+  <rect x="642" y="123.5" width="48.0" height="5" rx="1.5" fill="#1D4ED8"/>
+  <text x="738" y="129.5" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="#23262E">15/15</text>
+  <text x="562" y="146.0" class="mono" font-size="8.2" font-weight="700" fill="#D97706">PR/STARS</text>
+  <rect x="642" y="140.0" width="48" height="5" rx="1.5" fill="#DCD4B8"/>
+  <rect x="642" y="140.0" width="16.8" height="5" rx="1.5" fill="#1D4ED8"/>
+  <text x="738" y="146.0" text-anchor="end" class="mono" font-size="8.2" font-weight="700" fill="#23262E">3.5/10</text>
+
+  <!-- Grade Stamp inside Hero Attributes Right Slot -->
+  <rect x="748" y="73" width="70" height="82" rx="3.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.4"/>
+  <text x="783" y="86" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="#535B6E">RANK</text>
+  <text x="783" y="114" text-anchor="middle" class="sans" font-size="26" font-weight="800" fill="#1D4ED8">A</text>
+  <text x="783" y="130" text-anchor="middle" class="mono" font-size="9.5" font-weight="700" fill="#23262E">85/100</text>
+  <text x="783" y="146" text-anchor="middle" class="mono" font-size="6.8" font-weight="600" fill="#D97706">+1 pt to Rank S</text>
+
+  <!-- Box 2: PLAYER STATISTICS (2-Column RPG Stat Ledger) -->
+  <rect x="552" y="172" width="274" height="86" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+  <rect x="552" y="172" width="274" height="19" rx="3" fill="#FAF7ED"/>
+  <line x1="552" y1="191" x2="826" y2="191" stroke="#4A5162" stroke-width="1"/>
+  <text x="562" y="185" class="sans" font-size="9.5" font-weight="800" letter-spacing="0.8" fill="#23262E">PLAYER STATISTICS</text>
+  <text x="816" y="185" text-anchor="end" class="mono" font-size="8" font-weight="600" fill="#535B6E">LIVE REPOS</text>
+
+  <text x="562" y="206" class="mono" font-size="8.2" fill="#535B6E">Commits:</text>
+  <text x="680" y="206" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#23262E">928</text>
+  <text x="696" y="206" class="mono" font-size="8.2" fill="#535B6E">Test Files:</text>
+  <text x="816" y="206" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#23262E">150</text>
+
+  <text x="562" y="221" class="mono" font-size="8.2" fill="#535B6E">Active Days:</text>
+  <text x="680" y="221" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#23262E">130</text>
+  <text x="696" y="221" class="mono" font-size="8.2" fill="#535B6E">CI Gates:</text>
+  <text x="816" y="221" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#16A34A">8/10</text>
+
+  <text x="562" y="236" class="mono" font-size="8.2" fill="#535B6E">Best Streak:</text>
+  <text x="680" y="236" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#D97706">10d</text>
+  <text x="696" y="236" class="mono" font-size="8.2" fill="#535B6E">Docs Ready:</text>
+  <text x="816" y="236" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#16A34A">10/10</text>
+
+  <text x="562" y="251" class="mono" font-size="8.2" fill="#535B6E">Merged PRs:</text>
+  <text x="680" y="251" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#23262E">5</text>
+  <text x="696" y="251" class="mono" font-size="8.2" fill="#535B6E">Dockerized:</text>
+  <text x="816" y="251" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#1D4ED8">3/10</text>
+
+  <!-- Box 3 Left Top: COMBAT -->
+  <rect x="552" y="266" width="124" height="82" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+  <rect x="552" y="266" width="124" height="18" rx="3" fill="#FAF7ED"/>
+  <line x1="552" y1="284" x2="676" y2="284" stroke="#4A5162" stroke-width="1"/>
+  <text x="560" y="278.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="#23262E">COMBAT</text>
+
+  <text x="560" y="298" class="mono" font-size="7.8" fill="#535B6E">Strike DMG:</text>
+  <text x="668" y="298" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#DC2626">16–28</text>
+  <text x="560" y="312" class="mono" font-size="7.8" fill="#535B6E">Crit Hit:</text>
+  <text x="668" y="312" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#D97706">26–44</text>
+  <text x="560" y="326" class="mono" font-size="7.8" fill="#535B6E">Hero Level:</text>
+  <text x="668" y="326" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">Lv 14</text>
+  <text x="560" y="340" class="mono" font-size="7.8" fill="#535B6E">Ext Stars:</text>
+  <text x="668" y="340" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#D97706">2 ★</text>
+
+  <!-- Box 3 Left Bottom: NODE MASTERY -->
+  <rect x="552" y="355" width="124" height="82" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+  <rect x="552" y="355" width="124" height="18" rx="3" fill="#FAF7ED"/>
+  <line x1="552" y1="373" x2="676" y2="373" stroke="#4A5162" stroke-width="1"/>
+  <text x="560" y="367.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="#23262E">MASTERY</text>
+
+  <text x="560" y="387" class="mono" font-size="7.8" fill="#535B6E">Mastered:</text>
+  <text x="668" y="387" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#D97706">13/24</text>
+  <text x="560" y="401" class="mono" font-size="7.8" fill="#535B6E">Proficient:</text>
+  <text x="668" y="401" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#16A34A">9/24</text>
+  <text x="560" y="415" class="mono" font-size="7.8" fill="#535B6E">Capstones:</text>
+  <text x="668" y="415" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#7C3AED">6/6</text>
+  <text x="560" y="429" class="mono" font-size="7.8" fill="#535B6E">Total Pips:</text>
+  <text x="668" y="429" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#23262E">83/96</text>
+
+  <!-- Box 4 Right: LANGUAGES & RARITY MIX -->
+  <rect x="684" y="266" width="142" height="171" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>
+  <rect x="684" y="266" width="142" height="18" rx="3" fill="#FAF7ED"/>
+  <line x1="684" y1="284" x2="826" y2="284" stroke="#4A5162" stroke-width="1"/>
+  <text x="692" y="278.5" class="sans" font-size="9" font-weight="800" letter-spacing="0.8" fill="#23262E">STACK WEIGHTS</text>
+
+  <rect x="692" y="291.5" width="6" height="6" rx="1" fill="#3572A5"/>
+  <text x="702" y="298.0" class="sans" font-size="8" font-weight="600" fill="#23262E">Python</text>
+  <text x="818" y="298.0" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">64.8% (9r)</text>
+  <rect x="692" y="306.0" width="6" height="6" rx="1" fill="#3178C6"/>
+  <text x="702" y="312.5" class="sans" font-size="8" font-weight="600" fill="#23262E">TypeScript</text>
+  <text x="818" y="312.5" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">24.5% (5r)</text>
+  <rect x="692" y="320.5" width="6" height="6" rx="1" fill="#F1E05A"/>
+  <text x="702" y="327.0" class="sans" font-size="8" font-weight="600" fill="#23262E">JavaScript</text>
+  <text x="818" y="327.0" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">4.4% (6r)</text>
+  <rect x="692" y="335.0" width="6" height="6" rx="1" fill="#563D7C"/>
+  <text x="702" y="341.5" class="sans" font-size="8" font-weight="600" fill="#23262E">CSS</text>
+  <text x="818" y="341.5" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">2.0% (6r)</text>
+  <rect x="692" y="349.5" width="6" height="6" rx="1" fill="#E34C26"/>
+  <text x="702" y="356.0" class="sans" font-size="8" font-weight="600" fill="#23262E">HTML</text>
+  <text x="818" y="356.0" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">1.8% (5r)</text>
+  <rect x="692" y="364.0" width="6" height="6" rx="1" fill="#A97BFF"/>
+  <text x="702" y="370.5" class="sans" font-size="8" font-weight="600" fill="#23262E">Kotlin</text>
+  <text x="818" y="370.5" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#535B6E">1.2% (1r)</text>
+
+  <line x1="692" y1="384" x2="818" y2="384" stroke="#4A5162" stroke-width="0.9"/>
+  <text x="692" y="396" class="mono" font-size="7.5" font-weight="700" fill="#535B6E">RARITY TIERS</text>
+  <text x="692" y="410" class="mono" font-size="7.8" font-weight="700" fill="#D97706">Legend: 5</text>
+  <text x="818" y="410" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#7C3AED">Epic: 12</text>
+  <text x="692" y="424" class="mono" font-size="7.8" font-weight="700" fill="#1D4ED8">Rare: 5</text>
+  <text x="818" y="424" text-anchor="end" class="mono" font-size="7.8" font-weight="700" fill="#16A34A">Uncom: 2</text>
+
+  <!-- Bottom Right Legend & Provenance Strip -->
+  <rect x="552" y="445" width="274" height="43" rx="4" fill="#FAF7ED" stroke="#4A5162" stroke-width="1.2"/>
+  <text x="562" y="458" class="mono" font-size="7.5" font-weight="700" fill="#23262E">NODE RING = RARITY · ARCH PIPS = MASTERY (4 MAX)</text>
+  <text x="562" y="470" class="mono" font-size="7.2" fill="#535B6E">Gold=Legend · Violet=Epic · Blue=Rare · Green=Uncom</text>
+  <text x="562" y="481.5" class="mono" font-size="7" fill="#727B91">Auto-verified from live repo manifests · Synced 2026-11-28</text>
 </svg>
