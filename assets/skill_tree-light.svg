@@ -6,7 +6,7 @@
       <rect x="14" y="48" width="812" height="490" rx="5"/>
     </clipPath>
     <radialGradient id="hub-aura-light" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.30"/>
+      <stop offset="0%" stop-color="#D97706" stop-opacity="0.30"/>
       <stop offset="65%" stop-color="#7C3AED" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#F5F1E3" stop-opacity="0"/>
     </radialGradient>
@@ -85,9 +85,9 @@
     <rect x="24" y="21" width="1" height="1" fill="#182032"/>
     <rect x="18" y="22" width="6" height="1" fill="#182032"/>
   </g>
-  <text x="34" y="26" class="mono" font-size="10.5" font-weight="700" fill="#D97706">3,917 XP · 10 Repos</text>
+  <text x="34" y="26" class="mono" font-size="10.5" font-weight="700" fill="#D97706">3,981 XP · 10 Repos</text>
   <text x="420" y="27" text-anchor="middle" class="sans" font-size="14" font-weight="800" letter-spacing="2.0" fill="#23262E">‹   TALENT TREE · @25sarvesh2005   ›</text>
-  <text x="822" y="26" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#1D4ED8">83/96 Pips · Rank A</text>
+  <text x="822" y="26" text-anchor="end" class="mono" font-size="10.5" font-weight="700" fill="#D97706">83/96 Pips · Rank S</text>
 
   <!-- FULL-WIDTH SPACIOUS CONSTELLATION STAGE (812 x 490) -->
   <rect x="14" y="48" width="812" height="490" rx="5" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.6"/>
@@ -233,7 +233,7 @@
   <text x="26" y="83" class="mono" font-size="9.5" font-weight="700" fill="#535B6E">Mastered: <tspan fill="#D97706">13/24</tspan></text>
 
   <!-- Large Central Astrolabe Core Seal (r=46) -->
-  <circle cx="420" cy="293" r="46" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="2.2"/>
+  <circle cx="420" cy="293" r="46" fill="#FAF7ED" stroke="#D97706" stroke-width="2.2"/>
   <line x1="458.0" y1="293.0" x2="464.0" y2="293.0" stroke="#D97706" stroke-width="1.6" opacity="0.8"/>
   <line x1="456.1" y1="304.7" x2="461.8" y2="306.6" stroke="#D97706" stroke-width="1.6" opacity="0.8"/>
   <line x1="450.7" y1="315.3" x2="455.6" y2="318.9" stroke="#D97706" stroke-width="1.6" opacity="0.8"/>
@@ -258,12 +258,12 @@
   <g transform="translate(420, 293)">
     <g class="astrolabe-spin">
       <polygon points="-15,-26 30,0 -15,26" fill="none" stroke="#D97706" stroke-width="1.2" opacity="0.58"/>
-      <polygon points="15,-26 15,26 -30,0" fill="none" stroke="#1D4ED8" stroke-width="1.2" opacity="0.52"/>
+      <polygon points="15,-26 15,26 -30,0" fill="none" stroke="#D97706" stroke-width="1.2" opacity="0.52"/>
     </g>
   </g>
-  <circle cx="420" cy="293" r="20.5" fill="#FAF7ED" stroke="#1D4ED8" stroke-width="1.4"/>
-  <text x="420" y="298" text-anchor="middle" class="sans" font-size="18" font-weight="800" fill="#1D4ED8">A</text>
-  <text x="420" y="309.5" text-anchor="middle" class="mono" font-size="8" font-weight="700" fill="#535B6E">Lv14</text>
+  <circle cx="420" cy="293" r="20.5" fill="#FAF7ED" stroke="#D97706" stroke-width="1.4"/>
+  <text x="420" y="298" text-anchor="middle" class="sans" font-size="18" font-weight="800" fill="#D97706">S</text>
+  <text x="420" y="309.5" text-anchor="middle" class="mono" font-size="8" font-weight="700" fill="#535B6E">Lv15</text>
 
   <!-- 24 Large Clear Skill Nodes (15px Circle / 20px Octagon Capstone + Jewel Pips + Clear 2-Line Halo Labels) -->
       <circle cx="488" cy="200" r="19" fill="none" stroke="#1D4ED8" stroke-width="4.4" opacity="0.20"/>
@@ -638,8 +638,8 @@
     <text x="368" y="146" text-anchor="middle" class="sans" font-size="10.2" font-weight="700" fill="#FAF7E8" stroke="#FAF7E8" stroke-width="4" stroke-linejoin="round" opacity="0.94">GH Actions</text>
     <text x="368" y="146" text-anchor="middle" class="sans" font-size="10.2" font-weight="700" fill="#23262E">GH Actions</text>
 
-    <text x="368" y="156.5" text-anchor="middle" class="mono" font-size="8.2" font-weight="700" fill="#FAF7E8" stroke="#FAF7E8" stroke-width="3.2" stroke-linejoin="round" opacity="0.94">8 repos</text>
-    <text x="368" y="156.5" text-anchor="middle" class="mono" font-size="8.2" font-weight="700" fill="#D97706">8 repos</text>
+    <text x="368" y="156.5" text-anchor="middle" class="mono" font-size="8.2" font-weight="700" fill="#FAF7E8" stroke="#FAF7E8" stroke-width="3.2" stroke-linejoin="round" opacity="0.94">9 repos</text>
+    <text x="368" y="156.5" text-anchor="middle" class="mono" font-size="8.2" font-weight="700" fill="#D97706">9 repos</text>
       <circle cx="228" cy="166" r="19" fill="none" stroke="#DC2626" stroke-width="4.4" opacity="0.20"/>
       <circle cx="228" cy="166" r="15" fill="#FAF7ED" stroke="#7C3AED" stroke-width="2.0"/>
       <circle cx="228" cy="166" r="11.5" fill="#FAF7E8" stroke="#DC2626" stroke-width="0.8" opacity="0.6"/>
@@ -681,12 +681,12 @@
   <rect x="14" y="546" width="264" height="22" rx="3" fill="#FAF7ED"/>
   <line x1="14" y1="568" x2="278" y2="568" stroke="#4A5162" stroke-width="1"/>
   <text x="24" y="561" class="sans" font-size="10" font-weight="800" letter-spacing="0.8" fill="#23262E">ARCHITECTURE PROOF</text>
-  <text x="268" y="561" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#1D4ED8">RANK A (85/100)</text>
+  <text x="268" y="561" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#D97706">RANK S (86/100)</text>
 
   <text x="24" y="587" class="mono" font-size="9" fill="#535B6E">Specialty</text>
   <text x="142" y="587" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#23262E">Systems &amp; AI</text>
   <text x="156" y="587" class="mono" font-size="9" fill="#535B6E">CI Gates</text>
-  <text x="268" y="587" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#16A34A">8/10</text>
+  <text x="268" y="587" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#16A34A">9/10</text>
 
   <text x="24" y="608" class="mono" font-size="9" fill="#535B6E">Repos Built</text>
   <text x="142" y="608" text-anchor="end" class="mono" font-size="9" font-weight="700" fill="#23262E">10 Public</text>
@@ -700,7 +700,7 @@
 
   <line x1="24" y1="646" x2="268" y2="646" stroke="#4A5162" stroke-width="0.9"/>
   <text x="24" y="667" class="mono" font-size="9" fill="#535B6E">Next Rank Milestone</text>
-  <text x="268" y="667" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#D97706">+1 pt to Rank S</text>
+  <text x="268" y="667" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#D97706">+8 pts to Rank S+</text>
 
   <!-- Panel 2: SECTOR ALLOCATION -->
   <rect x="288" y="546" width="264" height="140" rx="4" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.5"/>

@@ -107,17 +107,17 @@
   <path d="M482,172 L812,172 L812,240 L494,240 L482,230 Z" fill="#FAF7E8" stroke="#4A5162" stroke-width="2"/>
   <path d="M486,176 L808,176 L808,236 L496,236 L486,228 Z" fill="none" stroke="#788096" stroke-width="1" opacity="0.45"/>
   <text x="498" y="193" class="sans" font-size="12.5" font-weight="700" fill="#23262E">HERO · SARVESH</text>
-  <text x="798" y="193" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="#1D4ED8">Lv14</text>
+  <text x="798" y="193" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="#1D4ED8">Lv15</text>
 
   <rect x="498" y="200" width="300" height="13" rx="4" fill="#1F2937" stroke="#4A5162" stroke-width="1"/>
   <text x="504" y="209.5" class="mono" font-size="8.5" font-weight="700" fill="#FBBF24">HP</text>
   <rect x="522" y="203" width="188" height="7" rx="2" fill="#22C55E"/>
   <text x="792" y="209.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#6EE7B7">POWER +0</text>
 
-  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">916/yr · 3,917 XP</text>
+  <text x="498" y="229" class="mono" font-size="9" fill="#535B6E">918/yr · 3,981 XP</text>
   <text x="652" y="229" text-anchor="end" class="mono" font-size="8" font-weight="700" fill="#1D4ED8">EXP</text>
   <rect x="658" y="223" width="140" height="5" rx="1.5" fill="#DCD4B8"/>
-  <rect x="658" y="223" width="139.16" height="5" rx="1.5" fill="#1D4ED8"/>
+  <rect x="658" y="223" width="14.7" height="5" rx="1.5" fill="#1D4ED8"/>
 
   <!-- Natural Shaded 2px GBA Sprites -->
   <g class="bob-enemy" shape-rendering="crispEdges">
@@ -568,7 +568,7 @@
   <rect x="19" y="261" width="494" height="56" rx="3" fill="#233A47"/>
   <text x="32" y="280" class="sans" font-size="11.5" font-weight="700" fill="#F8FAFC">★ @25sarvesh2005 starred! 1-HIT KO on Merge Conflict</text>
   <text x="32" y="296" class="sans" font-size="11.5" font-weight="700" fill="#F8FAFC">Golem! Next: Hallucination Phantom!</text>
-  <text x="32" y="311" class="mono" font-size="8.5" fill="#93C5FD">Squad: @25sarvesh2005 · Log: @25sarvesh2005: &#34;Raid Guestbook live!&#34;</text>
+  <text x="32" y="311" class="mono" font-size="8.5" fill="#93C5FD">Squad: @25sarvesh200 · Log: @25sarvesh200: &#34;Raid Guestbook live!&#34;</text>
 
   <!-- Right 2x2 Comic Command Menu -->
   <rect x="526" y="256" width="300" height="66" rx="5" fill="#FAF7E8" stroke="#4A5162" stroke-width="1.8"/>

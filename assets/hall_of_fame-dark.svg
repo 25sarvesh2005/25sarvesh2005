@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 208" width="840" height="208" role="img" aria-labelledby="hof-title-dark hof-desc-dark">
+  <title id="hof-title-dark">Hero Guild Board &amp; Tavern Guestbook — @25sarvesh2005</title>
+  <desc id="hof-desc-dark">Live Star Boss Slayers leaderboard, highest raid damage record, and visitor guestbook notes on @25sarvesh2005.</desc>
+  <defs>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Outer Guild Board Frame -->
+  <rect x="2" y="2" width="836" height="204" rx="6" fill="#131926" stroke="#364666" stroke-width="1.8"/>
+  <rect x="4" y="4" width="832" height="30" rx="3" fill="#1A2234"/>
+  <line x1="4" y1="34" x2="836" y2="34" stroke="#364666" stroke-width="1.2"/>
+
+  <g shape-rendering="crispEdges">
+    <rect x="19" y="13" width="4" height="1" fill="#182032"/>
+    <rect x="17" y="14" width="2" height="1" fill="#182032"/>
+    <rect x="19" y="14" width="4" height="1" fill="#E11D48"/>
+    <rect x="23" y="14" width="2" height="1" fill="#182032"/>
+    <rect x="16" y="15" width="1" height="1" fill="#182032"/>
+    <rect x="17" y="15" width="7" height="1" fill="#E11D48"/>
+    <rect x="24" y="15" width="2" height="1" fill="#182032"/>
+    <rect x="16" y="16" width="1" height="1" fill="#182032"/>
+    <rect x="17" y="16" width="2" height="1" fill="#E11D48"/>
+    <rect x="19" y="16" width="1" height="1" fill="#FDA4AF"/>
+    <rect x="20" y="16" width="4" height="1" fill="#E11D48"/>
+    <rect x="24" y="16" width="2" height="1" fill="#182032"/>
+    <rect x="16" y="17" width="4" height="1" fill="#182032"/>
+    <rect x="20" y="17" width="2" height="1" fill="#F8FAFC"/>
+    <rect x="22" y="17" width="4" height="1" fill="#182032"/>
+    <rect x="16" y="18" width="3" height="1" fill="#182032"/>
+    <rect x="19" y="18" width="4" height="1" fill="#F8FAFC"/>
+    <rect x="23" y="18" width="3" height="1" fill="#182032"/>
+    <rect x="16" y="19" width="1" height="1" fill="#182032"/>
+    <rect x="17" y="19" width="2" height="1" fill="#94A3B8"/>
+    <rect x="19" y="19" width="4" height="1" fill="#F8FAFC"/>
+    <rect x="23" y="19" width="2" height="1" fill="#94A3B8"/>
+    <rect x="25" y="19" width="1" height="1" fill="#182032"/>
+    <rect x="17" y="20" width="1" height="1" fill="#182032"/>
+    <rect x="18" y="20" width="6" height="1" fill="#94A3B8"/>
+    <rect x="24" y="20" width="1" height="1" fill="#182032"/>
+    <rect x="18" y="21" width="6" height="1" fill="#182032"/>
+  </g>
+  <text x="32" y="23" class="sans" font-size="11.5" font-weight="800" fill="#EDF2FA">HERO GUILD BOARD · STAR SLAYERS &amp; TAVERN WALL</text>
+  <text x="822" y="23" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="#FBBF24">2 K.O.'d · 1 ★ Star Slayers · 2 Moves</text>
+
+  <!-- LEFT PANE: Star Finishers & Combat Records -->
+  <rect x="14" y="42" width="370" height="154" rx="4" fill="#182032" stroke="#364666" stroke-width="1.5"/>
+  <text x="26" y="60" class="mono" font-size="9.5" font-weight="800" fill="#FBBF24">★ 1-HIT STAR FINISHERS</text>
+  <text x="372" y="60" text-anchor="end" class="mono" font-size="8.5" fill="#9AAAD0">Star repo = Instant KO badge</text>
+
+    <rect x="26" y="72" width="170" height="20" rx="3" fill="#1A2234" stroke="#FBBF24" stroke-width="1.1"/>
+    <text x="34" y="85.5" class="mono" font-size="8.8" font-weight="700" fill="#FBBF24">★ @25sarvesh2005</text>
+
+  <!-- Records Box -->
+  <rect x="26" y="130" width="346" height="54" rx="3" fill="#1A2234" stroke="#364666" stroke-width="1"/>
+  <text x="36" y="147" class="mono" font-size="8.5" font-weight="700" fill="#F43F5E">RECORD CRIT:</text>
+  <text x="362" y="147" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="#EDF2FA">Unclaimed (Overclock up to 44 DMG)</text>
+  <line x1="36" y1="156" x2="362" y2="156" stroke="#364666" stroke-width="0.8"/>
+  <text x="36" y="172" class="mono" font-size="8.5" font-weight="700" fill="#38BDF8">LATEST KO:</text>
+  <text x="362" y="172" text-anchor="end" class="mono" font-size="8.5" fill="#9AAAD0">2 bosses slain</text>
+
+  <!-- RIGHT PANE: Tavern Guestbook Speech Bubbles (Up to 4 Visitor Notes) -->
+  <rect x="394" y="42" width="432" height="154" rx="4" fill="#182032" stroke="#364666" stroke-width="1.5"/>
+  <text x="406" y="60" class="mono" font-size="9.5" font-weight="800" fill="#38BDF8">TAVERN GUESTBOOK</text>
+  <text x="814" y="60" text-anchor="end" class="mono" font-size="8.5" fill="#9AAAD0">Click "Say Hi!" above to sign</text>
+
+  <rect x="406" y="70" width="408" height="28" rx="3" fill="#1A2234" stroke="#38BDF8" stroke-width="1.1" opacity="1"/>
+  <text x="416" y="87.5" class="mono" font-size="8.8" font-weight="700" fill="#38BDF8">@25sarvesh2005</text>
+  <text x="530" y="87.5" class="sans" font-size="9.2" font-weight="600" fill="#EDF2FA">Raid Guestbook live!</text>
+  <text x="804" y="87.5" text-anchor="end" class="mono" font-size="8" fill="#9AAAD0">#1</text>
+  <rect x="406" y="101" width="408" height="28" rx="3" fill="#1A2234" stroke="#364666" stroke-width="0.8" opacity="0.55"/>
+  <text x="416" y="118.5" class="mono" font-size="8.8" font-weight="700" fill="#6F80A6">[Slot #2]</text>
+  <text x="530" y="118.5" class="sans" font-size="9.2" font-weight="600" fill="#6F80A6">Empty seat — click Say Hi! above to sign the wall</text>
+  <text x="804" y="118.5" text-anchor="end" class="mono" font-size="8" fill="#9AAAD0">OPEN</text>
+  <rect x="406" y="132" width="408" height="28" rx="3" fill="#1A2234" stroke="#364666" stroke-width="0.8" opacity="0.55"/>
+  <text x="416" y="149.5" class="mono" font-size="8.8" font-weight="700" fill="#6F80A6">[Slot #3]</text>
+  <text x="530" y="149.5" class="sans" font-size="9.2" font-weight="600" fill="#6F80A6">Empty seat — click Say Hi! above to sign the wall</text>
+  <text x="804" y="149.5" text-anchor="end" class="mono" font-size="8" fill="#9AAAD0">OPEN</text>
+  <rect x="406" y="163" width="408" height="28" rx="3" fill="#1A2234" stroke="#364666" stroke-width="0.8" opacity="0.55"/>
+  <text x="416" y="180.5" class="mono" font-size="8.8" font-weight="700" fill="#6F80A6">[Slot #4]</text>
+  <text x="530" y="180.5" class="sans" font-size="9.2" font-weight="600" fill="#6F80A6">Empty seat — click Say Hi! above to sign the wall</text>
+  <text x="804" y="180.5" text-anchor="end" class="mono" font-size="8" fill="#9AAAD0">OPEN</text>
+</svg>
