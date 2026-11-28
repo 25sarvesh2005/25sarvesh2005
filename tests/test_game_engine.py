@@ -96,3 +96,13 @@ def test_sync_external_star_ko_triggers_on_new_portfolio_stars() -> None:
     assert incremented["boss_index"] == 1
     assert incremented["last_synced_external_stars"] == 3
     assert "1-HIT KO" in incremented["last_event"]
+
+
+def test_highest_crit_and_slay_history_recorded() -> None:
+    state = init_game_state(565)
+    state, _ = apply_visitor_move(state, issue_number=4, user_login="crit-lord", action="overclock")
+    assert state["highest_crit"]["user"] == "crit-lord"
+    assert state["highest_crit"]["dmg"] >= 26
+    state["boss_hp"] = 5
+    state, _ = apply_visitor_move(state, issue_number=5, user_login="finisher", action="strike")
+    assert state["slay_history"][0]["finisher"] == "finisher"

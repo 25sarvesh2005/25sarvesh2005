@@ -1,10 +1,19 @@
-## Sarvesh Sharma · Systems & AI Builder
+<div align="center">
+  <a href="https://25sarvesh2005.github.io/25sarvesh2005/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/banner-dark.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/banner-light.svg" />
+      <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/banner-light.svg" width="100%" alt="Sarvesh Sharma Webcomic RPG Profile Banner" />
+    </picture>
+  </a>
+</div>
 
-> *"Wait—why didn't production crash during the spike?"*  
-> **Plot armor:** row-locked ledgers, Docker sandboxes, citation-grounded RAG, and automated CI gates.
-
-I build backend engines, BI compilers, and applied AI tools in **Python**, **TypeScript**, **FastAPI**, and **PostgreSQL**.  
-[sarvesh.sh7890@gmail.com](mailto:sarvesh.sh7890@gmail.com) · **Play Live:** [Whitfield WMS](https://warehouse-management-system-jade-seven.vercel.app) · [SmartRIS 6G Simulator](https://smartris.vercel.app)
+<p align="center">
+  <a href="https://25sarvesh2005.github.io/25sarvesh2005/"><b>⚡ Open Zero-Refresh Real-Time Arcade</b></a> ·
+  <a href="mailto:sarvesh.sh7890@gmail.com">sarvesh.sh7890@gmail.com</a> ·
+  <b>Play Live:</b> <a href="https://warehouse-management-system-jade-seven.vercel.app">Whitfield WMS</a> ·
+  <a href="https://smartris.vercel.app">SmartRIS 6G Simulator</a>
+</p>
 
 ---
 
@@ -41,8 +50,16 @@ I build backend engines, BI compilers, and applied AI tools in **Python**, **Typ
 </p>
 
 <p align="center">
-  <sub><b>How to Play:</b> Click <b>★ Star</b> at the top-right of <code>25sarvesh2005/25sarvesh2005</code> for an <b>instant 1-Hit Boss K.O.</b> (~15s), or pick any action button above and submit the pre-filled Issue to roll damage or sign the Hero Log. New stars &amp; commits across my repos also strike the boss automatically!</sub>
+  <sub><b>How to Play:</b> Click <b>★ Star</b> at the top-right of <code>25sarvesh2005/25sarvesh2005</code> for an <b>instant 1-Hit Boss K.O.</b>, pick any action button above, or watch updates stream live on the <a href="https://25sarvesh2005.github.io/25sarvesh2005/">Real-Time Arcade HUD</a>!</sub>
 </p>
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/hall_of_fame-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/hall_of_fame-light.svg" />
+    <img src="https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output/assets/hall_of_fame-light.svg" width="100%" alt="Hero Guild Board, Star Finishers &amp; Tavern Guestbook" />
+  </picture>
+</div>
 
 ---
 

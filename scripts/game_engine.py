@@ -77,6 +77,8 @@ def init_game_state(initial_contributions: int = 565, initial_stars: int = 0) ->
         "last_synced_contributions": initial_contributions,
         "last_synced_external_stars": initial_stars,
         "star_finishers": [],
+        "highest_crit": None,
+        "slay_history": [],
         "last_event": f"Wild {first_boss.name} ambushes main! Drop a Star or strike!",
         "recent_raiders": [],
         "tavern_log": [],
@@ -121,10 +123,29 @@ def _deterministic_roll(seed_str: str, low: int, high: int) -> int:
     return low + (val % (high - low + 1))
 
 
-def _advance_boss_if_defeated(state: dict[str, Any]) -> str | None:
+def _record_highest_hit(state: dict[str, Any], dmg: int, player: str, boss_name: str, move: str) -> None:
+    prev = state.get("highest_crit")
+    prev_dmg = int(prev.get("dmg", 0)) if isinstance(prev, dict) else 0
+    if dmg >= prev_dmg and dmg > 0:
+        state["highest_crit"] = {"dmg": dmg, "user": player, "boss": boss_name, "move": move}
+
+
+def _record_ko_history(state: dict[str, Any], boss_name: str, finisher: str, method: str) -> None:
+    history = list(state.get("slay_history") or [])
+    history.insert(0, {"boss": boss_name, "finisher": finisher, "method": method})
+    state["slay_history"] = history[:6]
+
+
+def _advance_boss_if_defeated(
+    state: dict[str, Any],
+    *,
+    finisher: str = "25sarvesh2005",
+    method: str = "raid",
+) -> str | None:
     if int(state["boss_hp"]) > 0:
         return None
     slain_boss = get_active_boss(state)
+    _record_ko_history(state, slain_boss.name, finisher, method)
     state["bosses_slain"] = int(state.get("bosses_slain", 0)) + 1
     state["boss_index"] = (int(state.get("boss_index", 0)) + 1) % len(BOSS_ROSTER)
     next_boss = get_active_boss(state)
@@ -157,11 +178,13 @@ def apply_visitor_move(
         dmg = _deterministic_roll(seed, 16, 28) + bonus_dmg
         next_state["hero_buff_charges"] = 0
         next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
+        _record_highest_hit(next_state, dmg, player, boss.name, "Strike")
         summary = f"SLASH! @{player} lands a Strike on {boss.name} ({dmg} DMG)!"
     elif action == "overclock":
         dmg = _deterministic_roll(seed, 26, 44) + bonus_dmg
         next_state["hero_buff_charges"] = 0
         next_state["boss_hp"] = max(0, int(next_state["boss_hp"]) - dmg)
+        _record_highest_hit(next_state, dmg, player, boss.name, "Overclock")
         summary = f"KRAKOOM! @{player} fires Overclock Crit for {dmg} DMG!"
     elif action == "buff":
         next_state["hero_buff_charges"] = min(5, buffs + 1)
@@ -174,7 +197,7 @@ def apply_visitor_move(
         summary = f"GUEST LOG — @{player}: \"{clean_msg[:36]}\""
 
     next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
-    ko_msg = _advance_boss_if_defeated(next_state)
+    ko_msg = _advance_boss_if_defeated(next_state, finisher=player, method=action)
     final_msg = f"{summary} {ko_msg}" if ko_msg else summary
     next_state["last_event"] = final_msg
 
@@ -209,7 +232,7 @@ def apply_star_ko(state: dict[str, Any], *, user_login: str) -> dict[str, Any]:
     boss = get_active_boss(next_state)
     next_state["boss_hp"] = 0
     next_state["total_raids"] = int(next_state.get("total_raids", 0)) + 1
-    _advance_boss_if_defeated(next_state)
+    _advance_boss_if_defeated(next_state, finisher=player, method="star")
     next_boss = get_active_boss(next_state)
     next_state["last_event"] = (
         f"★ @{player} starred! 1-HIT KO on {boss.name}! Next: {next_boss.name}!"

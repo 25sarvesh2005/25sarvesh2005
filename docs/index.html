@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>@25sarvesh2005 — Live Real-Time RPG Arcade &amp; Telemetry HUD</title>
+  <style>
+    :root {
+      --bg: #0b101b;
+      --panel: #131b2b;
+      --border: #2c3b59;
+      --text: #eef4ff;
+      --muted: #8ea1c8;
+      --accent: #38bdf8;
+      --amber: #fbbf24;
+      --green: #22c55e;
+      --rose: #f43f5e;
+    }
+    body.light {
+      --bg: #f3eee0;
+      --panel: #faf7ed;
+      --border: #4a5162;
+      --text: #1f2430;
+      --muted: #535b6e;
+      --accent: #1d4ed8;
+      --amber: #d97706;
+      --green: #16a34a;
+      --rose: #dc2626;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--panel);
+      border-bottom: 1.5px solid var(--border);
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+    .live-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 8px var(--green); animation: pulse 1.5s infinite;
+    }
+    .dot.paused { background: var(--muted); box-shadow: none; animation: none; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+    .pill {
+      padding: 4px 9px; border-radius: 4px; border: 1px solid var(--border);
+      background: rgba(56, 189, 248, 0.08); color: var(--text); font-weight: 700;
+    }
+    .pill.ci-active { border-color: var(--amber); color: var(--amber); background: rgba(251,191,36,0.12); }
+    .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    button, .btn-link {
+      cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 700;
+      padding: 5px 10px; border-radius: 4px; border: 1.2px solid var(--border);
+      background: var(--bg); color: var(--text); text-decoration: none;
+    }
+    button:hover, .btn-link:hover { border-color: var(--accent); color: var(--accent); }
+    .poll-bar-wrap { height: 2px; background: transparent; width: 100%; overflow: hidden; }
+    .poll-bar { height: 2px; background: var(--accent); width: 0%; transition: width 0.25s linear; }
+    .stage {
+      max-width: 880px;
+      margin: 16px auto 48px;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+    .toast {
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 5px;
+      border: 1.4px solid var(--amber);
+      background: rgba(251, 191, 36, 0.12);
+      color: var(--amber);
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+    }
+    .toast.show { display: block; }
+    .card-img { width: 100%; max-width: 840px; height: auto; display: block; border-radius: 6px; }
+    .shake { animation: impact-shake 0.35s ease; }
+    @keyframes impact-shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+    }
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; max-width: 840px;
+    }
+    .action-btn {
+      flex: 1 1 144px; max-width: 160px; display: inline-flex; align-items: center; justify-content: center;
+      padding: 9px 10px; border-radius: 5px; font-weight: 800; font-size: 12px; text-decoration: none;
+      border: 1.5px solid var(--border); background: var(--panel); color: var(--text);
+      transition: transform 0.1s ease, border-color 0.15s ease;
+    }
+    .action-btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .action-btn.strike { border-color: #38bdf8; }
+    .action-btn.crit { border-color: #f43f5e; }
+    .action-btn.buff { border-color: #34d399; }
+    .action-btn.tavern { border-color: #60a5fa; }
+    .action-btn.star { border-color: #fbbf24; color: #fbbf24; }
+    .foot {
+      font-family: ui-monospace, Consolas, monospace; font-size: 11px; color: var(--muted); text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="live-group">
+      <span id="liveDot" class="dot"></span>
+      <strong id="liveLabel">LIVE REAL-TIME HUD · 5s POLL</strong>
+      <span id="rankPill" class="pill">SYNCING...</span>
+      <span id="ciPill" class="pill">CI: CHECKING</span>
+    </div>
+    <div class="controls">
+      <button id="sfxBtn" type="button">SFX: OFF</button>
+      <button id="themeBtn" type="button">THEME: DARK</button>
+      <button id="pauseBtn" type="button">PAUSE</button>
+      <button id="syncBtn" type="button">SYNC NOW</button>
+      <a class="btn-link" href="https://github.com/25sarvesh2005" target="_blank" rel="noopener">GITHUB PROFILE ↗</a>
+    </div>
+  </header>
+  <div class="poll-bar-wrap"><div id="pollBar" class="poll-bar"></div></div>
+
+  <main class="stage">
+    <div id="toast" class="toast"></div>
+
+    <img id="imgBanner" class="card-img" alt="Webcomic RPG Hero Banner" />
+    <img id="imgBattle" class="card-img" alt="Interactive Pixel RPG Boss Raid" />
+
+    <nav class="actions" aria-label="Boss Raid Actions">
+      <a class="action-btn strike" target="_blank" rel="noopener" href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cstrike&body=Optional+battle+cry+(max+58+chars):+">⚔ Strike! (16–28)</a>
+      <a class="action-btn crit" target="_blank" rel="noopener" href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Coverclock&body=Optional+battle+cry+(max+58+chars):+">⚡ Overclock (26–44)</a>
+      <a class="action-btn buff" target="_blank" rel="noopener" href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Cbuff&body=Optional+battle+cry+(max+58+chars):+">🧪 Power Up (+10)</a>
+      <a class="action-btn tavern" target="_blank" rel="noopener" href="https://github.com/25sarvesh2005/25sarvesh2005/issues/new?title=raid%7Ctavern&body=Leave+a+short+hello+for+the+profile+log:+">📜 Say Hi!</a>
+      <a class="action-btn star" target="_blank" rel="noopener" href="https://github.com/25sarvesh2005/25sarvesh2005">★ Star Repo = 1-Hit KO</a>
+    </nav>
+
+    <img id="imgHof" class="card-img" alt="Guild Board &amp; Tavern Guestbook" />
+    <img id="imgTrainer" class="card-img" alt="Hero Pokédex Codex" />
+    <img id="imgTree" class="card-img" alt="Talent Constellation &amp; Stat Matrix" />
+    <img id="imgSnake" class="card-img" alt="Contribution Trail Snake" />
+
+    <p class="foot" id="footMeta">
+      Zero-refresh real-time sync powered by output branch JSON + GitHub Actions · Whitfield WMS &amp; SmartRIS 6G
+    </p>
+  </main>
+
+  <script>
+    const RAW_BASE = "https://raw.githubusercontent.com/25sarvesh2005/25sarvesh2005/output";
+    const API_RUNS = "https://api.github.com/repos/25sarvesh2005/25sarvesh2005/actions/runs?per_page=3";
+    const POLL_MS = 5000;
+
+    let themeMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    let paused = false;
+    let sfxEnabled = false;
+    let lastFingerprint = "";
+    let tickStart = Date.now();
+
+    function applyTheme() {
+      document.body.classList.toggle("light", themeMode === "light");
+      document.getElementById("themeBtn").textContent = "THEME: " + themeMode.toUpperCase();
+    }
+
+    function playChiptune(kind) {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = kind === "ko" ? [523, 659, 784, 1046] : [330, 440, 620];
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "square";
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.05, ctx.currentTime + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.07 + 0.12);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + idx * 0.07);
+          osc.stop(ctx.currentTime + idx * 0.07 + 0.13);
+        });
+      } catch {}
+    }
+
+    function preloadSwap(el, url) {
+      const probe = new Image();
+      probe.onload = () => { el.src = url; };
+      probe.src = url;
+    }
+
+    function refreshImages(bust) {
+      const m = themeMode;
+      preloadSwap(document.getElementById("imgBanner"), `${RAW_BASE}/assets/banner-${m}.svg?t=${bust}`);
+      preloadSwap(document.getElementById("imgBattle"), `${RAW_BASE}/assets/battle-${m}.svg?t=${bust}`);
+      preloadSwap(document.getElementById("imgHof"), `${RAW_BASE}/assets/hall_of_fame-${m}.svg?t=${bust}`);
+      preloadSwap(document.getElementById("imgTrainer"), `${RAW_BASE}/assets/trainer-${m}.svg?t=${bust}`);
+      preloadSwap(document.getElementById("imgTree"), `${RAW_BASE}/assets/skill_tree-${m}.svg?t=${bust}`);
+      preloadSwap(document.getElementById("imgSnake"), `${RAW_BASE}/assets/snake-${m}.svg?t=${bust}`);
+    }
+
+    function showToast(msg, shakeBattle) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      if (shakeBattle) {
+        const b = document.getElementById("imgBattle");
+        b.classList.remove("shake");
+        void b.offsetWidth;
+        b.classList.add("shake");
+      }
+      setTimeout(() => toast.classList.remove("show"), 6500);
+    }
+
+    async function pollLive() {
+      const bust = Date.now();
+      tickStart = bust;
+      try {
+        const [gsRes, repRes] = await Promise.all([
+          fetch(`${RAW_BASE}/data/game_state.json?t=${bust}`, { cache: "no-store" }),
+          fetch(`${RAW_BASE}/data/gamification.json?t=${bust}`, { cache: "no-store" }),
+        ]);
+        if (gsRes.ok && repRes.ok) {
+          const gs = await gsRes.json();
+          const rep = await repRes.json();
+          document.getElementById("rankPill").textContent =
+            `RANK ${rep.grade} (${rep.grade_score}/100) · BOSS ${(gs.boss_index || 0) + 1}/6 · ${gs.boss_hp} HP`;
+          const fp = `${gs.boss_index}:${gs.boss_hp}:${gs.bosses_slain}:${gs.total_raids}:${rep.grade_score}:${rep.xp}`;
+          if (!lastFingerprint) {
+            refreshImages(bust);
+          } else if (fp !== lastFingerprint) {
+            refreshImages(bust);
+            const isKo = (gs.last_event || "").includes("KO");
+            playChiptune(isKo ? "ko" : "hit");
+            showToast(`⚡ LIVE UPDATE: ${gs.last_event || "Telemetry synced!"}`, true);
+          }
+          lastFingerprint = fp;
+          document.getElementById("footMeta").textContent =
+            `Synced ${new Date().toLocaleTimeString()} · ${rep.non_empty_owned_repos} Repos · ${rep.total_test_files} Tests · ${rep.ci_repos} CI Gates`;
+        }
+      } catch {}
+
+      try {
+        const runRes = await fetch(API_RUNS, { cache: "no-store" });
+        if (runRes.ok) {
+          const data = await runRes.json();
+          const active = (data.workflow_runs || []).find((r) => r.status !== "completed");
+          const ciPill = document.getElementById("ciPill");
+          if (active) {
+            ciPill.textContent = `⚡ CI LIVE: ${active.name.slice(0, 22)}`;
+            ciPill.classList.add("ci-active");
+          } else {
+            ciPill.textContent = "CI: IDLE · AUTO-SYNC READY";
+            ciPill.classList.remove("ci-active");
+          }
+        }
+      } catch {}
+    }
+
+    document.getElementById("themeBtn").onclick = () => {
+      themeMode = themeMode === "dark" ? "light" : "dark";
+      applyTheme();
+      refreshImages(Date.now());
+    };
+    document.getElementById("sfxBtn").onclick = (e) => {
+      sfxEnabled = !sfxEnabled;
+      e.target.textContent = "SFX: " + (sfxEnabled ? "ON" : "OFF");
+      if (sfxEnabled) playChiptune("hit");
+    };
+    document.getElementById("pauseBtn").onclick = (e) => {
+      paused = !paused;
+      document.getElementById("liveDot").classList.toggle("paused", paused);
+      e.target.textContent = paused ? "RESUME" : "PAUSE";
+    };
+    document.getElementById("syncBtn").onclick = () => pollLive();
+
+    applyTheme();
+    pollLive();
+    setInterval(() => {
+      if (!paused) pollLive();
+    }, POLL_MS);
+    setInterval(() => {
+      const pct = paused ? 0 : Math.min(100, ((Date.now() - tickStart) / POLL_MS) * 100);
+      document.getElementById("pollBar").style.width = `${pct}%`;
+    }, 150);
+  </script>
+</body>
+</html>

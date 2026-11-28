@@ -31,8 +31,12 @@ def test_render_all_svgs_outputs_valid_pure_svgs(tmp_path: Path) -> None:
     paths = render_all_svgs(report, tmp_path, game_state=game_state, raw_metrics=raw)
     names = sorted(p.name for p in paths)
     assert names == [
+        "banner-dark.svg",
+        "banner-light.svg",
         "battle-dark.svg",
         "battle-light.svg",
+        "hall_of_fame-dark.svg",
+        "hall_of_fame-light.svg",
         "skill_tree-dark.svg",
         "skill_tree-light.svg",
         "trainer-dark.svg",
@@ -154,3 +158,13 @@ def test_all_six_bosses_and_combat_vfx_render_cleanly(tmp_path: Path) -> None:
         validate_svg_xml(svg)
         assert boss.name in svg
         assert expected_badge in svg
+
+    # Verify long multi-raider subline stays cleanly bounded inside the Left Dialog panel
+    crowded = init_game_state(report.total_contributions)
+    crowded["recent_raiders"] = ["very-long-raider-one", "very-long-raider-two", "raider-three"]
+    crowded, _ = apply_visitor_move(crowded, issue_number=19, user_login="raider-three", action="tavern", raw_note="Hi!")
+    c_dir = tmp_path / "crowded"
+    render_all_svgs(report, c_dir, game_state=crowded, raw_metrics=raw)
+    c_svg = (c_dir / "battle-dark.svg").read_text(encoding="utf-8")
+    assert "Squad:" in c_svg
+    assert "Tip: ★ Star repo for instant 1-Hit KO!" not in c_svg

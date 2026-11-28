@@ -638,6 +638,72 @@ def _classify_battle_fx(last_event: str, buff_charges: int) -> tuple[str, str]:
     return "idle", ""
 
 
+def _build_hall_of_fame_ctx(state: dict[str, Any]) -> dict[str, Any]:
+    """Assemble Star Finishers chips, highest crit record, KO history, and Tavern slots."""
+    finishers = list(state.get("star_finishers") or [])
+    recent_stars = list(reversed(finishers[-4:]))
+    star_chips: list[dict[str, Any]] = []
+    for idx, handle in enumerate(recent_stars):
+        col = idx % 2
+        row = idx // 2
+        star_chips.append(
+            {
+                "x": 26 + col * 176,
+                "y": 72 + row * 26,
+                "w": 170,
+                "handle": str(handle)[:16],
+            }
+        )
+
+    crit = state.get("highest_crit")
+    if isinstance(crit, dict) and int(crit.get("dmg", 0)) > 0:
+        best_hit_text = f"{crit['dmg']} DMG · @{crit['user']} ({crit.get('move', 'Strike')})"
+    else:
+        best_hit_text = "Unclaimed (Overclock up to 44 DMG)"
+
+    history = list(state.get("slay_history") or [])
+    if history:
+        top = history[0]
+        latest_ko_text = f"@{top['finisher']} -> {top['boss']} ({top.get('method', 'raid')})"
+    else:
+        slain = int(state.get("bosses_slain", 0))
+        latest_ko_text = f"{slain} boss slain" if slain == 1 else f"{slain} bosses slain"
+
+    tavern_entries = list(state.get("tavern_log") or [])[:4]
+    tavern_slots: list[dict[str, Any]] = []
+    for slot_idx in range(4):
+        sy = 70 + slot_idx * 31
+        if slot_idx < len(tavern_entries):
+            item = tavern_entries[slot_idx]
+            tavern_slots.append(
+                {
+                    "y": sy,
+                    "filled": True,
+                    "author": f"@{str(item.get('user', 'raider'))[:13]}",
+                    "note": str(item.get("note", ""))[:40],
+                    "issue": f"#{item.get('issue', '?')}",
+                }
+            )
+        else:
+            tavern_slots.append(
+                {
+                    "y": sy,
+                    "filled": False,
+                    "author": f"[Slot #{slot_idx + 1}]",
+                    "note": "Empty seat — click Say Hi! above to sign the wall",
+                    "issue": "OPEN",
+                }
+            )
+
+    return {
+        "star_finisher_count": len(finishers),
+        "star_chips": star_chips,
+        "best_hit_text": best_hit_text,
+        "latest_ko_text": latest_ko_text,
+        "tavern_slots": tavern_slots,
+    }
+
+
 def validate_svg_xml(svg_text: str) -> None:
     """Validate well-formed SVG XML and reject <foreignObject> or <script> tags."""
     root = ET.fromstring(svg_text)
@@ -664,7 +730,9 @@ def render_all_svgs(
         lstrip_blocks=True,
     )
 
+    banner_tpl = env.get_template("banner.svg.j2")
     battle_tpl = env.get_template("battle.svg.j2")
+    hof_tpl = env.get_template("hall_of_fame.svg.j2")
     trainer_tpl = env.get_template("trainer.svg.j2")
     skill_tpl = env.get_template("skill_tree.svg.j2")
 
@@ -696,14 +764,17 @@ def render_all_svgs(
 
     dex_hero_rects = compile_pixel_grid(HERO_TRAINER, scale=2, ox=56 - (hw // 2), oy=144 - hh)
     dex_pet_rects = compile_pixel_grid(COMPANION_FOX, scale=2, ox=104 - (cw // 2), oy=146 - ch)
+    banner_hero_rects = compile_pixel_grid(HERO_TRAINER, scale=2, ox=50 - (hw // 2), oy=109 - hh)
+    banner_pet_rects = compile_pixel_grid(COMPANION_FOX, scale=2, ox=104 - (cw // 2), oy=111 - ch)
+    hof_ctx = _build_hall_of_fame_ctx(state)
 
     raiders_list = state.get("recent_raiders") or []
-    raiders_text = ", ".join(f"@{r}" for r in raiders_list[:4]) if raiders_list else "Open to raiders"
+    raiders_text = ", ".join(f"@{str(r)[:12]}" for r in raiders_list[:2]) if raiders_list else "Open to raiders"
 
     tavern_list = state.get("tavern_log") or []
     if tavern_list:
         latest = tavern_list[0]
-        tavern_text = f"@{latest['user']}: \"{latest['note'][:24]}\""
+        tavern_text = f"@{str(latest['user'])[:12]}: \"{str(latest['note'])[:20]}\""
     else:
         tavern_text = "Sign Guestbook"
 
@@ -712,9 +783,11 @@ def render_all_svgs(
     fx_kind, fx_label = _classify_battle_fx(last_event_raw, buff_charges)
     event_line1, event_line2 = _wrap_dialog(last_event_raw)
     if "signed Tavern:" in last_event_raw or "GUEST LOG" in last_event_raw:
-        battle_subline = f"Squad: {raiders_text} · Tip: ★ Star repo for instant 1-Hit KO!"
+        battle_subline = f"Squad: {raiders_text} · ★ Star repo = 1-Hit KO!"
     else:
         battle_subline = f"Squad: {raiders_text} · Log: {tavern_text}"
+    if len(battle_subline) > 74:
+        battle_subline = f"{battle_subline[:71].rstrip()}..."
 
     primary_lang_tag = report.top_languages[0].name.upper()[:12] if report.top_languages else "PYTHON"
     secondary_tag = report.top_languages[1].name.upper()[:12] if len(report.top_languages) > 1 else "SYSTEMS"
@@ -799,6 +872,30 @@ def render_all_svgs(
                 header_ball=tree_ball,
                 sync_date=sync_date,
                 **constellation,
+            ),
+        )
+
+        _emit(
+            f"banner-{mode}.svg",
+            banner_tpl.render(
+                mode=mode,
+                theme=theme,
+                report=report,
+                grade_color=g_color,
+                banner_hero_rects=banner_hero_rects,
+                banner_pet_rects=banner_pet_rects,
+            ),
+        )
+
+        _emit(
+            f"hall_of_fame-{mode}.svg",
+            hof_tpl.render(
+                mode=mode,
+                theme=theme,
+                report=report,
+                game=state,
+                header_ball=header_ball,
+                **hof_ctx,
             ),
         )
 

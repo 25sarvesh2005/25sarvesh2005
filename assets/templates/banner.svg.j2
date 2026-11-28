@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 132" width="840" height="132" role="img" aria-labelledby="banner-title-{{ mode }} banner-desc-{{ mode }}">
+  <title id="banner-title-{{ mode }}">{{ report.display_name }} — Systems &amp; AI Architect (Rank {{ report.grade }})</title>
+  <desc id="banner-desc-{{ mode }}">Webcomic RPG header panel for @{{ report.username }}: Rank {{ report.grade }} ({{ report.grade_score }}/100), {{ report.non_empty_owned_repos }} public builds, {{ report.total_test_files }} test files.</desc>
+  <defs>
+    <linearGradient id="banner-sky-{{ mode }}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{{ theme.bg_panel }}"/>
+      <stop offset="100%" stop-color="{{ theme.bg_hud }}"/>
+    </linearGradient>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .live-dot { animation: pulse-live 1.8s ease-in-out infinite; }
+      @keyframes pulse-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+    </style>
+  </defs>
+
+  <!-- Outer Comic Cover Frame -->
+  <rect x="2" y="2" width="836" height="128" rx="6" fill="{{ theme.bg_card }}" stroke="{{ theme.border }}" stroke-width="1.8"/>
+
+  <!-- Left Panel: Pixel Hero + Sparklynx Portrait -->
+  <rect x="12" y="12" width="134" height="108" rx="4" fill="{{ theme.dex_lcd }}" stroke="{{ grade_color }}" stroke-width="1.6"/>
+  <ellipse cx="78" cy="108" rx="46" ry="7" fill="{{ theme.dex_dot }}"/>
+  <g shape-rendering="crispEdges">
+    {% for r in banner_hero_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+    {% for r in banner_pet_rects %}
+    <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
+    {% endfor %}
+  </g>
+  <rect x="18" y="18" width="46" height="15" rx="2.5" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1"/>
+  <text x="41" y="28.5" text-anchor="middle" class="mono" font-size="8" font-weight="800" fill="{{ grade_color }}">VOL.{{ "%02d" | format(report.level) }}</text>
+
+  <!-- Center Comic Story Panel -->
+  <rect x="156" y="12" width="460" height="108" rx="4" fill="url(#banner-sky-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.5"/>
+  <rect x="166" y="20" width="440" height="22" rx="3" fill="{{ theme.bg_dialog }}" stroke="{{ theme.bg_dialog_rim }}" stroke-width="1"/>
+  <text x="176" y="34.5" class="sans" font-size="10.5" font-style="italic" font-weight="600" fill="#F8FAFC">"Production spike hit main—why didn't the ledger crash?"</text>
+
+  <text x="168" y="61" class="sans" font-size="15.5" font-weight="800" fill="{{ theme.text_primary }}">{{ report.display_name }} · Systems &amp; AI Builder</text>
+  <text x="168" y="79" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">PLOT ARMOR: <tspan fill="{{ theme.text_muted }}" font-weight="600">Row-locked ledgers · Docker sandboxes · Verified RAG · CI</tspan></text>
+
+  <!-- Tech Loadout Pills -->
+  <rect x="168" y="90" width="66" height="18" rx="3" fill="{{ theme.bg_hud_inner }}" stroke="#3572A5" stroke-width="1"/>
+  <text x="201" y="102.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">PYTHON</text>
+  <rect x="240" y="90" width="84" height="18" rx="3" fill="{{ theme.bg_hud_inner }}" stroke="#3178C6" stroke-width="1"/>
+  <text x="282" y="102.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">TYPESCRIPT</text>
+  <rect x="330" y="90" width="70" height="18" rx="3" fill="{{ theme.bg_hud_inner }}" stroke="{{ theme.accent_signal }}" stroke-width="1"/>
+  <text x="365" y="102.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">FASTAPI</text>
+  <rect x="406" y="90" width="88" height="18" rx="3" fill="{{ theme.bg_hud_inner }}" stroke="{{ theme.accent_arcane }}" stroke-width="1"/>
+  <text x="450" y="102.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">POSTGRESQL</text>
+  <rect x="500" y="90" width="82" height="18" rx="3" fill="{{ theme.bg_hud_inner }}" stroke="{{ theme.accent_amber }}" stroke-width="1"/>
+  <text x="541" y="102.5" text-anchor="middle" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_primary }}">AI / MCP</text>
+
+  <!-- Right Panel: Live Rank & Telemetry Stamp -->
+  <rect x="626" y="12" width="202" height="108" rx="4" fill="{{ theme.bg_hud }}" stroke="{{ grade_color }}" stroke-width="1.6"/>
+  <circle class="live-dot" cx="640" cy="26" r="4" fill="#22C55E"/>
+  <text x="650" y="29.5" class="mono" font-size="9" font-weight="700" fill="#22C55E">LIVE · 5m SYNC</text>
+  <text x="816" y="29.5" text-anchor="end" class="mono" font-size="8.5" font-weight="700" fill="{{ theme.text_muted }}">@{{ report.username }}</text>
+
+  <line x1="636" y1="38" x2="818" y2="38" stroke="{{ theme.border }}" stroke-width="1"/>
+
+  <text x="638" y="66" class="sans" font-size="24" font-weight="800" fill="{{ grade_color }}">RANK {{ report.grade }}</text>
+  <text x="816" y="64" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="{{ theme.text_primary }}">{{ report.grade_score }}/100</text>
+  <text x="638" y="84" class="mono" font-size="8.8" font-weight="600" fill="{{ theme.text_muted }}">{{ report.non_empty_owned_repos }} Repos · {{ report.total_test_files }} Tests · {{ report.ci_repos }} CI</text>
+  <rect x="638" y="92" width="178" height="19" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.accent_amber }}" stroke-width="1.1"/>
+  <text x="727" y="104.5" text-anchor="middle" class="mono" font-size="8.2" font-weight="700" fill="{{ theme.accent_amber }}">{{ report.next_grade_hint }} · ★ KO LIVE</text>
+</svg>
