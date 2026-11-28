@@ -274,6 +274,17 @@ BOSS_QUIPS: dict[str, str] = {
     "merge_golem": "409 CONFLICT!",
     "hallucination_phantom": "SOURCE: TRUST ME",
     "legacy_monolith": "DO NOT TOUCH!",
+    "recursion_hydra": "STACK OVERFLOW!",
+    "outage_titan": "502 BAD GATEWAY!",
+}
+
+BOSS_TYPES: dict[str, str] = {
+    "nullpointer_wyrm": "MEM · BUG",
+    "merge_golem": "GIT · ROCK",
+    "hallucination_phantom": "LLM · VOID",
+    "legacy_monolith": "DEBT · STEEL",
+    "recursion_hydra": "LOOP · FIRE",
+    "outage_titan": "CLOUD · VOLT",
 }
 
 

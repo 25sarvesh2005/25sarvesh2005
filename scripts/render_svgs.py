@@ -13,8 +13,15 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from scripts.compute_gamification import GamificationReport, QuestProgress, evaluate_metrics
-from scripts.config import BOSS_QUIPS, BRANCH_META, QUEST_PLAIN_LABELS, SUPERSEDED_QUESTS, THEMES
-from scripts.game_engine import get_active_boss, init_game_state
+from scripts.config import (
+    BOSS_QUIPS,
+    BOSS_TYPES,
+    BRANCH_META,
+    QUEST_PLAIN_LABELS,
+    SUPERSEDED_QUESTS,
+    THEMES,
+)
+from scripts.game_engine import BOSS_ROSTER, get_active_boss, init_game_state
 from scripts.pixel_sprites import (
     BOSS_SPRITES,
     COMPANION_FOX,
@@ -49,9 +56,10 @@ def _select_display_quests(report: GamificationReport) -> tuple[list[QuestProgre
     )
     next_target = next((q for q in locked if q.current > 0), locked[0] if locked else None)
 
-    selected = unlocked[:8]
+    in_progress = [q for q in locked if q.current > 0]
+    reserved_wip = min(2, len(in_progress))
+    selected = unlocked[: 8 - reserved_wip]
     if len(selected) < 8:
-        in_progress = [q for q in locked if q.current > 0]
         selected.extend(in_progress[: 8 - len(selected)])
     if len(selected) < 6:
         remaining = [q for q in locked if q not in selected]
@@ -422,32 +430,40 @@ def _build_constellation_tree(
             }
         )
 
-    # Constellation edges + subtle inter-sector synergy bridges + relay joint dots
+    # Curved Constellation Bezier Arcs + exact curve-midpoint relay dots
     edges: list[dict[str, Any]] = []
     joint_dots: list[dict[str, Any]] = []
-    for src_key, dst_key, is_synergy in CONSTELLATION_EDGES:
+    for idx_edge, (src_key, dst_key, is_synergy) in enumerate(CONSTELLATION_EDGES):
         sx, sy = (HUB_CX, HUB_CY) if src_key == "__hub__" else CONSTELLATION_POS[src_key]
         dx, dy = CONSTELLATION_POS[dst_key]
         dst_node = by_key[dst_key]
         src_pips = 4 if src_key == "__hub__" else by_key[src_key].pips
         active = dst_node.pips > 0 and src_pips > 0
         stroke = branch_accents[dst_node.branch] if active else theme["border"]
+
+        vx, vy = dx - sx, dy - sy
+        length = math.hypot(vx, vy) or 1.0
+        mx, my = (sx + dx) / 2.0, (sy + dy) / 2.0
+        # Gentle organic bow alternating sign per edge without crossing neighbors
+        bend = 0.0 if is_synergy else (10.5 if src_key != "__hub__" else 13.0) * (1 if idx_edge % 2 == 0 else -1)
+        nx_u, ny_u = -vy / length, vx / length
+        qx, qy = round(mx + bend * nx_u, 1), round(my + bend * ny_u, 1)
+        path_d = f"M{sx},{sy} Q{qx},{qy} {dx},{dy}"
+
         edges.append(
             {
-                "x1": sx,
-                "y1": sy,
-                "x2": dx,
-                "y2": dy,
+                "d": path_d,
                 "stroke": stroke,
                 "active": active,
                 "synergy": is_synergy,
             }
         )
         if not is_synergy and src_key != "__hub__":
+            # Quadratic Bezier midpoint at t=0.5: 0.25*P0 + 0.5*Q + 0.25*P1
             joint_dots.append(
                 {
-                    "cx": round((sx + dx) / 2.0, 1),
-                    "cy": round((sy + dy) / 2.0, 1),
+                    "cx": round(0.25 * sx + 0.5 * qx + 0.25 * dx, 1),
+                    "cy": round(0.25 * sy + 0.5 * qy + 0.25 * dy, 1),
                     "fill": stroke if active else theme["bg_track"],
                     "active": active,
                 }
@@ -458,12 +474,14 @@ def _build_constellation_tree(
         ax, ay = CONSTELLATION_POS[a_key]
         bx, by = CONSTELLATION_POS[b_key]
         active = by_key[a_key].pips >= 2 and by_key[b_key].pips >= 2
+        mx, my = (ax + bx) / 2.0, (ay + by) / 2.0
+        # Bow gently inward/outward along radial vector from Hub
+        rx, ry = mx - HUB_CX, my - HUB_CY
+        rl = math.hypot(rx, ry) or 1.0
+        qx, qy = round(mx + (rx / rl) * 10.0, 1), round(my + (ry / rl) * 10.0, 1)
         bridges.append(
             {
-                "x1": ax,
-                "y1": ay,
-                "x2": bx,
-                "y2": by,
+                "d": f"M{ax},{ay} Q{qx},{qy} {bx},{by}",
                 "stroke": theme["border_hi"] if active else theme["border"],
                 "active": active,
             }
@@ -614,6 +632,20 @@ def _hp_bar_color(ratio: float) -> str:
     return "#EF4444"
 
 
+def _classify_battle_fx(last_event: str, buff_charges: int) -> tuple[str, str]:
+    """Return dynamic comic impact VFX type & caption from latest raid event."""
+    upper = last_event.upper()
+    if "1-HIT KO" in upper:
+        return "star_ko", "1-HIT K.O.!"
+    if "KRAKOOM" in upper or "CRIT" in upper:
+        return "crit", "KRAKOOM!"
+    if "SLASH" in upper or "COMBO" in upper:
+        return "strike", "SLASH!"
+    if "POWER UP" in upper or buff_charges > 0:
+        return "buff", f"+{max(1, buff_charges) * 10} ATK"
+    return "idle", ""
+
+
 def validate_svg_xml(svg_text: str) -> None:
     """Validate well-formed SVG XML and reject <foreignObject> or <script> tags."""
     root = ET.fromstring(svg_text)
@@ -654,9 +686,11 @@ def render_all_svgs(
     hp_ratio = max(0.0, min(1.0, boss_hp / max(1, boss.max_hp)))
     boss_hp_width = round(hp_ratio * 244.0, 2)
     boss_hp_color = _hp_bar_color(hp_ratio)
-    boss_idx = int(state.get("boss_index", 0))
+    boss_idx = int(state.get("boss_index", 0)) % len(BOSS_ROSTER)
     boss_level = 12 + boss_idx * 3
     boss_quip = BOSS_QUIPS.get(boss.key, "READY!")
+    boss_type = BOSS_TYPES.get(boss.key, "RAID · BOSS")
+    total_bosses = len(BOSS_ROSTER)
 
     boss_grid = BOSS_SPRITES[boss.key]
     bw, bh = sprite_bounds(boss_grid, scale=2)
@@ -681,19 +715,21 @@ def render_all_svgs(
     else:
         tavern_text = "Sign Guestbook"
 
+    buff_charges = int(state.get("hero_buff_charges", 0))
     last_event_raw = str(state.get("last_event") or "")
+    fx_kind, fx_label = _classify_battle_fx(last_event_raw, buff_charges)
     event_line1, event_line2 = _wrap_dialog(last_event_raw)
-    if "signed Tavern:" in last_event_raw:
+    if "signed Tavern:" in last_event_raw or "GUEST LOG" in last_event_raw:
         battle_subline = f"Squad: {raiders_text} · Tip: ★ Star repo for instant 1-Hit KO!"
     else:
         battle_subline = f"Squad: {raiders_text} · Log: {tavern_text}"
 
     primary_lang_tag = report.top_languages[0].name.upper()[:12] if report.top_languages else "PYTHON"
     secondary_tag = report.top_languages[1].name.upper()[:12] if len(report.top_languages) > 1 else "SYSTEMS"
+    dex_exp_w = round((report.level_progress_pct / 100.0) * 106.0, 1)
 
     exp_bar_width = round((report.level_progress_pct / 100.0) * 140.0, 2)
     sync_date = report.generated_at_utc[:10]
-    buff_charges = int(state.get("hero_buff_charges", 0))
 
     out_dir.mkdir(parents=True, exist_ok=True)
     written: list[Path] = []
@@ -718,10 +754,15 @@ def render_all_svgs(
                 game=state,
                 boss=boss,
                 boss_quip=boss_quip,
+                boss_type=boss_type,
+                total_bosses=total_bosses,
                 boss_index_1=boss_idx + 1,
                 boss_level=boss_level,
                 boss_hp_width=boss_hp_width,
                 boss_hp_color=boss_hp_color,
+                boss_danger=(hp_ratio <= 0.25),
+                fx_kind=fx_kind,
+                fx_label=fx_label,
                 exp_bar_width=exp_bar_width,
                 buff_charges=buff_charges,
                 event_line1=event_line1,
@@ -745,6 +786,7 @@ def render_all_svgs(
                 dex_hero_rects=dex_hero_rects,
                 dex_pet_rects=dex_pet_rects,
                 dex_stat_bars=_build_dex_stat_bars(report, theme),
+                dex_exp_w=dex_exp_w,
                 language_tiles=_build_language_tiles(report, theme),
                 badge_tiles=badge_tiles,
                 next_label=next_label,

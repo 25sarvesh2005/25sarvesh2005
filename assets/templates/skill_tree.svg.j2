@@ -20,6 +20,11 @@
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .astrolabe-spin { animation: orbit-spin 48s linear infinite; }
+      .star-a { animation: star-twinkle 3.2s ease-in-out infinite; }
+      .star-b { animation: star-twinkle 4.4s ease-in-out 1.4s infinite; }
+      @keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes star-twinkle { 0%, 100% { opacity: 0.48; } 50% { opacity: 0.14; } }
     </style>
   </defs>
 
@@ -47,11 +52,11 @@
     {% endfor %}
 
     {% if mode == "dark" %}
-    <g fill="{{ theme.text_subtle }}" opacity="0.35">
-      <circle cx="92" cy="142" r="1.1"/><circle cx="468" cy="126" r="1.2"/>
-      <circle cx="486" cy="348" r="1.1"/><circle cx="88" cy="404" r="1.2"/>
-      <circle cx="348" cy="64" r="1.1"/><circle cx="294" cy="456" r="1.1"/>
-      <circle cx="64" cy="338" r="1"/><circle cx="452" cy="414" r="1.1"/>
+    <g fill="{{ theme.text_subtle }}">
+      <circle class="star-a" cx="92" cy="142" r="1.2"/><circle class="star-b" cx="468" cy="126" r="1.3"/>
+      <circle class="star-b" cx="486" cy="348" r="1.1"/><circle class="star-a" cx="88" cy="404" r="1.2"/>
+      <circle class="star-a" cx="348" cy="64" r="1.1"/><circle class="star-b" cx="294" cy="456" r="1.1"/>
+      <circle class="star-b" cx="64" cy="338" r="1.1"/><circle class="star-a" cx="452" cy="414" r="1.2"/>
     </g>
     {% endif %}
 
@@ -67,17 +72,17 @@
     <!-- Center Glow -->
     <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="66" fill="url(#hub-aura-{{ mode }})"/>
 
-    <!-- Faint Inter-Branch Links -->
+    <!-- Curved Inter-Branch Links -->
     {% for br in bridges %}
-    <line x1="{{ br.x1 }}" y1="{{ br.y1 }}" x2="{{ br.x2 }}" y2="{{ br.y2 }}" stroke="{{ br.stroke }}" stroke-width="0.9" stroke-dasharray="3,4" opacity="{{ 0.36 if br.active else 0.16 }}"/>
+    <path d="{{ br.d }}" fill="none" stroke="{{ br.stroke }}" stroke-width="0.9" stroke-dasharray="3,4" opacity="{{ 0.36 if br.active else 0.16 }}"/>
     {% endfor %}
 
-    <!-- Organic Skill Constellation Paths -->
+    <!-- Curved Bezier Constellation Paths -->
     {% for edge in edges %}
     {% if edge.active and not edge.synergy %}
-    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="4.2" opacity="0.16"/>
+    <path d="{{ edge.d }}" fill="none" stroke="{{ edge.stroke }}" stroke-width="4.2" opacity="0.16"/>
     {% endif %}
-    <line x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" stroke="{{ edge.stroke }}" stroke-width="{{ 1.2 if edge.synergy else 1.9 }}" stroke-dasharray="{{ '3,3' if edge.synergy else 'none' }}" opacity="{{ 0.88 if edge.active else 0.32 }}"/>
+    <path d="{{ edge.d }}" fill="none" stroke="{{ edge.stroke }}" stroke-width="{{ 1.2 if edge.synergy else 1.9 }}" stroke-dasharray="{{ '3,3' if edge.synergy else 'none' }}" opacity="{{ 0.88 if edge.active else 0.32 }}"/>
     {% endfor %}
 
     <!-- Delicate Pathway Star Joints -->
@@ -95,14 +100,18 @@
   <text x="24" y="64" class="mono" font-size="8" font-weight="700" fill="{{ theme.text_muted }}">Active Nodes: <tspan fill="{{ theme.text_primary }}">{{ active_skill_count }}/{{ total_skill_count }}</tspan></text>
   <text x="24" y="77" class="mono" font-size="8" font-weight="700" fill="{{ theme.text_muted }}">Mastered: <tspan fill="{{ theme.accent_amber }}">{{ mastered_count }}/{{ total_skill_count }}</tspan></text>
 
-  <!-- Central Sacred 6-Point Astrolabe Core -->
+  <!-- Central Sacred 6-Point Astrolabe Core (Subtle Slow Rotation) -->
   <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="36" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.9"/>
   {% for tk in hub_ticks %}
   <line x1="{{ tk.x1 }}" y1="{{ tk.y1 }}" x2="{{ tk.x2 }}" y2="{{ tk.y2 }}" stroke="{{ theme.accent_amber }}" stroke-width="1.3" opacity="0.78"/>
   {% endfor %}
   <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="28" fill="{{ theme.bg_hud }}" stroke="{{ theme.accent_amber }}" stroke-width="1.1" opacity="0.85"/>
-  <polygon points="{{ hub_tri_pts }}" fill="none" stroke="{{ theme.accent_amber }}" stroke-width="1" opacity="0.55"/>
-  <polygon points="{{ hub_tri_inv_pts }}" fill="none" stroke="{{ grade_color }}" stroke-width="1" opacity="0.5"/>
+  <g transform="translate({{ hub_cx }}, {{ hub_cy }})">
+    <g class="astrolabe-spin">
+      <polygon points="-11.5,-19.9 23,0 -11.5,19.9" fill="none" stroke="{{ theme.accent_amber }}" stroke-width="1" opacity="0.55"/>
+      <polygon points="11.5,-19.9 11.5,19.9 -23,0" fill="none" stroke="{{ grade_color }}" stroke-width="1" opacity="0.5"/>
+    </g>
+  </g>
   <circle cx="{{ hub_cx }}" cy="{{ hub_cy }}" r="15.5" fill="{{ theme.bg_panel }}" stroke="{{ grade_color }}" stroke-width="1.2"/>
   <text x="{{ hub_cx }}" y="{{ hub_cy + 4 }}" text-anchor="middle" class="sans" font-size="13.5" font-weight="800" fill="{{ grade_color }}">{{ report.grade }}</text>
   <text x="{{ hub_cx }}" y="{{ hub_cy + 12.5 }}" text-anchor="middle" class="mono" font-size="6.5" font-weight="700" fill="{{ theme.text_muted }}">Lv{{ report.level }}</text>

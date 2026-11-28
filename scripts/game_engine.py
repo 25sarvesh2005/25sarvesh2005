@@ -44,8 +44,20 @@ BOSS_ROSTER: tuple[BossSpec, ...] = (
     BossSpec(
         key="legacy_monolith",
         name="Legacy Monolith",
-        subtitle="LVL 20 SPAGHETTI FORTRESS",
+        subtitle="LVL 21 SPAGHETTI FORTRESS",
         max_hp=500,
+    ),
+    BossSpec(
+        key="recursion_hydra",
+        name="Infinite Loop Hydra",
+        subtitle="LVL 24 STACK OVERFLOW",
+        max_hp=620,
+    ),
+    BossSpec(
+        key="outage_titan",
+        name="Prod Outage Titan",
+        subtitle="LVL 27 FRIDAY DEPLOY",
+        max_hp=760,
     ),
 )
 
@@ -170,12 +182,16 @@ def apply_visitor_move(
     next_state["recent_raiders"] = [player, *raiders][:4]
 
     new_boss = get_active_boss(next_state)
+    hp_pct = max(0, min(100, round((next_state["boss_hp"] / max(1, new_boss.max_hp)) * 100)))
+    filled = round(hp_pct / 10)
+    hp_bar = ("█" * filled) + ("░" * (10 - filled))
+    ep_num = (int(next_state.get("boss_index", 0)) % len(BOSS_ROSTER)) + 1
     reply = (
-        f"⚔️ **{summary}**\n\n"
+        f"⚔️ **Episode {ep_num} · {summary}**\n\n"
         + (f"🏆 **{ko_msg}**\n\n" if ko_msg else "")
-        + f"- **Active Boss:** {new_boss.name} (`{next_state['boss_hp']} / {new_boss.max_hp} HP`)\n"
-        + f"- **Bosses Slain:** `{next_state['bosses_slain']}` · **Total Raid Moves:** `{next_state['total_raids']}`\n\n"
-        + "Thanks for playing! The battle screen updates automatically on `https://github.com/25sarvesh2005`."
+        + f"- **Active Boss:** {new_boss.name} `[{hp_bar}]` `{next_state['boss_hp']} / {new_boss.max_hp} HP ({hp_pct}%)`\n"
+        + f"- **Buff Charges:** `+{int(next_state.get('hero_buff_charges', 0)) * 10} Next ATK` · **Bosses Slain:** `{next_state['bosses_slain']}` · **Moves:** `{next_state['total_raids']}`\n\n"
+        + "Live battle card updated automatically at [github.com/25sarvesh2005](https://github.com/25sarvesh2005)! (Want an instant finish? Drop a ★ Star on this repo!)"
     )
     return next_state, reply
 

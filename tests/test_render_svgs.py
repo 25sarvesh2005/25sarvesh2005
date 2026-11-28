@@ -125,3 +125,32 @@ def test_constellation_skill_tree_geometry_has_no_pill_overlaps(tmp_path: Path) 
     assert "SECTOR ALLOCATION" in tree_svg
     assert "CAPSTONES" in tree_svg
     assert "COMBAT" not in tree_svg  # No fake combat filler on skill tree
+    assert "astrolabe-spin" in tree_svg
+    assert " Q" in tree_svg  # Curved Bezier constellation edges
+
+
+def test_all_six_bosses_and_combat_vfx_render_cleanly(tmp_path: Path) -> None:
+    from scripts.game_engine import BOSS_ROSTER
+
+    assert len(BOSS_ROSTER) == 6
+    raw = _sample_raw_metrics()
+    report = evaluate_metrics(raw, reference_date=date(2026, 11, 28))
+    events = [
+        ("1-HIT KO", "1-HIT K.O.!"),
+        ("KRAKOOM! CRIT", "KRAKOOM!"),
+        ("SLASH! Strike", "SLASH!"),
+        ("POWER UP! +10", "BUFF +20"),
+    ]
+    for idx, boss in enumerate(BOSS_ROSTER):
+        state = init_game_state(report.total_contributions)
+        state["boss_index"] = idx
+        state["boss_hp"] = max(1, int(boss.max_hp * 0.20))
+        state["hero_buff_charges"] = 2 if idx == 3 else 0
+        evt_text, expected_badge = events[idx % len(events)]
+        state["last_event"] = evt_text
+        b_dir = tmp_path / f"boss_{idx}"
+        render_all_svgs(report, b_dir, game_state=state, raw_metrics=raw)
+        svg = (b_dir / "battle-dark.svg").read_text(encoding="utf-8")
+        validate_svg_xml(svg)
+        assert boss.name in svg
+        assert expected_badge in svg

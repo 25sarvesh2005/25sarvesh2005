@@ -17,9 +17,12 @@
       .bob-enemy { animation: float-enemy 2.4s ease-in-out infinite; }
       .bob-ally { animation: float-ally 2.0s steps(2, end) infinite; }
       .cursor { animation: blink-cursor 1.1s steps(2, end) infinite; }
+      .hp-danger { animation: pulse-danger 0.9s ease-in-out infinite; }
+      .fx-pop { animation: float-enemy 1.8s ease-in-out infinite; }
       @keyframes float-enemy { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3px); } }
       @keyframes float-ally { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-2px); } }
       @keyframes blink-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      @keyframes pulse-danger { 0%, 100% { opacity: 1; } 50% { opacity: 0.48; } }
     </style>
   </defs>
 
@@ -33,7 +36,7 @@
     {% endfor %}
   </g>
   <text x="32" y="22" class="sans" font-size="11.5" font-weight="700" fill="{{ theme.text_primary }}">Episode {{ boss_index_1 }} · Hero @{{ report.username }} vs {{ boss.name }}</text>
-  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="{{ theme.text_muted }}">Boss {{ boss_index_1 }}/4 · {{ game.bosses_slain }} K.O.'d · {{ game.total_raids }} Moves</text>
+  <text x="822" y="22" text-anchor="end" class="mono" font-size="10" font-weight="600" fill="{{ theme.text_muted }}">Boss {{ boss_index_1 }}/{{ total_bosses }} · {{ game.bosses_slain }} K.O.'d · {{ game.total_raids }} Moves</text>
 
   <!-- Classic Diagonal GBA Battle Viewport -->
   <rect x="14" y="38" width="812" height="212" rx="4" fill="url(#gba-sky-{{ mode }})" stroke="{{ theme.border }}" stroke-width="1.5"/>
@@ -47,6 +50,32 @@
       <rect x="380" y="54" width="2" height="2"/><rect x="442" y="72" width="2" height="2"/>
       <rect x="504" y="48" width="2" height="2"/><rect x="774" y="60" width="2" height="2"/>
     </g>
+    {% endif %}
+
+    <!-- Per-Boss Atmospheric Stage Details -->
+    {% if boss.key == "nullpointer_wyrm" %}
+    <g shape-rendering="crispEdges" opacity="0.45">
+      <rect x="556" y="70" width="12" height="2" fill="#EF4444"/><rect x="716" y="108" width="14" height="2" fill="#EF4444"/>
+      <rect x="614" y="62" width="3" height="3" fill="#F59E0B"/><rect x="688" y="114" width="3" height="3" fill="#F43F5E"/>
+    </g>
+    {% elif boss.key == "merge_golem" %}
+    <g shape-rendering="crispEdges" opacity="0.45">
+      <rect x="552" y="114" width="10" height="3" fill="#FBBF24"/><rect x="718" y="84" width="10" height="3" fill="#38BDF8"/>
+    </g>
+    {% elif boss.key == "hallucination_phantom" %}
+    <circle cx="636" cy="112" r="46" fill="{{ theme.accent_arcane }}" opacity="0.14"/>
+    <circle cx="636" cy="112" r="32" fill="none" stroke="{{ theme.accent_arcane }}" stroke-width="1" stroke-dasharray="3,4" opacity="0.4"/>
+    {% elif boss.key == "legacy_monolith" %}
+    <g opacity="0.22" fill="{{ theme.border }}">
+      <rect x="526" y="88" width="16" height="62" rx="1"/>
+      <rect x="738" y="76" width="18" height="74" rx="1"/>
+    </g>
+    {% elif boss.key == "recursion_hydra" %}
+    <circle cx="636" cy="114" r="50" fill="none" stroke="#F43F5E" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.38"/>
+    <circle cx="636" cy="114" r="38" fill="none" stroke="#FBBF24" stroke-width="1" stroke-dasharray="3,5" opacity="0.42"/>
+    {% elif boss.key == "outage_titan" %}
+    <path d="M736,46 L722,74 L734,74 L718,104" fill="none" stroke="#FBBF24" stroke-width="2" opacity="0.5"/>
+    <circle cx="636" cy="112" r="46" fill="#38BDF8" opacity="0.12"/>
     {% endif %}
 
     <!-- Isometric Enemy Platform (Upper Right) -->
@@ -65,13 +94,13 @@
   <path d="M30,48 L330,48 L330,104 L318,114 L30,114 Z" fill="{{ theme.bg_hud }}" stroke="{{ theme.border }}" stroke-width="2"/>
   <path d="M34,52 L326,52 L326,102 L316,110 L34,110 Z" fill="none" stroke="{{ theme.border_hi }}" stroke-width="1" opacity="0.45"/>
   <text x="44" y="69" class="sans" font-size="12.5" font-weight="700" fill="{{ theme.text_primary }}">{{ boss.name }}</text>
-  <text x="316" y="69" text-anchor="end" class="mono" font-size="11" font-weight="700" fill="{{ theme.accent_amber }}">Lv{{ boss_level }}</text>
+  <text x="316" y="69" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">{{ boss_type }} · Lv{{ boss_level }}</text>
 
   <rect x="44" y="77" width="272" height="14" rx="4" fill="#1F2937" stroke="{{ theme.border }}" stroke-width="1"/>
   <text x="50" y="87" class="mono" font-size="9" font-weight="700" fill="#FBBF24">HP</text>
   <rect x="68" y="80" width="244" height="8" rx="2" fill="#374151"/>
   {% if boss_hp_width > 0 %}
-  <rect x="68" y="80" width="{{ boss_hp_width }}" height="8" rx="2" fill="{{ boss_hp_color }}"/>
+  <rect class="{{ 'hp-danger' if boss_danger else '' }}" x="68" y="80" width="{{ boss_hp_width }}" height="8" rx="2" fill="{{ boss_hp_color }}"/>
   {% endif %}
   <text x="45" y="104" class="mono" font-size="9" font-weight="700" fill="{{ theme.accent_amber }}">★ STAR REPO = 1-HIT KO!</text>
   <text x="314" y="104" text-anchor="end" class="mono" font-size="10" font-weight="700" fill="{{ theme.text_primary }}">{{ game.boss_hp }}/{{ boss.max_hp }}</text>
@@ -104,12 +133,37 @@
     <rect x="{{ r.x }}" y="{{ r.y }}" width="{{ r.w }}" height="{{ r.h }}" fill="{{ r.fill }}"/>
     {% endfor %}
   </g>
+  <!-- Dynamic Comic Impact SFX & Slash VFX -->
+  {% if fx_kind == "star_ko" %}
+  <g class="fx-pop">
+    <path d="M594,142 L674,84" stroke="#FEF08A" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+    <path d="M602,146 L682,88" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+    <polygon points="750,62 762,74 782,66 778,84 798,94 776,102 780,118 760,110 746,122 742,104 720,98 738,84 732,68" fill="#FEF08A" stroke="#D97706" stroke-width="1.6"/>
+    <text x="758" y="96" text-anchor="middle" class="mono" font-size="8.2" font-weight="800" fill="#78350F">{{ fx_label }}</text>
+  </g>
+  {% elif fx_kind == "crit" %}
+  <g class="fx-pop">
+    <path d="M594,144 L676,84" stroke="#F43F5E" stroke-width="4.5" stroke-linecap="round" opacity="0.85"/>
+    <path d="M596,144 L674,86" stroke="#FEF08A" stroke-width="1.8" stroke-linecap="round"/>
+    <polygon points="752,66 765,76 785,68 780,86 798,96 776,104 762,118 746,106 724,100 738,84" fill="#F43F5E" stroke="#FEF08A" stroke-width="1.4"/>
+    <text x="760" y="96" text-anchor="middle" class="mono" font-size="8.2" font-weight="800" fill="#FFFFFF">{{ fx_label }}</text>
+  </g>
+  {% elif fx_kind == "strike" %}
+  <g class="fx-pop">
+    <path d="M598,140 L674,88" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+    <path d="M600,140 L672,90" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+    <rect x="722" y="76" width="66" height="22" rx="4" fill="#0284C7" stroke="#BAE6FD" stroke-width="1.4"/>
+    <text x="755" y="90.5" text-anchor="middle" class="mono" font-size="9" font-weight="800" fill="#FFFFFF">{{ fx_label }}</text>
+  </g>
+  {% endif %}
   {% if buff_charges > 0 %}
   <g class="cursor" shape-rendering="crispEdges" fill="{{ theme.accent_signal }}">
     <rect x="190" y="168" width="4" height="4"/>
     <rect x="258" y="184" width="4" height="4"/>
     <rect x="208" y="190" width="3" height="3" fill="{{ theme.accent_amber }}"/>
     <rect x="252" y="206" width="3" height="3" fill="{{ theme.accent_amber }}"/>
+    <rect x="206" y="156" width="54" height="16" rx="3" fill="{{ theme.bg_panel }}" stroke="{{ theme.accent_signal }}" stroke-width="1.2"/>
+    <text x="233" y="167" text-anchor="middle" class="mono" font-size="7.5" font-weight="700" fill="{{ theme.accent_signal }}">BUFF +{{ buff_charges * 10 }}</text>
   </g>
   {% endif %}
   <g class="bob-ally" shape-rendering="crispEdges">

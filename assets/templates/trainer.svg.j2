@@ -13,6 +13,10 @@
     <style>
       .mono { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace; }
       .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .dex-pulse { animation: lens-glow 2.8s ease-in-out infinite; }
+      .led-blink { animation: led-flash 2.2s steps(2, end) infinite; }
+      @keyframes lens-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.72; } }
+      @keyframes led-flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
     </style>
   </defs>
 
@@ -22,14 +26,14 @@
 
   <!-- Iconic Camera Lens + LEDs -->
   <circle cx="28" cy="24" r="14" fill="#E2E8F0" stroke="#1E293B" stroke-width="1.5"/>
-  <circle cx="28" cy="24" r="10.5" fill="url(#dex-lens-{{ mode }})" stroke="#0369A1" stroke-width="1"/>
+  <circle class="dex-pulse" cx="28" cy="24" r="10.5" fill="url(#dex-lens-{{ mode }})" stroke="#0369A1" stroke-width="1"/>
   <ellipse cx="24" cy="20" rx="3.5" ry="2.2" fill="#FFFFFF" opacity="0.85"/>
 
   <circle cx="52" cy="18" r="4" fill="#EF4444" stroke="#1E293B" stroke-width="1"/>
   <circle cx="50.8" cy="16.8" r="1.2" fill="#FCA5A5"/>
   <circle cx="66" cy="18" r="4" fill="#FBBF24" stroke="#1E293B" stroke-width="1"/>
   <circle cx="64.8" cy="16.8" r="1.2" fill="#FEF08A"/>
-  <circle cx="80" cy="18" r="4" fill="#22C55E" stroke="#1E293B" stroke-width="1"/>
+  <circle class="led-blink" cx="80" cy="18" r="4" fill="#22C55E" stroke="#1E293B" stroke-width="1"/>
   <circle cx="78.8" cy="16.8" r="1.2" fill="#A7F3D0"/>
 
   <!-- Top Codex Bar -->
@@ -60,8 +64,12 @@
 
   <!-- Identity + Class Type Pills -->
   <text x="306" y="74" text-anchor="end" class="sans" font-size="12.5" font-weight="700" fill="{{ theme.text_primary }}">{{ report.display_name }}</text>
-  <text x="306" y="90" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">Lv{{ report.level }} · {{ "{:,}".format(report.xp) }} XP</text>
-  <text x="306" y="104" text-anchor="end" class="mono" font-size="8" fill="{{ theme.text_muted }}">{{ report.non_empty_owned_repos }} PUBLIC QUESTS</text>
+  <text x="306" y="89" text-anchor="end" class="mono" font-size="9.5" font-weight="700" fill="{{ theme.accent_amber }}">Lv{{ report.level }} · {{ "{:,}".format(report.xp) }} XP</text>
+  <text x="306" y="102" text-anchor="end" class="mono" font-size="7.8" fill="{{ theme.text_muted }}">{{ report.non_empty_owned_repos }} REPOS · {{ report.level_progress_pct }}% LV</text>
+  <rect x="200" y="107" width="106" height="3.5" rx="1.5" fill="{{ theme.bg_track }}"/>
+  {% if dex_exp_w > 0 %}
+  <rect x="200" y="107" width="{{ dex_exp_w }}" height="3.5" rx="1.5" fill="{{ theme.accent_primary }}"/>
+  {% endif %}
 
   <rect x="194" y="116" width="50" height="16" rx="3" fill="#2563EB"/>
   <text x="219" y="127.5" text-anchor="middle" class="mono" font-size="7.3" font-weight="700" fill="#FFFFFF">{{ primary_lang_tag }}</text>
